@@ -125,6 +125,89 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
   font-size:12.5px;font-family:inherit;outline:none;color:var(--text)}
 .pg .jump input:focus{border-color:var(--blue)}
 
+/* ===================== 影像质控分析 ===================== */
+.qa-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);
+  border-radius:4px;padding:12px 14px;margin-bottom:12px}
+.qa-seg{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.qa-seg button{background:#fff;border:none;border-right:1px solid var(--line);padding:0 14px;height:30px;
+  font-size:13px;color:var(--text)}
+.qa-seg button:last-child{border-right:none}
+.qa-seg button:hover{color:var(--blue)}
+.qa-seg button.on{background:var(--blue);color:#fff}
+.qa-seg button.on:hover{color:#fff}
+.qa-sel{height:30px;border:1px solid var(--line);border-radius:3px;background:#fff;font-size:13px;
+  color:var(--text);padding:0 8px;min-width:88px}
+.qa-bar .lbl{font-size:13px;color:var(--sub)}
+.qa-range{font-size:12.5px;color:var(--muted)}
+.qa-sp{flex:1}
+.qa-tabs{display:flex;gap:24px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.qa-tabs button{background:none;border:none;padding:0 0 9px;font-size:14px;color:var(--sub);position:relative}
+.qa-tabs button.on{color:var(--blue-600);font-weight:600}
+.qa-tabs button.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--blue)}
+.qa-grid{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:12px;align-items:start}
+.qa-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px}
+.qa-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.qa-kpi{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:#FCFDFF}
+.qa-kpi .lb{font-size:12px;color:var(--sub);display:flex;align-items:center;gap:5px}
+.qa-kpi .vl{font-size:22px;font-weight:600;color:var(--navy);line-height:1.3;margin-top:3px;
+  font-variant-numeric:tabular-nums}
+.qa-kpi .dt{font-size:11.5px;color:var(--muted);margin-top:1px}
+.qa-kpi .dt b{font-weight:600}
+.qa-kpi.bad .vl{color:var(--bad)}
+.qa-donutrow{display:flex;align-items:center;gap:14px;padding:4px 0 12px;border-bottom:1px dashed var(--line)}
+.qa-leg{display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--text)}
+.qa-leg .r{display:flex;align-items:center;gap:7px}
+.qa-leg .r i{width:8px;height:8px;border-radius:50%;flex:0 0 8px}
+.qa-dt-head{display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px;
+  cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text)}
+.qa-dt-head i{font-style:normal;color:var(--muted);font-size:11px;transition:transform .2s}
+.qa-dt-head.closed i{transform:rotate(-90deg)}
+.qa-grp{margin-bottom:12px}
+.qa-grp-h{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);margin-bottom:8px}
+.qa-grp-h i{width:7px;height:7px;border-radius:50%}
+.qa-issue{display:grid;grid-template-columns:1fr 96px 62px;gap:10px;align-items:center;
+  font-size:12.5px;color:var(--sub);margin-bottom:9px}
+.qa-issue .tk{height:6px;border-radius:3px;background:#EDF1F7;overflow:hidden}
+.qa-issue .tk i{display:block;height:100%;border-radius:3px;background:var(--blue)}
+.qa-issue .num{text-align:right;color:var(--text);font-variant-numeric:tabular-nums}
+.qa-warn{display:flex;align-items:center;gap:6px;margin-top:12px;padding:7px 10px;border-radius:3px;
+  background:#FFF7E6;border:1px solid #FFE0A3;color:#AD6800;font-size:12.5px}
+.qa-card-h{font-size:14px;font-weight:600;color:var(--text);padding-bottom:10px;
+  border-bottom:1px solid var(--line);margin-bottom:12px}
+.qa-blk{margin-bottom:16px}
+.qa-blk:last-child{margin-bottom:0}
+.qa-blk-h{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.qa-blk-h::before{content:"";width:3px;height:12px;background:var(--blue);border-radius:2px}
+.qa-txt{margin:0 0 8px;font-size:12.5px;line-height:1.75;color:var(--sub);text-align:justify}
+.qa-chart{display:block;width:100%;max-width:528px;height:auto;margin:2px auto 0}
+.qa-chart text{font-family:inherit;fill:var(--muted);font-size:10px}
+.qa-chart .ax{stroke:#EEF1F6}
+.qa-chart .vl{fill:var(--text);font-size:11px;font-weight:600}
+.qa-keytbl{width:100%;border-collapse:collapse;font-size:13px}
+.qa-keytbl th{background:var(--head);text-align:left;font-weight:600;padding:9px 10px;
+  border-bottom:1px solid var(--line);color:var(--text);white-space:nowrap}
+.qa-keytbl td{padding:10px;border-bottom:1px solid var(--line);color:var(--text)}
+.qa-keytbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+.qa-empty{padding:50px 0;text-align:center;color:var(--muted);font-size:13px}
+
+/* AI 分析报告弹窗 */
+.ai-sheet{width:min(880px,94vw)}
+.ai-body{padding:0 20px 4px}
+.ai-sec{padding:16px 0;border-bottom:1px solid var(--line)}
+.ai-sec:last-of-type{border-bottom:none}
+.ai-sec-h{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ai-sec-h span{display:inline-flex;width:20px;height:20px;border-radius:3px;background:var(--blue-soft);
+  color:var(--blue-600);font-size:11.5px;align-items:center;justify-content:center}
+.ai-h2{font-size:13px;font-weight:600;color:var(--text);margin:12px 0 6px}
+.ai-h3{font-size:12.5px;font-weight:600;color:var(--text);margin:9px 0 4px}
+.ai-p{margin:0;font-size:12.5px;line-height:1.95;color:var(--sub);text-align:justify}
+.ai-data{font-size:12.5px;color:var(--text);background:var(--head);border:1px solid var(--line);
+  border-radius:3px;padding:9px 12px}
+.ai-radios{display:flex;gap:22px;margin:4px 0 14px}
+.ai-radios label{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text);cursor:pointer}
+.ai-radios input{width:15px;height:15px;accent-color:var(--blue);cursor:pointer;margin:0}
+.ai-foot{display:flex;justify-content:flex-start;padding:0 20px 18px}
+
 /* ---------------- 其它页签占位 ---------------- */
 .placeholder{padding:80px 20px;text-align:center;border:1px solid var(--line);border-radius:4px;background:#fff}
 .placeholder .ic{width:54px;height:54px;margin:0 auto 14px;border-radius:10px;background:var(--blue-soft);
@@ -224,7 +307,76 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
       <div class="pg" id="qcPager"></div>
     </div>
   </div>
-  <div id="tabOther" class="hidden"></div>
+    <div id="tabImg" class="hidden">
+    <div class="qa-bar">
+      <span class="lbl">时间周期</span>
+      <div class="qa-seg" id="qaPeriod">
+        <button class="on" data-v="month">近一月</button>
+        <button data-v="quarter">近三月</button>
+        <button data-v="half">近半年</button>
+        <button data-v="custom">自定义</button>
+      </div>
+      <span class="lbl">环节</span>
+      <div class="qa-seg" id="qaStage">
+        <button class="on" data-v="终末">终末</button>
+        <button data-v="事中">事中</button>
+      </div>
+      <span class="lbl">设备</span>
+      <select class="qa-sel" id="qaDev"><option>CT</option><option>MR</option><option>DR</option></select>
+      <span class="lbl">类型</span>
+      <div class="qa-seg" id="qaType">
+        <button class="on" data-v="系统">系统</button>
+        <button data-v="人工">人工</button>
+      </div>
+      <button class="btn primary" id="qaQuery">查询</button>
+      <button class="btn" id="qaReset">重置</button>
+      <span class="qa-sp"></span>
+      <span class="qa-range" id="qaRange">2026.09.27–2026.10.27</span>
+      <button class="btn primary" id="qaAiReport">
+        <span style="display:inline-flex;align-items:center;gap:6px">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>
+          </svg>AI分析报告</span>
+      </button>
+    </div>
+
+    <div class="qa-tabs" id="qaTabs2">
+      <button class="on" data-v="sum">总体达标情况</button>
+      <button data-v="key">关键问题分析</button>
+    </div>
+
+    <div id="qaSum" class="qa-grid">
+      <div class="qa-card">
+        <div class="qa-kpis" id="qaKpis"></div>
+        <div class="qa-donutrow">
+          <div id="qaDonut"></div>
+          <div class="qa-leg" id="qaLeg"></div>
+        </div>
+        <div class="qa-dt-head" id="qaCollapse"><span>详情分析</span><i>▾</i></div>
+        <div id="qaDetail"></div>
+        <div class="qa-warn" id="qaWarn">⚠ 需关注：丙级及以下报告需在下周内完成整改复核</div>
+      </div>
+      <div class="qa-card">
+        <div class="qa-card-h">总体达标情况改进分析</div>
+        <div class="qa-blk">
+          <div class="qa-blk-h">环比数据分析</div>
+          <p class="qa-txt" id="qaMomTxt"></p>
+          <div id="qaMomChart"></div>
+        </div>
+        <div class="qa-blk">
+          <div class="qa-blk-h">同比数据分析</div>
+          <p class="qa-txt" id="qaYoyTxt"></p>
+          <div id="qaYoyChart"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="qaKey" class="hidden">
+      <div class="qa-card"><div id="qaKeyBody"></div></div>
+    </div>
+  </div>
+<div id="tabOther" class="hidden"></div>
 </div>
 
 <div id="dgModal" class="hidden"></div>
@@ -588,10 +740,12 @@ function showTab(key){
   [].forEach.call(document.querySelectorAll('#qcTabs .tab'), function(b){
     b.classList.toggle('on', b.getAttribute('data-tab') === key);
   });
-  var isList = (key === 'list');
+  var isList = (key === 'list'), isImg = (key === 'img');
   document.getElementById('tabList').classList.toggle('hidden', !isList);
   document.getElementById('qcActions').classList.toggle('hidden', !isList);
+  document.getElementById('tabImg').classList.toggle('hidden', !isImg);
   var other = document.getElementById('tabOther');
+  if (isImg) { other.classList.add('hidden'); other.innerHTML = ''; bindQa(); renderQa(); return; }
   if (isList) { other.classList.add('hidden'); other.innerHTML = ''; return; }
   var m = QC_TABS[key];
   other.innerHTML = '<div class="placeholder"><div class="ic">'
@@ -600,6 +754,404 @@ function showTab(key){
     + '<div class="tags">' + m.tags.map(function(x){ return '<span>' + esc(x) + '</span>'; }).join('') + '</div>'
     + '<p style="margin-top:16px;color:#999;font-size:12.5px">该页签原型待补充</p></div>';
   other.classList.remove('hidden');
+}
+
+/* ============================================================================
+   影像质控分析（QA）
+   ============================================================================ */
+var QA_ROWS = [
+  { d:'2026-10-20', stage:'终末', dev:'CT', type:'系统', grade:'丙',
+    issues:['图像清晰度较差','图像位置偏下','存在运动伪影','扫描上界超出肺尖'] },
+  { d:'2026-10-18', stage:'事中', dev:'CT', type:'系统', grade:'乙', issues:['存在运动伪影'] },
+  { d:'2026-10-15', stage:'终末', dev:'CT', type:'人工', grade:'甲', issues:[] },
+  { d:'2026-10-09', stage:'终末', dev:'MR', type:'系统', grade:'乙', issues:['图像位置偏下'] },
+  { d:'2026-09-10', stage:'终末', dev:'CT', type:'系统', grade:'甲', issues:[] },
+  { d:'2026-09-01', stage:'终末', dev:'CT', type:'系统', grade:'甲', issues:[] },
+  { d:'2026-08-14', stage:'终末', dev:'CT', type:'系统', grade:'乙', issues:['存在运动伪影'] },
+  { d:'2026-07-22', stage:'终末', dev:'DR', type:'人工', grade:'丁', issues:['扫描范围不足'] },
+  { d:'2026-06-30', stage:'事中', dev:'CT', type:'人工', grade:'甲', issues:[] },
+  { d:'2026-05-12', stage:'终末', dev:'MR', type:'系统', grade:'丙', issues:['图像清晰度较差','存在运动伪影'] }
+];
+
+var QA_GRADES = ['甲','乙','丙','丁'];
+var QA_COLOR = { '甲':'#18A058', '乙':'#3B82F6', '丙':'#5B9BF8', '丁':'#D03050' };
+var QA_END = '2026-10-27';
+
+var QA_S = { period:'month', stage:'终末', dev:'CT', type:'系统', tab:'sum', collapsed:false,
+             cFrom:'2026-08-01', cTo:'2026-10-27' };
+
+function qaFmt(d){
+  var p = function(n){ return (n < 10 ? '0' : '') + n; };
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+}
+function qaDot(d){ return d.replace(/-/g,'.'); }
+function qaShift(str, months){
+  var m = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  var d = new Date(+m[1], +m[2] - 1, +m[3]);
+  d.setMonth(d.getMonth() + months);
+  return qaFmt(d);
+}
+function qaMinusDay(str){
+  var m = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  var d = new Date(+m[1], +m[2] - 1, +m[3]);
+  d.setDate(d.getDate() - 1);
+  return qaFmt(d);
+}
+function qaShiftDays(str, n){
+  var m = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  var d = new Date(+m[1], +m[2] - 1, +m[3]);
+  d.setDate(d.getDate() + n);
+  return qaFmt(d);
+}
+function qaSpan(from, to){
+  var a = from.match(/(\d{4})-(\d{2})-(\d{2})/), b = to.match(/(\d{4})-(\d{2})-(\d{2})/);
+  var d1 = new Date(+a[1], +a[2] - 1, +a[3]), d2 = new Date(+b[1], +b[2] - 1, +b[3]);
+  return Math.round((d2 - d1) / 86400000);
+}
+function qaRanges(){
+  var to = QA_END, from;
+  if (QA_S.period === 'month') from = qaShift(to, -1);
+  else if (QA_S.period === 'quarter') from = qaShift(to, -3);
+  else if (QA_S.period === 'half') from = qaShift(to, -6);
+  else { from = QA_S.cFrom; to = QA_S.cTo; }
+  var span = qaSpan(from, to);
+  var prevTo = qaShiftDays(from, -1);
+  var prevFrom = qaShiftDays(prevTo, -span);
+  var yoyTo = qaShiftDays(qaShift(to, -12), -0);
+  var yoyFrom = qaShiftDays(yoyTo, -span);
+  return { from:from, to:to, prevFrom:prevFrom, prevTo:prevTo, yoyFrom:yoyFrom, yoyTo:yoyTo };
+}
+function qaPick(f, t){
+  return QA_ROWS.filter(function(r){
+    if (r.d < f || r.d > t) return false;
+    if (QA_S.stage && r.stage !== QA_S.stage) return false;
+    if (QA_S.dev && r.dev !== QA_S.dev) return false;
+    if (QA_S.type && r.type !== QA_S.type) return false;
+    return true;
+  });
+}
+function qaCount(rows, g){ return rows.filter(function(r){ return r.grade === g; }).length; }
+
+/* ---------- 环形图 ---------- */
+function qaDonut(rows){
+  var total = rows.length;
+  var segs = QA_GRADES.map(function(g){
+    return { g:g, v:qaCount(rows, g) };
+  }).filter(function(s){ return s.v > 0; });
+  var S = 132, r = S / 2 - 15, c = 2 * Math.PI * r, cx = S / 2, off = 0;
+  var s = '<svg width="' + S + '" height="' + S + '" viewBox="0 0 ' + S + ' ' + S + '">';
+  s += '<circle cx="' + cx + '" cy="' + cx + '" r="' + r + '" fill="none" stroke="#EEF1F6" stroke-width="16"/>';
+  segs.forEach(function(sg){
+    var len = total ? c * sg.v / total : 0;
+    var col = (segs.length === 1) ? '#3B82F6' : QA_COLOR[sg.g];
+    s += '<circle cx="' + cx + '" cy="' + cx + '" r="' + r + '" fill="none" stroke="' + col + '"'
+       + ' stroke-width="16" stroke-dasharray="' + len.toFixed(2) + ' ' + (c - len).toFixed(2) + '"'
+       + ' stroke-dashoffset="' + (-off).toFixed(2) + '" transform="rotate(-90 ' + cx + ' ' + cx + ')"/>';
+    off += len;
+  });
+  s += '<text x="' + cx + '" y="' + (cx - 4) + '" text-anchor="middle" style="font-size:10px;fill:#999">总数</text>'
+     + '<text x="' + cx + '" y="' + (cx + 14) + '" text-anchor="middle" style="font-size:19px;font-weight:600;fill:#1E3A6F">'
+     + total + '</text>'
+     + '<text x="' + cx + '" y="' + (cx + 26) + '" text-anchor="middle" style="font-size:9.5px;fill:#999">例</text>';
+  s += '</svg>';
+  return { svg:s, segs:segs };
+}
+
+/* ---------- 柱+线组合图 ---------- */
+function qaCombo(legend, prevLabel, curLabel, prev, cur){
+  var W = 500, H = 196, pl = 34, pr = 14, pt = 24, pb = 40;
+  var iw = W - pl - pr, ih = H - pt - pb;
+  var max = Math.max(prev, cur, 1);
+  var step = max <= 1 ? 1 : (max <= 2 ? 0.5 : Math.ceil(max / 4));
+  var top = Math.ceil(max / step) * step;
+  var Y = function(v){ return pt + ih * (1 - v / top); };
+  var xs = [pl + iw * 0.28, pl + iw * 0.72];
+  var bw = 46;
+  var s = '<svg class="qa-chart" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet">';
+  s += '<defs><linearGradient id="qaBar' + legend + '" x1="0" y1="0" x2="0" y2="1">'
+     + '<stop offset="0%" stop-color="#3B82F6" stop-opacity=".92"/>'
+     + '<stop offset="100%" stop-color="#3B82F6" stop-opacity=".55"/></linearGradient></defs>';
+  for (var v = 0; v <= top + 1e-9; v += step) {
+    var y = Y(v);
+    var tv = (step < 1) ? v.toFixed(1) : String(v);
+    s += '<line class="ax" x1="' + pl + '" y1="' + y + '" x2="' + (W - pr) + '" y2="' + y + '"/>'
+       + '<text x="' + (pl - 6) + '" y="' + (y + 3) + '" text-anchor="end">' + tv + '</text>';
+  }
+  [[xs[0], prev], [xs[1], cur]].forEach(function(p){
+    var x = p[0], val = p[1];
+    s += '<rect x="' + (x - bw / 2) + '" y="' + Y(val) + '" width="' + bw + '" height="' + (Y(0) - Y(val))
+       + '" rx="2" fill="url(#qaBar' + legend + ')"/>';
+    s += '<text class="vl" x="' + x + '" y="' + (Y(val) - 7) + '" text-anchor="middle">' + val + '</text>';
+  });
+  s += '<polyline points="' + xs[0] + ',' + Y(prev) + ' ' + xs[1] + ',' + Y(cur)
+     + '" fill="none" stroke="#1E3A6F" stroke-width="1.8"/>';
+  [[xs[0], prev], [xs[1], cur]].forEach(function(p){
+    s += '<circle cx="' + p[0] + '" cy="' + Y(p[1]) + '" r="3.4" fill="#fff" stroke="#1E3A6F" stroke-width="1.8"/>';
+  });
+  s += '<text x="' + xs[0] + '" y="' + (H - 20) + '" text-anchor="middle">' + esc(prevLabel[0]) + '</text>'
+     + '<text x="' + xs[0] + '" y="' + (H - 7) + '" text-anchor="middle" style="fill:#1E3A6F">' + esc(prevLabel[1]) + '</text>'
+     + '<text x="' + xs[1] + '" y="' + (H - 20) + '" text-anchor="middle">' + esc(curLabel[0]) + '</text>'
+     + '<text x="' + xs[1] + '" y="' + (H - 7) + '" text-anchor="middle" style="fill:#1E3A6F">' + esc(curLabel[1]) + '</text>';
+  /* 图例 */
+  s += '<rect x="' + (W - 148) + '" y="6" width="10" height="10" rx="2" fill="#3B82F6"/>'
+     + '<text x="' + (W - 133) + '" y="15">' + esc(legend) + '</text>'
+     + '<line x1="' + (W - 92) + '" y1="11" x2="' + (W - 74) + '" y2="11" stroke="#1E3A6F" stroke-width="1.8"/>'
+     + '<circle cx="' + (W - 83) + '" cy="11" r="3.2" fill="#fff" stroke="#1E3A6F" stroke-width="1.6"/>'
+     + '<text x="' + (W - 68) + '" y="15">趋势</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* ---------- 文案 ---------- */
+function qaDelta(a, b, unit){
+  var d = b - a;
+  if (d === 0) return '不变';
+  return (d > 0 ? '增加' : '减少') + Math.abs(d) + unit;
+}
+function qaTrend(a, b){
+  if (b > a) return '上升';
+  if (b < a) return '下降';
+  return '持平';
+}
+function qaShareText(cur, prev, when){
+  when = when || '上一周期';
+  if (!prev.length) return when + '无样本，等级占比不可比。';
+  var ups = [], downs = [], flats = [];
+  QA_GRADES.forEach(function(g){
+    var c1 = qaCount(prev, g) / prev.length, c2 = qaCount(cur, g) / (cur.length || 1);
+    if (!cur.length) { flats.push(g); return; }
+    var d = c2 - c1;
+    if (d > 0.0001) ups.push(g); else if (d < -0.0001) downs.push(g); else flats.push(g);
+  });
+  var seg = [];
+  if (downs.length) seg.push(downs.join('、') + '级占比下降');
+  if (ups.length) seg.push(ups.join('、') + '级占比上升');
+  if (flats.length) seg.push(flats.join('、') + '级未见明显改变');
+  return seg.length ? ('等级占比方面，' + seg.join('，') + '。') : '等级占比方面，各等级未见明显改变。';
+}
+
+function renderQa(){
+  var R = qaRanges();
+  document.getElementById('qaRange').textContent = qaDot(R.from) + '–' + qaDot(R.to);
+  var cur = qaPick(R.from, R.to);
+  var prev = qaPick(R.prevFrom, R.prevTo);
+  var yoy = qaPick(R.yoyFrom, R.yoyTo);
+
+  var passN = cur.filter(function(r){ return r.grade !== '丁'; }).length;
+  var failN = cur.length - passN;
+  var rate = cur.length ? (passN / cur.length * 100).toFixed(0) : '0';
+  var failRate = cur.length ? (failN / cur.length * 100).toFixed(0) : '0';
+  document.getElementById('qaKpis').innerHTML =
+      '<div class="qa-kpi"><div class="lb">报告总数</div><div class="vl">' + cur.length + '</div>'
+    + '<div class="dt">' + esc(QA_S.stage) + ' · ' + esc(QA_S.dev) + ' · ' + esc(QA_S.type) + '</div></div>'
+    + '<div class="qa-kpi"><div class="lb">已达标（例）</div><div class="vl">' + passN + '</div>'
+    + '<div class="dt"><b>' + rate + '%</b> 占比</div></div>'
+    + '<div class="qa-kpi ' + (failN ? 'bad' : '') + '"><div class="lb">未达标（例）</div><div class="vl">' + failN + '</div>'
+    + '<div class="dt"><b>' + failRate + '%</b> 占比</div></div>';
+
+  var d = qaDonut(cur);
+  document.getElementById('qaDonut').innerHTML = d.svg;
+  document.getElementById('qaLeg').innerHTML = d.segs.length
+    ? d.segs.map(function(sg){
+        return '<div class="r"><i style="background:' + ((d.segs.length === 1) ? '#3B82F6' : QA_COLOR[sg.g])
+             + '"></i><span>' + sg.g + ' ' + sg.v + '</span></div>';
+      }).join('')
+    : '<span style="color:#999;font-size:12.5px">该条件下暂无数据</span>';
+
+  /* 详情分析 */
+  var detail = '';
+  QA_GRADES.forEach(function(g){
+    var rows = cur.filter(function(r){ return r.grade === g; });
+    if (!rows.length) return;
+    var issueMap = {};
+    rows.forEach(function(r){ r.issues.forEach(function(it){ issueMap[it] = (issueMap[it] || 0) + 1; }); });
+    var names = Object.keys(issueMap);
+    detail += '<div class="qa-grp"><div class="qa-grp-h"><i style="background:' + QA_COLOR[g] + '"></i>' + g
+            + '<span style="color:#999;font-size:12px;margin-left:4px">' + rows.length + ' 例</span></div>';
+    if (!names.length) {
+      detail += '<div class="qa-issue" style="grid-template-columns:1fr"><span>未检出问题项</span></div>';
+    } else {
+      names.sort(function(a, b){ return issueMap[b] - issueMap[a]; });
+      names.forEach(function(nm){
+        var pct = Math.round(issueMap[nm] / rows.length * 100);
+        detail += '<div class="qa-issue"><span>' + esc(nm) + '</span>'
+               + '<span class="tk"><i style="width:' + pct + '%"></i></span>'
+               + '<span class="num">' + pct + '% | ' + issueMap[nm] + '例</span></div>';
+      });
+    }
+    detail += '</div>';
+  });
+  document.getElementById('qaDetail').innerHTML = detail || '<div class="qa-empty">该条件下暂无质控样本</div>';
+  document.getElementById('qaDetail').classList.toggle('hidden', QA_S.collapsed);
+  document.getElementById('qaWarn').classList.toggle('hidden', !cur.some(function(r){ return r.grade === '丙' || r.grade === '丁'; }));
+
+  /* 环比 */
+  var momTxt = '本期 ' + qaDot(R.from) + '–' + qaDot(R.to) + ' 完成' + QA_S.stage + '影像 ' + cur.length
+    + ' 例；上一周期 ' + qaDot(R.prevFrom) + '–' + qaDot(R.prevTo) + ' 完成 ' + prev.length + ' 例。'
+    + '总数环比' + qaDelta(prev.length, cur.length, '例') + '，趋势' + qaTrend(prev.length, cur.length) + '。'
+    + '其中' + QA_GRADES.map(function(g){ return g + '级' + qaDelta(qaCount(prev, g), qaCount(cur, g), '例'); }).join('，') + '。'
+    + qaShareText(cur, prev, '上一周期');
+  document.getElementById('qaMomTxt').textContent = momTxt;
+  document.getElementById('qaMomChart').innerHTML = qaCombo('环比',
+    [qaDot(R.prevFrom) + '–' + qaDot(R.prevTo), '环比'], [qaDot(R.from) + '–' + qaDot(R.to), '当前'],
+    prev.length, cur.length);
+
+  /* 同比 */
+  var yoyTxt = '本期 ' + qaDot(R.from) + '–' + qaDot(R.to) + ' 完成' + QA_S.stage + '影像 ' + cur.length
+    + ' 例；去年同期 ' + qaDot(R.yoyFrom) + '–' + qaDot(R.yoyTo) + ' 完成 ' + yoy.length + ' 例。'
+    + '总数同比' + qaDelta(yoy.length, cur.length, '例') + '，趋势' + qaTrend(yoy.length, cur.length) + '。'
+    + '其中' + QA_GRADES.map(function(g){ return g + '级' + qaDelta(qaCount(yoy, g), qaCount(cur, g), '例'); }).join('，') + '。'
+    + qaShareText(cur, yoy, '去年同期');
+  document.getElementById('qaYoyTxt').textContent = yoyTxt;
+  document.getElementById('qaYoyChart').innerHTML = qaCombo('同比',
+    [qaDot(R.yoyFrom) + '–' + qaDot(R.yoyTo), '同比'], [qaDot(R.from) + '–' + qaDot(R.to), '当前'],
+    yoy.length, cur.length);
+
+  renderQaKey(cur, prev);
+  QA_S._cur = cur;
+}
+
+function renderQaKey(cur, prev){
+  var stat = {};
+  cur.forEach(function(r){
+    r.issues.forEach(function(it){
+      if (!stat[it]) stat[it] = { n:0, grades:{}, prevN:0 };
+      stat[it].n++;
+      stat[it].grades[r.grade] = (stat[it].grades[r.grade] || 0) + 1;
+    });
+  });
+  prev.forEach(function(r){
+    r.issues.forEach(function(it){ if (stat[it]) stat[it].prevN++; });
+  });
+  var names = Object.keys(stat).sort(function(a, b){ return stat[b].n - stat[a].n; });
+  var body = '';
+  if (!names.length) {
+    body = '<div class="qa-empty">该条件下暂无质控问题</div>';
+  } else {
+    body = '<table class="qa-keytbl"><thead><tr><th>问题项</th><th>涉及等级</th>'
+         + '<th class="num">涉及例数</th><th class="num">占总数</th><th class="num">环比</th></tr></thead><tbody>';
+    names.forEach(function(nm){
+      var s = stat[nm];
+      var gs = Object.keys(s.grades).map(function(g){
+        return '<span style="display:inline-flex;align-items:center;gap:4px;margin-right:8px">'
+             + '<i style="width:6px;height:6px;border-radius:50%;background:' + QA_COLOR[g] + '"></i>'
+             + g + ' ' + s.grades[g] + '</span>';
+      }).join('');
+      body += '<tr><td>' + esc(nm) + '</td><td>' + gs + '</td>'
+            + '<td class="num">' + s.n + '</td>'
+            + '<td class="num">' + Math.round(s.n / (cur.length || 1) * 100) + '%</td>'
+            + '<td class="num">' + qaDelta(s.prevN, s.n, '例') + '</td></tr>';
+    });
+    body += '</tbody></table>';
+  }
+  document.getElementById('qaKeyBody').innerHTML =
+      '<div class="qa-card-h" style="border:none;margin-bottom:0;padding-bottom:12px">关键问题分析 · 共 '
+    + names.length + ' 类问题，涉及 ' + cur.length + ' 例</div>' + body;
+}
+
+/* ---------- AI 分析报告 ---------- */
+function openAiReport(){
+  dgOpen('<div class="dg-sheet ai-sheet">'
+    + '<div class="dg-shead"><div><b>AI分析报告</b></div>'
+    +   '<button class="dg-x" id="dgX">✕</button></div>'
+    + '<div class="dg-sbody ai-body">'
+    +   '<div class="ai-sec"><div class="ai-sec-h"><span>1</span>大纲生成</div>'
+    +     '<div class="ai-h2">一、质控目标</div>'
+    +     '<p class="ai-p">结合本次质控统计数据，梳理本次质控整体等级分布情况，明确整体质量等级分布特征，对照质控评定标准完成整体质量等级判定。'
+    +       '同步汇总全质量质控问题整体发生情况，梳理整体问题发生趋势，结合同期往期参照维度，明确整体问题数量变动态势。'
+    +       '提炼本次质控过程中最为突出、占比靠前的核心问题类别，明确影像采集、参数设置、图像处理、成像规范等板块存在的共性短板，'
+    +       '直观点明本次质控整体质量现状与核心症结。</p>'
+    +     '<div class="ai-h2">二、总体质控概况</div>'
+    +     '<div class="ai-h3">2.1 总体达标情况综述</div>'
+    +     '<p class="ai-p">梳理本次参与质控全部影像样本整体数量，划分不同质量评定等级，逐一列明各质量等级对应样本规模与整体占比情况。'
+    +       '结合环比、同比两大对比维度，分别说明本期各等级样本数量、往期同期样本数量，清晰阐述各质量等级数据同期变动走向与整体浮动趋势，'
+    +       '完整呈现整体质量层级分布与阶段性变化特点。</p>'
+    +     '<div class="ai-h3">2.2 总体达标情况详细分析</div>'
+    +     '<p class="ai-p">汇总本次质控排查出的全部问题总量，按照影像质控标准分类规则，对所有质控问题进行统一归类划分。'
+    +       '依次罗列各类别质控问题所属板块范畴，明确各类问题发生体量与整体问题占比，同时依托环比、同比数据，'
+    +       '分析整体质控问题整体数量增减变化规律，全面展现整体问题分布格局。</p>'
+    +   '</div>'
+    +   '<div class="ai-sec"><div class="ai-sec-h"><span>2</span>数据获取</div>'
+    +     '<div class="ai-data">影像科质控管理规范；质控统计数据</div>'
+    +   '</div>'
+    +   '<div class="ai-sec"><div class="ai-sec-h"><span>3</span>报告格式</div>'
+    +     '<div class="ai-radios">'
+    +       '<label><input type="radio" name="aiFmt" value="PDF" checked>PDF</label>'
+    +       '<label><input type="radio" name="aiFmt" value="Word">Word</label>'
+    +     '</div>'
+    +     '<button class="btn primary" id="aiGen">生成报告</button>'
+    +   '</div>'
+    + '</div>'
+    + '</div>');
+  document.getElementById('aiGen').onclick = function(){
+    var f = document.querySelector('input[name="aiFmt"]:checked');
+    dgClose();
+    toast('已生成 ' + (f ? f.value : 'PDF') + ' 报告（示例）');
+  };
+}
+
+function bindQa(){
+  if (bindQa._done) return;
+  bindQa._done = true;
+
+  [['qaPeriod','period'], ['qaStage','stage'], ['qaType','type']].forEach(function(p){
+    var box = document.getElementById(p[0]);
+    [].forEach.call(box.querySelectorAll('button'), function(b){
+      b.onclick = function(){
+        [].forEach.call(box.querySelectorAll('button'), function(x){ x.classList.remove('on'); });
+        b.classList.add('on');
+        QA_S[p[1]] = b.getAttribute('data-v');
+        if (p[1] === 'period') document.getElementById('qaCustom').classList.toggle('hidden', QA_S.period !== 'custom');
+        renderQa();
+      };
+    });
+  });
+  document.getElementById('qaDev').onchange = function(){ QA_S.dev = this.value; renderQa(); };
+  document.getElementById('qaQuery').onclick = function(){ renderQa(); toast('已按当前条件查询'); };
+  document.getElementById('qaReset').onclick = function(){
+    QA_S.period = 'month'; QA_S.stage = '终末'; QA_S.dev = 'CT'; QA_S.type = '系统';
+    [['qaPeriod','month'], ['qaStage','终末'], ['qaType','系统']].forEach(function(p){
+      [].forEach.call(document.getElementById(p[0]).querySelectorAll('button'), function(b){
+        b.classList.toggle('on', b.getAttribute('data-v') === p[1]);
+      });
+    });
+    document.getElementById('qaDev').value = 'CT';
+    renderQa(); toast('已重置筛选条件');
+  };
+  document.getElementById('qaAiReport').onclick = function(){ openAiReport(); };
+  document.getElementById('qaCollapse').onclick = function(){
+    QA_S.collapsed = !QA_S.collapsed;
+    this.classList.toggle('closed', QA_S.collapsed);
+    document.getElementById('qaDetail').classList.toggle('hidden', QA_S.collapsed);
+  };
+  [].forEach.call(document.querySelectorAll('#qaTabs2 button'), function(b){
+    b.onclick = function(){
+      [].forEach.call(document.querySelectorAll('#qaTabs2 button'), function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      QA_S.tab = b.getAttribute('data-v');
+      var isSum = QA_S.tab === 'sum';
+      document.getElementById('qaSum').classList.toggle('hidden', !isSum);
+      document.getElementById('qaKey').classList.toggle('hidden', isSum);
+    };
+  });
+  /* 自定义区间 */
+  var bar = document.querySelector('#tabImg .qa-bar');
+  var cw = document.createElement('span');
+  cw.id = 'qaCustom';
+  cw.className = 'hidden';
+  cw.style.cssText = 'display:none;align-items:center;gap:6px';
+  cw.innerHTML = '<input type="date" id="qaFrom" value="2026-08-01" class="qa-sel" style="width:140px">'
+               + '<span style="color:#999;font-size:12px">至</span>'
+               + '<input type="date" id="qaTo" value="2026-10-27" class="qa-sel" style="width:140px">';
+  bar.insertBefore(cw, document.getElementById('qaRange'));
+  ['qaFrom','qaTo'].forEach(function(id){
+    document.getElementById(id).onchange = function(){
+      QA_S.cFrom = document.getElementById('qaFrom').value || '2026-08-01';
+      QA_S.cTo = document.getElementById('qaTo').value || '2026-10-27';
+      if (QA_S.period === 'custom') renderQa();
+    };
+  });
+  renderQa();
 }
 
 /* ---------- 交互 ---------- */
