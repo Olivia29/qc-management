@@ -790,6 +790,11 @@ var QC_VIEW = { key:'qc', cols:QC2_COLS, S:QC2_S, F:QC2_F, p:'qcf_', tbl:'qcTabl
 var QM_VIEW = { key:'qm', cols:QM_COLS, S:QM_S, F:QM_F, p:'qmf_', tbl:'qmTable2', pager:'qmPager', wrap:'qmTw',
                 all:'qmAll', gear:'qmGear', size:'qmSize', jump:'qmJump', reset:'qmReset', menu:'qmMenu' };
 
+function listColTitle(V, c){
+  /* 质控管理：暂存审核结果 / 审核质控结果 随「审核」筛选切换 */
+  if (V.key === 'qm' && c.k === 'tmp' && V.F.audit === '已审核') return '审核质控结果';
+  return c.t;
+}
 function renderList(V){
   var S = V.S, F = V.F;
   var COLS = V.cols || QC2_COLS;
@@ -811,7 +816,7 @@ function renderList(V){
         + cols.map(function(c){ return '<col style="width:' + c.w + 'px">'; }).join('')
         + '<col style="width:118px"></colgroup>';
   h += '<thead><tr><th class="ck"><input type="checkbox" id="' + V.all + '"></th>';
-  cols.forEach(function(c){ h += '<th>' + esc(c.t) + arrow(c) + '</th>'; });
+  cols.forEach(function(c){ h += '<th>' + esc(listColTitle(V, c)) + arrow(c) + '</th>'; });
   h += '<th class="op">操作<span class="qcf-gear" id="' + V.gear + '" title="表头设置">⚙</span></th></tr>';
   h += '<tr class="qcf-frow"><th class="ck"></th>';
   cols.forEach(function(c){ h += '<th>' + qc2Ctl(c, V.p) + '</th>'; });
@@ -954,7 +959,7 @@ function colMenuFor(V){
   var COLS = V.cols || QC2_COLS;
   var h = '<div class="qcf-menu" id="' + V.menu + '">';
   COLS.forEach(function(c){
-    h += '<label><input type="checkbox" data-qcc="' + c.k + '"' + (S.hide[c.k] ? '' : ' checked') + '>' + esc(c.t) + '</label>';
+    h += '<label><input type="checkbox" data-qcc="' + c.k + '"' + (S.hide[c.k] ? '' : ' checked') + '>' + esc(listColTitle(V, c)) + '</label>';
   });
   h += '<label class="all"><input type="checkbox" id="' + V.menu + 'All">全选 / 全不选</label></div>';
   document.getElementById(V.wrap).insertAdjacentHTML('afterbegin', h);
