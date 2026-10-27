@@ -188,7 +188,7 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
 .qa-grp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;
   color:var(--text);margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid #F2F4F8}
 .qa-grp-h .lt{display:flex;align-items:center;gap:6px;font-weight:600}
-.qa-grp-h .lt i{width:7px;height:7px;border-radius:50%}
+.qa-grp-h .lt i{width:7px;height:7px;flex:0 0 7px;border-radius:50%}
 .qa-grp-h .rt{font-size:12px;color:var(--muted);font-weight:400}
 .qa-issue{display:grid;grid-template-columns:1fr 88px 42px 44px;gap:8px;align-items:center;
   font-size:12.5px;color:var(--sub);margin-bottom:9px;padding-left:13px}
@@ -198,15 +198,17 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
 .qa-issue .num2{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;font-size:11.5px}
 .qa-row{padding-left:13px;font-size:12.5px;color:var(--muted);margin-bottom:8px}
 .qa-focus{display:flex;align-items:center;gap:5px;font-size:12px;color:#D4380D;font-weight:400}
-.qa-focus i{width:6px;height:6px;border-radius:50%;background:#D4380D}
+.qa-focus i{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#D4380D}
 .qa-donutrow.below{flex-direction:column;align-items:flex-start;gap:9px}
 .qa-leg.inline{flex-direction:row;flex-wrap:wrap;gap:6px 14px}
 .qa-leg.inline .r{display:flex;align-items:center;gap:5px;font-size:12.5px}
-.qa-leg.inline .r i{width:7px;height:7px;border-radius:50%}
+.qa-leg.inline .r i{width:8px;height:8px;flex:0 0 8px;border-radius:50%;align-self:center}
 .qa-none{font-size:12.5px;color:var(--muted)}
 .qa-tag{display:inline-block;margin-left:6px;padding:0 5px;height:16px;line-height:15px;border-radius:2px;
   background:#FFF1F0;color:#D4380D;font-size:10.5px;font-style:normal;border:1px solid #FFCCC7;vertical-align:1px}
-.qa-alert{font-style:normal;color:#D4380D;font-weight:600;margin-right:3px}
+.qa-alert{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;flex:0 0 14px;
+  border-radius:50%;background:#FFECE8;border:1px solid #FF7875;color:#CF1322;font-size:11px;font-weight:700;
+  font-style:normal;margin-right:5px;line-height:1}
 .qa-card-h{font-size:14px;font-weight:600;color:var(--text);padding-bottom:10px;
   border-bottom:1px solid var(--line);margin-bottom:12px}
 .qa-blk{margin-bottom:16px}
