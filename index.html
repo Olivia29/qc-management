@@ -58,7 +58,7 @@ button{font-family:inherit;cursor:pointer}
 
 /* ---------------- 表格 ---------------- */
 .wrap{padding:14px 16px 18px;flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.wrap>#tabList,.wrap>#tabQm,.wrap>#tabImg,.wrap>#tabRep{flex:1;min-height:0;display:flex;flex-direction:column}
+.wrap>#tabList,.wrap>#tabQm,.wrap>#tabImg,.wrap>#tabRep,.wrap>#tabCfg{flex:1;min-height:0;display:flex;flex-direction:column}
 .panel{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;
   flex:1;min-height:0;display:flex;flex-direction:column}
 .tablewrap{overflow:auto;flex:1;min-height:0;position:relative}
@@ -432,6 +432,127 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
 .ad-menu div{padding:6px 14px;font-size:12.5px;color:#374151;cursor:pointer}
 .ad-menu div:hover{background:#F2F6FF;color:#2F6BFF}
 
+/* ---------- 配置管理（数据抽取 / 质控规范 / 评价标准） ---------- */
+.cfg-tabs{flex:0 0 auto;display:flex;gap:8px;margin-bottom:10px}
+.cfg-tabs button{height:30px;padding:0 16px;border:1px solid #E5E7EB;background:#fff;color:#4B5563;
+  font-size:12.5px;border-radius:3px;cursor:pointer}
+.cfg-tabs button.on{background:#E6F0FF;border-color:#BBD3FB;color:#1D4ED8;font-weight:600}
+.cfg-page{flex:1;min-height:0;display:flex;flex-direction:column}
+.cfg-hd{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.cfg-hd h3{margin:0;font-size:15px;font-weight:600;color:var(--text)}
+.cfg-hd .acts{display:flex;gap:8px}
+.cfg-fbar{flex:0 0 auto;background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px 12px;margin-bottom:10px}
+.cfg-frow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.cfg-fi{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#4B5563}
+.cfg-fi input[type=text],.cfg-fi select,.cfg-fi input[type=date]{height:28px;border:1px solid #DCE3E1;
+  border-radius:3px;padding:0 8px;font-size:12.5px;color:#333;background:#fff;outline:0;min-width:118px}
+.cfg-fi input[type=text]{width:150px}
+.cfg-fi select{min-width:110px}
+.cfg-fi input[type=date]{min-width:126px}
+.cfg-fi .sep{color:#9AA6A3}
+.cfg-frow .sp{flex:1}
+.cfg-btn{height:28px;padding:0 14px;border:1px solid #D6DCE8;background:#fff;color:#374151;border-radius:3px;
+  font-size:12.5px;cursor:pointer}
+.cfg-btn.pri{background:#3B82F6;border-color:#3B82F6;color:#fff}
+.cfg-btn.pri:hover{background:#2F6BFF}
+.cfg-body{flex:1;min-height:0;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:4px}
+/* 表格 */
+.cfg-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.cfg-tbl th{position:sticky;top:0;z-index:2;background:#F7F9FC;color:#374151;font-weight:600;text-align:left;
+  padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.cfg-tbl td{padding:10px;border-bottom:1px solid #F1F4F8;color:#333;vertical-align:middle}
+.cfg-tbl tbody tr:hover{background:#FBFCFE}
+.cfg-tbl .ck{width:38px;text-align:center}
+.cfg-tbl .tm{color:#333;line-height:1.5}
+.cfg-tbl .tm span{display:block;color:#8A94A6;font-size:11.5px}
+.cfg-tbl .op a{color:#3B82F6;cursor:pointer;margin-right:10px}
+.cfg-tbl .op a.danger{color:#E5484D}
+.cfg-tbl .prog{display:flex;align-items:center;gap:8px}
+.cfg-tbl .prog .bar{width:56px;height:6px;background:#EDF1F7;border-radius:3px;overflow:hidden}
+.cfg-tbl .prog .bar i{display:block;height:100%;background:#3B82F6;border-radius:3px}
+.cfg-tbl .prog em{font-style:normal;color:#4B5563;font-variant-numeric:tabular-nums}
+.cfg-st{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 8px;border-radius:10px;font-size:11.5px}
+.cfg-st i{width:6px;height:6px;border-radius:50%}
+.cfg-st.ok{background:#EAF7EE;color:#1F8A4C}
+.cfg-st.ok i{background:#1F8A4C}
+.cfg-st.part{background:#FFF7E6;color:#B76E00}
+.cfg-st.part i{background:#FA8C16}
+.cfg-st.run{background:#E8F1FF;color:#1D4ED8}
+.cfg-st.run i{background:#3B82F6}
+.cfg-st.wait{background:#F3F5F9;color:#6B7280}
+.cfg-st.wait i{background:#9AA6B8}
+.cfg-st.fail{background:#FDECEC;color:#C0392B}
+.cfg-st.fail i{background:#E5484D}
+/* 分页 */
+.cfg-pg{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 2px 0;font-size:12.5px;color:#4B5563}
+.cfg-pg .info b{color:#1F2937}
+.cfg-pg .btns{display:flex;align-items:center;gap:6px}
+.cfg-pg button{min-width:28px;height:28px;border:1px solid #E5E7EB;background:#fff;border-radius:3px;
+  font-size:12.5px;color:#374151;cursor:pointer}
+.cfg-pg button.on{background:#3B82F6;border-color:#3B82F6;color:#fff}
+.cfg-pg button:disabled{color:#C7CDD8;cursor:not-allowed}
+.cfg-pg select{height:28px;border:1px solid #E5E7EB;border-radius:3px;font-size:12.5px;padding:0 6px;color:#374151}
+.cfg-pg .jump input{width:44px;height:28px;border:1px solid #E5E7EB;border-radius:3px;text-align:center;font-size:12.5px}
+/* 卡片网格 */
+.cfg-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:12px}
+.cfg-cards.c3{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:14px}
+.cfg-card{position:relative;background:#fff;border:1px solid #E5E7EB;border-radius:6px;padding:12px 12px 8px;
+  display:flex;flex-direction:column;gap:6px;transition:box-shadow .15s,border-color .15s}
+.cfg-card:hover{border-color:#BFD4FF;box-shadow:0 4px 14px rgba(47,107,255,.08)}
+.cfg-card .top{display:flex;align-items:flex-start;gap:6px}
+.cfg-card .top .nm{font-size:13.5px;font-weight:600;color:#1F2937;line-height:1.35;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cfg-card .top .cnt{font-size:11.5px;color:#8A94A6;font-weight:400;white-space:nowrap;margin-left:4px}
+.cfg-ai{display:inline-block;padding:0 5px;height:16px;line-height:16px;border-radius:2px;background:#3B82F6;
+  color:#fff;font-size:10px;font-weight:600;flex:0 0 auto}
+.cfg-card .kv{display:flex;gap:8px;font-size:12px;color:#4B5563;line-height:1.6}
+.cfg-card .kv b{font-weight:400;color:#8A94A6;flex:0 0 auto}
+.cfg-card .foot{margin-top:auto;padding-top:8px;border-top:1px dashed #EEF1F5;display:flex;gap:12px;font-size:12px}
+.cfg-card .foot a{color:#3B82F6;cursor:pointer}
+.cfg-card .foot a.danger{color:#E5484D}
+.cfg-card .sw{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:#6B7280}
+.cfg-card .sw i{width:6px;height:6px;border-radius:50%;background:#9AA6B8}
+.cfg-card .sw.on{color:#1D4ED8}
+.cfg-card .sw.on i{background:#3B82F6}
+.cfg-card .cbx{position:absolute;left:12px;top:12px;display:none}
+.cfg-cards.pick .cfg-card .cbx{display:block}
+.cfg-cards.pick .cfg-card{padding-left:34px}
+.cfg-wrap{flex:1;min-height:0;overflow:auto}
+.cfg-tools{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:0 2px 10px;font-size:12.5px;color:#4B5563}
+.cfg-tools label{display:flex;align-items:center;gap:6px;cursor:pointer}
+/* 弹窗 */
+.cfg-mask{position:fixed;inset:0;background:rgba(16,24,40,.45);z-index:134;display:flex;align-items:center;justify-content:center}
+.cfg-dlg{background:#fff;border-radius:6px;box-shadow:0 18px 48px rgba(0,0,0,.28);display:flex;flex-direction:column;
+  max-height:90vh;width:560px}
+.cfg-dlg.wide{width:680px}
+.cfg-dlg-h{flex:0 0 auto;position:relative;padding:14px 18px 10px;border-bottom:1px solid #EEF1F5;font-size:14.5px;font-weight:600;color:#1F2937}
+.cfg-dlg-h .x{position:absolute;right:14px;top:12px;cursor:pointer;color:#9AA6B8;font-size:15px}
+.cfg-dlg-b{flex:1;min-height:0;overflow-y:auto;padding:14px 18px}
+.cfg-dlg-f{flex:0 0 auto;display:flex;justify-content:flex-end;gap:10px;padding:10px 18px 14px;border-top:1px solid #EEF1F5}
+.cfg-form{display:flex;flex-direction:column;gap:13px}
+.cfg-f{display:flex;gap:12px;align-items:flex-start}
+.cfg-f > label{flex:0 0 96px;text-align:right;font-size:12.5px;color:#374151;line-height:30px}
+.cfg-f > label em{color:#E5484D;font-style:normal;margin-right:3px}
+.cfg-f .fc{flex:1;min-width:0}
+.cfg-f input[type=text],.cfg-f select{width:100%;height:30px;border:1px solid #DCE3E1;border-radius:3px;
+  padding:0 9px;font-size:12.5px;color:#333;outline:0}
+.cfg-f .radios{display:flex;flex-wrap:wrap;gap:8px 20px;padding-top:6px;font-size:12.5px;color:#374151}
+.cfg-f .radios label{display:flex;align-items:center;gap:5px;cursor:pointer}
+.cfg-f .tip{font-size:11.5px;color:#8A94A6;margin-top:5px}
+.cfg-f .dual{display:flex;gap:10px}
+.cfg-f .dual > *{flex:1;min-width:0}
+.cfg-up{border:1px dashed #BFD4FF;background:#F7FAFF;border-radius:4px;padding:16px;text-align:center;cursor:pointer}
+.cfg-up:hover{border-color:#3B82F6;background:#F0F6FF}
+.cfg-up svg{display:block;margin:0 auto 6px}
+.cfg-up .t1{font-size:12.5px;color:#2F6BFF}
+.cfg-up .t2{font-size:11.5px;color:#8A94A6;margin-top:3px}
+.cfg-f .tmrow{display:flex;gap:8px}
+.cfg-f .tmrow > *{flex:1;min-width:0}
+.cfg-f .hint{display:inline-flex;width:14px;height:14px;line-height:14px;border-radius:50%;background:#E8F1FF;
+  color:#3B82F6;font-size:10px;text-align:center;margin-left:4px;cursor:help;vertical-align:middle}
+.cfg-dlg .chk-grid{display:flex;gap:20px;padding-top:6px;font-size:12.5px}
+.cfg-empty{padding:36px;text-align:center;color:#9AA6B8;font-size:12.5px}
+
 </style>
 </head>
 <body>
@@ -632,6 +753,46 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
           <div id="rpYoyChart"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="tabCfg" class="hidden">
+    <div class="cfg-tabs" id="cfgTabs">
+      <button class="on" data-cfg="ext">数据抽取管理</button>
+      <button data-cfg="rule">质控规范配置</button>
+      <button data-cfg="std">评价标准配置</button>
+    </div>
+    <div class="cfg-page" id="pgExt">
+      <div class="cfg-hd">
+        <h3>质控数据抽取管理</h3>
+        <div class="acts">
+          <button class="cfg-btn pri" id="btnImport">＋ 数据导入</button>
+          <button class="cfg-btn pri" id="btnNewTask">＋ 新增任务</button>
+        </div>
+      </div>
+      <div class="cfg-fbar" id="fbarExt"></div>
+      <div class="cfg-body"><table class="cfg-tbl" id="tblExt"></table></div>
+      <div class="cfg-pg" id="pgExtPg"></div>
+    </div>
+    <div class="cfg-page hidden" id="pgRule">
+      <div class="cfg-hd">
+        <h3>质控规范配置管理</h3>
+        <div class="acts"><button class="cfg-btn pri" id="btnNewRule">＋ 新增质控卡片</button></div>
+      </div>
+      <div class="cfg-fbar" id="fbarRule"></div>
+      <div class="cfg-wrap"><div class="cfg-cards" id="cardsRule"></div></div>
+    </div>
+    <div class="cfg-page hidden" id="pgStd">
+      <div class="cfg-hd">
+        <h3>评价标准配置管理</h3>
+        <div class="acts"><button class="cfg-btn pri" id="btnNewStd">＋ 新增质控卡片</button></div>
+      </div>
+      <div class="cfg-fbar" id="fbarStd"></div>
+      <div class="cfg-tools">
+        <label><input type="checkbox" id="stdAll">全选</label>
+        <button class="cfg-btn" id="stdToggle">状态切换</button>
+      </div>
+      <div class="cfg-wrap"><div class="cfg-cards c3 pick" id="cardsStd"></div></div>
     </div>
   </div>
 
@@ -1041,13 +1202,16 @@ function showTab(key){
   [].forEach.call(document.querySelectorAll('#qcTabs .tab'), function(b){
     b.classList.toggle('on', b.getAttribute('data-tab') === key);
   });
-  var isList = (key === 'list'), isImg = (key === 'img'), isRep = (key === 'rep'), isQm = (key === 'qc');
+  var isList = (key === 'list'), isImg = (key === 'img'), isRep = (key === 'rep'), isQm = (key === 'qc'),
+      isCfg = (key === 'cfg');
   document.getElementById('tabList').classList.toggle('hidden', !isList);
   document.getElementById('qcActions').classList.toggle('hidden', !isList);
   document.getElementById('tabImg').classList.toggle('hidden', !isImg);
   document.getElementById('tabRep').classList.toggle('hidden', !isRep);
   document.getElementById('tabQm').classList.toggle('hidden', !isQm);
+  document.getElementById('tabCfg').classList.toggle('hidden', !isCfg);
   var other = document.getElementById('tabOther');
+  if (isCfg) { other.classList.add('hidden'); other.innerHTML = ''; cfgInit(); return; }
   if (isQm) { other.classList.add('hidden'); other.innerHTML = ''; renderQm(); return; }
   if (isImg) { other.classList.add('hidden'); other.innerHTML = ''; bindQa(); renderQa(); return; }
   if (isRep) { other.classList.add('hidden'); other.innerHTML = ''; bindRp(); renderRp(); return; }
@@ -2478,6 +2642,657 @@ document.addEventListener('click', function(e){
   var a = e.target.closest ? e.target.closest('[data-qma]') : null;
   if (a) { e.preventDefault(); openAudit(a.getAttribute('data-qma'), a.getAttribute('data-mode')); }
 });
+
+</script>
+<script>
+/* ============================================================================
+   配置管理：质控数据抽取管理 / 质控规范配置管理 / 评价标准配置管理
+   ============================================================================ */
+var CFG = {
+  tab: 'ext',
+  ext: { page:1, size:20, f:{}, sel:{}, rows:[] },
+  rule: { f:{}, cards:[] },
+  std:  { sel:{}, cards:[] }
+};
+
+var CF_ROW_NAMES = [
+  '世界人工大会演示的案例数据','测试采集数据库兼容','胸部CT质控抽检-10月','华西随访数据抽取',
+  '颅脑报告质控抽检','四川省医保局模板验证','联影设备数据回归','门控钙化积分验证',
+  '腹部影像抽检-第三批','胸部增强扫描抽检','诊断列表历史数据','肺结节随访入组',
+  '影像质控基线集','报告质控基线集','DR质控抽检-9月','MRI颅脑抽检',
+  '多中心数据汇聚','骨密度模型验证','肺炎模型训练集','骨折模型训练集'
+];
+var CF_ST = ['已完成','部分完成','执行中','待执行','失败'];
+
+function cfgBuildExt(){
+  var rows = [], total = 70;
+  for (var i = 0; i < total; i++) {
+    var nm = CF_ROW_NAMES[i % CF_ROW_NAMES.length] + (i >= CF_ROW_NAMES.length ? '-' + (Math.floor(i / CF_ROW_NAMES.length) + 1) : '');
+    var st = (i === 0) ? '部分完成' : (i === 1) ? '部分完成' : CF_ST[(i + 2) % CF_ST.length];
+    var qty = (i < 2) ? 10 : [10, 20, 50, 100][i % 4];
+    var done = st === '已完成' ? qty : (st === '部分完成' ? Math.max(1, qty - (i % 4) - 1)
+             : st === '执行中' ? Math.floor(qty / 2) : st === '失败' ? 0 : 0);
+    var d1 = 2026, m1 = ((i * 3) % 8) + 2, day = ((i * 7) % 27) + 1;
+    var from = '2026-' + String(m1).padStart(2,'0') + '-' + String(day).padStart(2,'0') + ' ' + String(6 + (i % 12)).padStart(2,'0') + ':' + String((i * 7) % 60).padStart(2,'0');
+    var to   = '2026-' + String(m1).padStart(2,'0') + '-' + String(day).padStart(2,'0') + ' ' + String(18 + (i % 5)).padStart(2,'0') + ':' + String((i * 11) % 60).padStart(2,'0');
+    rows.push({
+      no: i + 1, name: nm, from: from, to: to,
+      scope: i % 3 === 0 ? '影像' : (i % 3 === 1 ? '影像,报告' : '报告'),
+      type: ['CT - 平扫','CT - 增强','MR - 平扫'][i % 3],
+      part: ['胸部','颅脑','腹部'][i % 3],
+      dept: i % 4 === 0 ? '影像科' : '',
+      org:  i % 5 === 0 ? 'HUAXI' : '',
+      qty: qty, mode: i % 4 === 0 ? '随机' : '顺序',
+      status: st, done: done
+    });
+  }
+  rows[0].name = '世界人工大会演示的案例数据'; rows[0].from = '2026-07-16 00:08'; rows[0].to = '2026-07-16 23:59';
+  rows[0].scope = '影像'; rows[0].type = 'CT - 平扫'; rows[0].part = '胸部'; rows[0].dept = ''; rows[0].org = '';
+  rows[0].qty = 10; rows[0].mode = '顺序'; rows[0].status = '部分完成'; rows[0].done = 6;
+  rows[1].name = '测试采集数据库兼容'; rows[1].from = '2026-06-04 11:52'; rows[1].to = '2026-06-04 13:52';
+  rows[1].scope = '影像,报告'; rows[1].type = 'CT - 平扫'; rows[1].part = '胸部'; rows[1].dept = ''; rows[1].org = '';
+  rows[1].qty = 10; rows[1].mode = '顺序'; rows[1].status = '部分完成'; rows[1].done = 8;
+  CFG.ext.rows = rows;
+}
+
+var CF_RULE = [
+  ['MRI-演示',23,'MRI','多部位','影像','终末',1],
+  ['DR-演示',22,'DR','多部位','影像','终末',1],
+  ['MR_P演示',23,'MRI','多部位','影像','终末',1],
+  ['CT_P演示',23,'CT','多部位','影像','终末',1],
+  ['CT演示',23,'CT','多部位','影像','终末',1],
+  ['报告-演示',28,'DR','多部位','报告','终末',1],
+  ['颅脑内涵质控260910',8,'CT','头颅','报告','事中、终末',1],
+  ['通用形式质控260910',6,'CT','多部位','报告','事中、终末',1],
+  ['胸部内涵质控260910',9,'CT','胸部','报告','事中、终末',1],
+  ['胸部CT报告内涵质控V10.0',8,'CT','胸部','报告','事中、终末',1],
+  ['头颅CT报告内涵质控V5.0',8,'CT','头颅','报告','事中、终末',1],
+  ['胸部CT报告质控V10',12,'CT','胸部','报告','事中、终末',0],
+  ['头颅CT报告质控V5.0',12,'CT','头颅','报告','事中、终末',1],
+  ['四川省医保局AI质控模板',2,'CT','胸部','影像','事中、终末',1],
+  ['头颅CT报告质控V4.0',11,'CT','头颅','报告','事中、终末',0],
+  ['胸部CT报告质控V9.0',9,'CT','胸部','报告','事中、终末',1]
+];
+var CF_STD = [
+  ['DR影像质控评价标准',0,'影像',[['甲','90-100'],['乙','80-89'],['丙','60-79'],['丁','-999-59']]],
+  ['CT影像质控评价标准',1,'影像',[['3级','90-100'],['2级','80-89'],['1级','60-79'],['0级','-100-59']]],
+  ['MRI影像质控评价标准',0,'影像',[['3级','90-100'],['2级','80-89'],['1级','60-79'],['0级','-999-59']]],
+  ['影响质控标准2',0,'影像',[['甲','70-100']]],
+  ['报告质控评价标准',1,'报告',[['甲','90-100'],['乙','75-89'],['丙','60-74'],['丁','-100-59']]],
+  ['报告质控标准2',0,'报告',[['甲','80-100'],['乙','60-79'],['丙','-100-59']]]
+];
+
+function cfgInitData(){
+  cfgBuildExt();
+  CFG.rule.cards = CF_RULE.map(function(r, i){
+    return { id:'R' + i, name:r[0], n:r[1], type:r[2], part:r[3], scope:r[4], stage:r[5], on:!!r[6] };
+  });
+  CFG.std.cards = CF_STD.map(function(r, i){
+    return { id:'S' + i, name:r[0], on:!!r[1], scope:r[2], grades:r[3] };
+  });
+}
+
+/* ---------------- 筛选条 ---------------- */
+function cfgFilterBar(host, spec, F, onQuery, onReset){
+  host.innerHTML = '<div class="cfg-frow">' + spec.map(function(it){
+    if (it.type === 'text')
+      return '<div class="cfg-fi"><span>' + it.label + '</span><input type="text" id="' + it.id + '" placeholder="' + (it.ph || '请填写') + '"></div>';
+    if (it.type === 'date')
+      return '<div class="cfg-fi"><span>' + it.label + '</span><input type="date" id="' + it.id + '_from"><span class="sep">至</span><input type="date" id="' + it.id + '_to"></div>';
+    return '<div class="cfg-fi"><span>' + it.label + '</span><select id="' + it.id + '"><option value="">请选择</option>'
+      + it.opts.map(function(o){ return '<option>' + o + '</option>'; }).join('') + '</select></div>';
+  }).join('') + '<span class="sp"></span>'
+    + '<button class="cfg-btn pri" id="' + host.id + 'Q">查询</button>'
+    + '<button class="cfg-btn" id="' + host.id + 'R">重置</button></div>';
+  var read = function(){
+    spec.forEach(function(it){
+      if (it.type === 'date') {
+        F[it.id] = { from: (document.getElementById(it.id + '_from') || {}).value || '',
+                     to:   (document.getElementById(it.id + '_to')   || {}).value || '' };
+      } else {
+        var e = document.getElementById(it.id);
+        F[it.id] = e ? e.value.trim() : '';
+      }
+    });
+  };
+  document.getElementById(host.id + 'Q').onclick = function(){ read(); onQuery(); };
+  document.getElementById(host.id + 'R').onclick = function(){
+    spec.forEach(function(it){
+      if (it.type === 'date') {
+        document.getElementById(it.id + '_from').value = '';
+        document.getElementById(it.id + '_to').value = '';
+      } else document.getElementById(it.id).value = '';
+      F[it.id] = it.type === 'date' ? { from:'', to:'' } : '';
+    });
+    onReset();
+    toast('已重置筛选条件');
+  };
+}
+
+/* ---------------- 数据抽取表 ---------------- */
+var CF_EXT_SPEC = [
+  { id:'cxName',  label:'名称',     type:'text',  ph:'请填写名称' },
+  { id:'cxTime',  label:'时间',     type:'date' },
+  { id:'cxScope', label:'质控范围', type:'select', opts:['影像','报告','影像,报告'] },
+  { id:'cxType',  label:'检查类型', type:'select', opts:['CT - 平扫','CT - 增强','MR - 平扫'] },
+  { id:'cxPart',  label:'部位',     type:'select', opts:['胸部','颅脑','腹部'] },
+  { id:'cxDept',  label:'部门',     type:'select', opts:['影像科','放射科','口腔门诊'] },
+  { id:'cxOrg',   label:'机构',     type:'select', opts:['HUAXI','huaxi'] },
+  { id:'cxMode',  label:'抽取方式', type:'select', opts:['顺序','随机'] },
+  { id:'cxSt',    label:'执行状态', type:'select', opts:['已完成','部分完成','执行中','待执行','失败'] }
+];
+
+function cfgExtFiltered(){
+  var F = CFG.ext.f;
+  return CFG.ext.rows.filter(function(r){
+    if (F.cxName && r.name.indexOf(F.cxName) < 0) return false;
+    if (F.cxTime) {
+      if (F.cxTime.from && r.from.slice(0,10) < F.cxTime.from) return false;
+      if (F.cxTime.to   && r.from.slice(0,10) > F.cxTime.to)   return false;
+    }
+    if (F.cxScope && r.scope !== F.cxScope) return false;
+    if (F.cxType && r.type !== F.cxType) return false;
+    if (F.cxPart && r.part !== F.cxPart) return false;
+    if (F.cxDept && r.dept !== F.cxDept) return false;
+    if (F.cxOrg && r.org !== F.cxOrg) return false;
+    if (F.cxMode && r.mode !== F.cxMode) return false;
+    if (F.cxSt && r.status !== F.cxSt) return false;
+    return true;
+  });
+}
+
+function cfgStCls(s){
+  return s === '已完成' ? 'ok' : s === '部分完成' ? 'part' : s === '执行中' ? 'run' : s === '失败' ? 'fail' : 'wait';
+}
+
+function renderCfgExt(){
+  var rows = cfgExtFiltered();
+  var S = CFG.ext;
+  var maxP = Math.max(1, Math.ceil(rows.length / S.size));
+  if (S.page > maxP) S.page = maxP;
+  var view = rows.slice((S.page - 1) * S.size, S.page * S.size);
+
+  var h = '<thead><tr><th class="ck"><input type="checkbox" id="cxAll"></th>'
+        + '<th style="width:56px">序号</th><th style="min-width:190px">名称</th><th style="width:132px">起止时间</th>'
+        + '<th style="width:96px">质控范围</th><th style="width:104px">检查类型</th><th style="width:72px">部位</th>'
+        + '<th style="width:88px">部门</th><th style="width:84px">机构</th><th style="width:64px">数量</th>'
+        + '<th style="width:84px">抽取方式</th><th style="width:100px">执行状态</th><th style="width:132px">完成情况</th>'
+        + '<th style="width:132px">操作</th></tr></thead><tbody>';
+
+  if (!view.length) h += '<tr><td colspan="14"><div class="cfg-empty">没有符合条件的抽取任务</div></td></tr>';
+  view.forEach(function(r){
+    var on = !!S.sel[r.no];
+    var pct = r.qty ? Math.round(r.done / r.qty * 100) : 0;
+    h += '<tr data-no="' + r.no + '">'
+      + '<td class="ck"><input type="checkbox" data-cx="' + r.no + '"' + (on ? ' checked' : '') + '></td>'
+      + '<td>' + r.no + '</td>'
+      + '<td><span class="ell" title="' + esc(r.name) + '" style="display:inline-block;max-width:186px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle">' + esc(r.name) + '</span></td>'
+      + '<td class="tm">' + esc(r.from) + '<span>' + esc(r.to) + '</span></td>'
+      + '<td>' + esc(r.scope) + '</td><td>' + esc(r.type) + '</td><td>' + esc(r.part) + '</td>'
+      + '<td>' + (r.dept || '—') + '</td><td>' + (r.org || '—') + '</td><td>' + r.qty + '</td>'
+      + '<td>' + esc(r.mode) + '</td>'
+      + '<td><span class="cfg-st ' + cfgStCls(r.status) + '"><i></i>' + esc(r.status) + '</span></td>'
+      + '<td><div class="prog"><span class="bar"><i style="width:' + pct + '%"></i></span><em>' + r.done + '/' + r.qty + '</em></div></td>'
+      + '<td class="op"><a data-cxrun="' + r.no + '">执行</a><a data-cxclone="' + r.no + '">克隆</a>'
+      + '<a class="danger" data-cxdel="' + r.no + '">删除</a></td></tr>';
+  });
+  h += '</tbody>';
+  document.getElementById('tblExt').innerHTML = h;
+
+  var btns = '<button data-cp="' + (S.page - 1) + '"' + (S.page <= 1 ? ' disabled' : '') + '>‹</button>';
+  for (var p = 1; p <= maxP; p++) btns += '<button data-cp="' + p + '" class="' + (p === S.page ? 'on' : '') + '">' + p + '</button>';
+  btns += '<button data-cp="' + (S.page + 1) + '"' + (S.page >= maxP ? ' disabled' : '') + '>›</button>';
+  var selN = Object.keys(S.sel).length;
+  document.getElementById('pgExtPg').innerHTML =
+      '<span class="info">共 <b>' + rows.length + '</b> 条' + (selN ? ' ｜ 已选 <b>' + selN + '</b> 个' : '') + '</span>'
+    + '<span class="btns">' + btns
+    +   '<select id="cxSize">' + [20,50,100].map(function(n){ return '<option value="' + n + '"' + (n === S.size ? ' selected' : '') + '>' + n + '条/页</option>'; }).join('') + '</select>'
+    +   '<span class="jump">前往<input id="cxJump"><span>页</span></span></span>';
+
+  [].forEach.call(document.querySelectorAll('#tblExt [data-cx]'), function(cb){
+    cb.onchange = function(){
+      var no = cb.getAttribute('data-cx');
+      if (cb.checked) CFG.ext.sel[no] = true; else delete CFG.ext.sel[no];
+      renderCfgExt();
+    };
+  });
+  var all = document.getElementById('cxAll');
+  if (all) all.onchange = function(){
+    view.forEach(function(r){ if (all.checked) CFG.ext.sel[r.no] = true; else delete CFG.ext.sel[r.no]; });
+    renderCfgExt();
+  };
+  [].forEach.call(document.querySelectorAll('#pgExtPg [data-cp]'), function(b){
+    b.onclick = function(){ CFG.ext.page = +b.getAttribute('data-cp'); renderCfgExt(); };
+  });
+  var sz = document.getElementById('cxSize');
+  if (sz) sz.onchange = function(){ CFG.ext.size = +sz.value; CFG.ext.page = 1; renderCfgExt(); };
+  var jp = document.getElementById('cxJump');
+  if (jp) jp.onkeydown = function(e){
+    if (e.key !== 'Enter') return;
+    var n = parseInt(jp.value, 10);
+    if (!n || n < 1 || n > maxP) { toast('页码需在 1–' + maxP + ' 之间'); return; }
+    CFG.ext.page = n; renderCfgExt();
+  };
+  [].forEach.call(document.querySelectorAll('#tblExt [data-cxrun]'), function(a){
+    a.onclick = function(){
+      var no = +a.getAttribute('data-cxrun');
+      var r = CFG.ext.rows.filter(function(x){ return x.no === no; })[0];
+      if (!r) return;
+      r.status = '执行中'; r.done = 0;
+      renderCfgExt();
+      toast('任务已开始执行：' + r.name);
+      setTimeout(function(){
+        r.done = Math.max(1, Math.floor(r.qty * 0.6));
+        r.status = r.done >= r.qty ? '已完成' : '部分完成';
+        if (document.getElementById('tblExt')) renderCfgExt();
+      }, 900);
+    };
+  });
+  [].forEach.call(document.querySelectorAll('#tblExt [data-cxclone]'), function(a){
+    a.onclick = function(){
+      var no = +a.getAttribute('data-cxclone');
+      var r = CFG.ext.rows.filter(function(x){ return x.no === no; })[0];
+      if (!r) return;
+      var cp = JSON.parse(JSON.stringify(r));
+      cp.no = Math.max.apply(null, CFG.ext.rows.map(function(x){ return x.no; })) + 1;
+      cp.name = r.name + '-副本';
+      cp.status = '待执行'; cp.done = 0;
+      CFG.ext.rows.unshift(cp);
+      CFG.ext.page = 1;
+      renderCfgExt();
+      toast('已克隆任务：' + cp.name);
+    };
+  });
+  [].forEach.call(document.querySelectorAll('#tblExt [data-cxdel]'), function(a){
+    a.onclick = function(){
+      var no = +a.getAttribute('data-cxdel');
+      var i = -1;
+      CFG.ext.rows.forEach(function(x, k){ if (x.no === no) i = k; });
+      if (i < 0) return;
+      var nm = CFG.ext.rows[i].name;
+      CFG.ext.rows.splice(i, 1);
+      delete CFG.ext.sel[no];
+      renderCfgExt();
+      toast('已删除任务：' + nm);
+    };
+  });
+}
+
+/* ---------------- 质控规范卡片 ---------------- */
+var CF_RULE_SPEC = [
+  { id:'crName',  label:'质控名称', type:'text', ph:'请填写质控名称' },
+  { id:'crType',  label:'检查类型', type:'select', opts:['CT','MRI','DR'] },
+  { id:'crPart',  label:'适用部位', type:'select', opts:['多部位','胸部','头颅','腹部'] },
+  { id:'crOn',    label:'状态',     type:'select', opts:['启用','停用'] },
+  { id:'crScope', label:'适用范围', type:'select', opts:['影像','报告'] },
+  { id:'crStage', label:'质控环节', type:'select', opts:['终末','事中','事中、终末'] }
+];
+
+function renderCfgRule(){
+  var F = CFG.rule.f;
+  var list = CFG.rule.cards.filter(function(c){
+    if (F.crName && c.name.indexOf(F.crName) < 0) return false;
+    if (F.crType && c.type !== F.crType) return false;
+    if (F.crPart && c.part !== F.crPart) return false;
+    if (F.crOn && ((F.crOn === '启用') !== !!c.on)) return false;
+    if (F.crScope && c.scope !== F.crScope) return false;
+    if (F.crStage && c.stage !== F.crStage) return false;
+    return true;
+  });
+  var box = document.getElementById('cardsRule');
+  if (!list.length) { box.innerHTML = '<div class="cfg-empty">没有符合条件的质控规范</div>'; return; }
+  box.innerHTML = list.map(function(c){
+    return '<div class="cfg-card" data-rid="' + c.id + '">'
+      + '<div class="top"><span class="nm" title="' + esc(c.name) + '">' + esc(c.name) + '</span>'
+      +   '<span class="cnt">共' + c.n + '项</span><i class="cfg-ai">AI</i></div>'
+      + '<div class="kv"><b>检查类型：</b>' + esc(c.type) + '</div>'
+      + '<div class="kv"><b>适用部位：</b>' + esc(c.part) + '</div>'
+      + '<div class="kv"><b>适用范围：</b>' + esc(c.scope) + '</div>'
+      + '<div class="kv"><b>质控环节：</b>' + esc(c.stage) + '</div>'
+      + '<div class="foot"><a data-rview="' + c.id + '">查看</a><a data-redit="' + c.id + '">编辑</a>'
+      +   '<a class="danger" data-rdel="' + c.id + '">删除</a></div></div>';
+  }).join('');
+  cfgCardBind('rule');
+}
+
+/* ---------------- 评价标准卡片 ---------------- */
+var CF_STD_SPEC = [
+  { id:'csName',  label:'标准名称', type:'text', ph:'请填写质控名称' },
+  { id:'csScope', label:'适用范围', type:'select', opts:['影像','报告'] },
+  { id:'csOn',    label:'启用状态', type:'select', opts:['启用','停用'] }
+];
+
+function renderCfgStd(){
+  var F = CFG.std.f || {};
+  var list = CFG.std.cards.filter(function(c){
+    if (F.csName && c.name.indexOf(F.csName) < 0) return false;
+    if (F.csScope && c.scope !== F.csScope) return false;
+    if (F.csOn && ((F.csOn === '启用') !== !!c.on)) return false;
+    return true;
+  });
+  var box = document.getElementById('cardsStd');
+  if (!list.length) { box.innerHTML = '<div class="cfg-empty">没有符合条件的评价标准</div>'; return; }
+  box.innerHTML = list.map(function(c){
+    return '<div class="cfg-card" data-sid="' + c.id + '">'
+      + '<input type="checkbox" class="cbx" data-sck="' + c.id + '">'
+      + '<div class="top"><span class="nm" title="' + esc(c.name) + '">' + esc(c.name) + '</span>'
+      +   '<span class="sw ' + (c.on ? 'on' : '') + '" data-stog="' + c.id + '"><i></i>' + (c.on ? '启用' : '停用') + '</span></div>'
+      + '<div class="kv"><b>适用范围：</b>' + esc(c.scope) + '</div>'
+      + '<div class="kv" style="display:block"><b>评价方式：</b>' + c.grades.map(function(g){
+            return '<span style="margin-right:10px;white-space:nowrap">' + esc(g[0]) + ' ' + esc(g[1]) + '</span>'; }).join('') + '</div>'
+      + '<div class="foot"><a data-sview="' + c.id + '">查看</a><a data-sedit="' + c.id + '">编辑</a>'
+      +   '<a class="danger" data-sdel="' + c.id + '">删除</a></div></div>';
+  }).join('');
+  cfgCardBind('std');
+}
+
+function cfgCardBind(kind){
+  var root = document.getElementById(kind === 'rule' ? 'cardsRule' : 'cardsStd');
+  var key = kind === 'rule' ? 'r' : 's';
+  [].forEach.call(root.querySelectorAll('[data-' + key + 'view]'), function(a){
+    a.onclick = function(){ cfgCardView(kind, a.getAttribute('data-' + key + 'view')); };
+  });
+  [].forEach.call(root.querySelectorAll('[data-' + key + 'edit]'), function(a){
+    a.onclick = function(){ cfgCardEdit(kind, a.getAttribute('data-' + key + 'edit')); };
+  });
+  [].forEach.call(root.querySelectorAll('[data-' + key + 'del]'), function(a){
+    a.onclick = function(){
+      var id = a.getAttribute('data-' + key + 'del');
+      var arr = kind === 'rule' ? CFG.rule.cards : CFG.std.cards;
+      var i = arr.map(function(x){ return x.id; }).indexOf(id);
+      if (i < 0) return;
+      var nm = arr[i].name;
+      arr.splice(i, 1);
+      kind === 'rule' ? renderCfgRule() : renderCfgStd();
+      toast('已删除：' + nm);
+    };
+  });
+  if (kind === 'std') {
+    [].forEach.call(root.querySelectorAll('[data-stog]'), function(s){
+      s.onclick = function(){
+        var id = s.getAttribute('data-stog');
+        var c = CFG.std.cards.filter(function(x){ return x.id === id; })[0];
+        if (!c) return;
+        c.on = !c.on;
+        renderCfgStd();
+        toast(c.name + ' 已' + (c.on ? '启用' : '停用'));
+      };
+    });
+  }
+}
+
+function cfgCardView(kind, id){
+  var arr = kind === 'rule' ? CFG.rule.cards : CFG.std.cards;
+  var c = arr.filter(function(x){ return x.id === id; })[0];
+  if (!c) return;
+  var rows = kind === 'rule'
+    ? [['质控名称', c.name], ['条目数', '共' + c.n + '项'], ['检查类型', c.type], ['适用部位', c.part],
+       ['适用范围', c.scope], ['质控环节', c.stage], ['状态', c.on ? '启用' : '停用']]
+    : [['标准名称', c.name], ['适用范围', c.scope], ['启用状态', c.on ? '启用' : '停用'],
+       ['评价方式', c.grades.map(function(g){ return g[0] + ' ' + g[1]; }).join(' ｜ ')]];
+  cfgDialog({
+    title: kind === 'rule' ? '质控规范详情' : '评价标准详情',
+    okText: '关闭', hideCancel: true,
+    body: '<div class="cfg-form">' + rows.map(function(r){
+      return '<div class="cfg-f"><label>' + r[0] + '</label><div class="fc" style="line-height:30px;font-size:12.5px;color:#333">' + esc(r[1]) + '</div></div>';
+    }).join('') + '</div>'
+  });
+}
+
+function cfgCardEdit(kind, id){
+  var arr = kind === 'rule' ? CFG.rule.cards : CFG.std.cards;
+  var c = arr.filter(function(x){ return x.id === id; })[0];
+  if (!c) return;
+  var body;
+  if (kind === 'rule') {
+    body = '<div class="cfg-form">'
+      + '<div class="cfg-f"><label><em>*</em>质控名称</label><div class="fc"><input type="text" id="edName" value="' + esc(c.name) + '"></div></div>'
+      + '<div class="cfg-f"><label>检查类型</label><div class="fc"><select id="edType">'
+      +   ['CT','MRI','DR'].map(function(o){ return '<option' + (o === c.type ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div></div>'
+      + '<div class="cfg-f"><label>适用部位</label><div class="fc"><select id="edPart">'
+      +   ['多部位','胸部','头颅','腹部'].map(function(o){ return '<option' + (o === c.part ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div></div>'
+      + '<div class="cfg-f"><label>适用范围</label><div class="fc"><select id="edScope">'
+      +   ['影像','报告'].map(function(o){ return '<option' + (o === c.scope ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div></div>'
+      + '<div class="cfg-f"><label>质控环节</label><div class="fc"><select id="edStage">'
+      +   ['终末','事中','事中、终末'].map(function(o){ return '<option' + (o === c.stage ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div></div>'
+      + '</div>';
+  } else {
+    body = '<div class="cfg-form">'
+      + '<div class="cfg-f"><label><em>*</em>标准名称</label><div class="fc"><input type="text" id="edName" value="' + esc(c.name) + '"></div></div>'
+      + '<div class="cfg-f"><label>适用范围</label><div class="fc"><select id="edScope">'
+      +   ['影像','报告'].map(function(o){ return '<option' + (o === c.scope ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div></div>'
+      + '<div class="cfg-f"><label>启用状态</label><div class="fc"><select id="edOn">'
+      +   ['启用','停用'].map(function(o){ return '<option' + (((o === '启用') === !!c.on) ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div></div>'
+      + '</div>';
+  }
+  cfgDialog({
+    title: '编辑', body: body, okText: '保存',
+    onOk: function(){
+      var nm = document.getElementById('edName').value.trim();
+      if (!nm) { toast('请填写名称'); return false; }
+      c.name = nm;
+      if (kind === 'rule') {
+        c.type = document.getElementById('edType').value;
+        c.part = document.getElementById('edPart').value;
+        c.scope = document.getElementById('edScope').value;
+        c.stage = document.getElementById('edStage').value;
+        renderCfgRule();
+      } else {
+        c.scope = document.getElementById('edScope').value;
+        c.on = document.getElementById('edOn').value === '启用';
+        renderCfgStd();
+      }
+      toast('已保存：' + nm);
+    }
+  });
+}
+
+/* ---------------- 通用弹窗 ---------------- */
+function cfgDialog(opt){
+  var m = document.createElement('div');
+  m.className = 'cfg-mask';
+  m.innerHTML = '<div class="cfg-dlg' + (opt.wide ? ' wide' : '') + '">'
+    + '<div class="cfg-dlg-h">' + esc(opt.title) + '<span class="x">✕</span></div>'
+    + '<div class="cfg-dlg-b">' + opt.body + '</div>'
+    + '<div class="cfg-dlg-f">'
+    +   (opt.hideCancel ? '' : '<button class="cfg-btn" data-cancel>取消</button>')
+    +   '<button class="cfg-btn pri" data-ok>' + esc(opt.okText || '确定') + '</button>'
+    + '</div></div>';
+  document.body.appendChild(m);
+  var close = function(){ m.remove(); };
+  m.querySelector('.x').onclick = close;
+  m.addEventListener('click', function(e){ if (e.target === m) close(); });
+  var c = m.querySelector('[data-cancel]'); if (c) c.onclick = close;
+  m.querySelector('[data-ok]').onclick = function(){
+    if (opt.onOk && opt.onOk() === false) return;
+    close();
+  };
+  if (opt.after) opt.after(m);
+  return m;
+}
+
+/* ---------------- 数据导入弹窗 ---------------- */
+function cfgOpenImport(){
+  var body = '<div class="cfg-form">'
+  + '<div class="cfg-f"><label><em>*</em>任务名称</label><div class="fc"><input type="text" id="imName" placeholder="请输入任务名称"></div></div>'
+  + '<div class="cfg-f"><label><em>*</em>导入数据类型</label><div class="fc"><div class="radios">'
+  +   '<label><input type="radio" name="imType" value="仅影像" checked>仅影像</label>'
+  +   '<label><input type="radio" name="imType" value="仅报告">仅报告</label>'
+  +   '<label><input type="radio" name="imType" value="影像+报告">影像+报告</label></div></div></div>'
+  + '<div class="cfg-f"><label>数据文件</label><div class="fc"><div class="radios">'
+  +   '<label><input type="radio" name="imFile" value="zip" checked>上传ZIP压缩包</label>'
+  +   '<label><input type="radio" name="imFile" value="xls">Excel含URL列</label></div>'
+  +   '<div class="cfg-up" id="imUp">'
+  +     '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.6">'
+  +     '<path d="M6.5 18a4.5 4.5 0 0 1-.4-8.98A6 6 0 0 1 17.7 9.6 4.2 4.2 0 0 1 17.5 18"/><path d="M12 12v6"/><path d="m9.2 14.8 2.8-2.8 2.8 2.8"/></svg>'
+  +     '<div class="t1">点击选择ZIP 压缩包</div><div class="t2">支持 .zip 格式，≤ 2GB</div></div>'
+  +   '<div class="tip" id="imFileTip"></div></div></div>'
+  + '<div class="cfg-f"><label><em>*</em>机构与部门</label><div class="fc"><div class="dual">'
+  +   '<select id="imOrg"><option value="">请选择机构</option><option>HUAXI</option><option>huaxi</option></select>'
+  +   '<select id="imDept"><option value="">请选择部门</option><option>影像科</option><option>放射科</option><option>口腔门诊</option></select>'
+  + '</div></div></div></div>';
+
+  cfgDialog({
+    title: '导入数据', body: body, okText: '确认导入', wide: true,
+    after: function(m){
+      var up = m.querySelector('#imUp'), tip = m.querySelector('#imFileTip');
+      var setTip = function(v){
+        if (v === 'zip') { up.style.display = ''; tip.textContent = ''; }
+        else { up.style.display = 'none'; tip.textContent = '需包含「检查号」与「影像URL」两列，单次不超过 10 万行'; }
+      };
+      [].forEach.call(m.querySelectorAll('input[name=imFile]'), function(r){
+        r.onchange = function(){ setTip(r.value); };
+      });
+      up.onclick = function(){
+        var f = m.querySelector('input[type=file]');
+        if (!f) { f = document.createElement('input'); f.type = 'file'; f.accept = '.zip'; f.style.display = 'none'; m.appendChild(f); }
+        f.value = ''; f.click();
+        f.onchange = function(){
+          if (f.files && f.files[0]) {
+            up.querySelector('.t1').textContent = '已选择：' + f.files[0].name;
+            up.querySelector('.t2').textContent = '点击可重新选择';
+          }
+        };
+      };
+    },
+    onOk: function(){
+      var nm = document.getElementById('imName').value.trim();
+      if (!nm) { toast('请填写任务名称'); return false; }
+      var org = document.getElementById('imOrg').value, dept = document.getElementById('imDept').value;
+      if (!org) { toast('请选择机构'); return false; }
+      var scope = (document.querySelector('input[name=imType]:checked') || {}).value || '仅影像';
+      var maxNo = Math.max.apply(null, CFG.ext.rows.map(function(x){ return x.no; }));
+      CFG.ext.rows.unshift({
+        no: maxNo + 1, name: nm, from: '2026-10-27 09:00', to: '2026-10-27 18:00',
+        scope: scope.replace('仅', ''), type: 'CT - 平扫', part: '胸部', dept: dept, org: org,
+        qty: 0, mode: '顺序', status: '待执行', done: 0
+      });
+      CFG.ext.page = 1; renderCfgExt();
+      toast('已导入数据，任务已创建：' + nm);
+    }
+  });
+}
+
+/* ---------------- 新增任务弹窗 ---------------- */
+function cfgOpenTask(){
+  var body = '<div class="cfg-form">'
+  + '<div class="cfg-f"><label><em>*</em>名称</label><div class="fc"><input type="text" id="tkName" placeholder="请输入任务名称"></div></div>'
+  + '<div class="cfg-f"><label><em>*</em>数量</label><div class="fc"><input type="text" id="tkQty" placeholder="请输入数量">'
+  +   '<span class="hint" title="本次抽取的检查条数">i</span></div></div>'
+  + '<div class="cfg-f"><label><em>*</em>质控范围</label><div class="fc"><div class="chk-grid">'
+  +   '<label><input type="checkbox" id="tkScopeImg" checked>影像</label>'
+  +   '<label><input type="checkbox" id="tkScopeRep" checked>报告</label></div></div></div>'
+  + '<div class="cfg-f"><label><em>*</em>抽取方式</label><div class="fc"><div class="radios">'
+  +   '<label><input type="radio" name="tkMode" value="顺序" checked>顺序</label>'
+  +   '<label><input type="radio" name="tkMode" value="随机">随机</label></div></div></div>'
+  + '<div class="cfg-f"><label>机构</label><div class="fc"><select id="tkOrg"><option value="">请选择机构</option><option>HUAXI</option><option>huaxi</option></select></div></div>'
+  + '<div class="cfg-f"><label><em>*</em>检查类型</label><div class="fc"><select id="tkType"><option value="">请选择检查类型</option>'
+  +   '<option>CT - 平扫</option><option>CT - 增强</option><option>MR - 平扫</option></select>'
+  +   '<span class="hint" title="选择本次抽取限定的检查类型">i</span></div></div>'
+  + '<div class="cfg-f"><label><em>*</em>部位</label><div class="fc"><select id="tkPart"><option value="">请选择部位</option>'
+  +   '<option>胸部</option><option>颅脑</option><option>腹部</option></select></div></div>'
+  + '<div class="cfg-f"><label>部门</label><div class="fc"><select id="tkDept"><option value="">请选择部门</option>'
+  +   '<option>影像科</option><option>放射科</option><option>口腔门诊</option></select></div></div>'
+  + '<div class="cfg-f"><label>时间</label><div class="fc"><div class="tmrow">'
+  +   '<input type="date" id="tkDFrom"><input type="time" id="tkTFrom">'
+  +   '<input type="time" id="tkTTo"><input type="date" id="tkDTo"></div></div></div>'
+  + '</div>';
+
+  cfgDialog({
+    title: '新增任务', body: body, okText: '确定', wide: true,
+    onOk: function(){
+      var nm = document.getElementById('tkName').value.trim();
+      var qty = document.getElementById('tkQty').value.trim();
+      if (!nm) { toast('请填写名称'); return false; }
+      if (!qty || isNaN(+qty) || +qty <= 0) { toast('请输入正确的数量'); return false; }
+      var img = document.getElementById('tkScopeImg').checked;
+      var rep = document.getElementById('tkScopeRep').checked;
+      if (!img && !rep) { toast('请至少选择一个质控范围'); return false; }
+      var type = document.getElementById('tkType').value;
+      var part = document.getElementById('tkPart').value;
+      if (!type) { toast('请选择检查类型'); return false; }
+      if (!part) { toast('请选择部位'); return false; }
+      var d1 = document.getElementById('tkDFrom').value, d2 = document.getElementById('tkDTo').value;
+      var t1 = document.getElementById('tkTFrom').value || '00:00', t2 = document.getElementById('tkTTo').value || '23:59';
+      var maxNo = Math.max.apply(null, CFG.ext.rows.map(function(x){ return x.no; }));
+      CFG.ext.rows.unshift({
+        no: maxNo + 1, name: nm,
+        from: (d1 || '2026-10-27') + ' ' + t1, to: (d2 || '2026-10-27') + ' ' + t2,
+        scope: img && rep ? '影像,报告' : (img ? '影像' : '报告'),
+        type: type, part: part,
+        dept: document.getElementById('tkDept').value,
+        org: document.getElementById('tkOrg').value,
+        qty: +qty, mode: (document.querySelector('input[name=tkMode]:checked') || {}).value || '顺序',
+        status: '待执行', done: 0
+      });
+      CFG.ext.page = 1; renderCfgExt();
+      toast('已新增抽取任务：' + nm);
+    }
+  });
+}
+
+/* ---------------- 页签与初始化 ---------------- */
+function cfgSwitch(key){
+  CFG.tab = key;
+  [].forEach.call(document.querySelectorAll('#cfgTabs button'), function(b){
+    b.classList.toggle('on', b.getAttribute('data-cfg') === key);
+  });
+  document.getElementById('pgExt').classList.toggle('hidden', key !== 'ext');
+  document.getElementById('pgRule').classList.toggle('hidden', key !== 'rule');
+  document.getElementById('pgStd').classList.toggle('hidden', key !== 'std');
+  if (key === 'ext') renderCfgExt();
+  if (key === 'rule') renderCfgRule();
+  if (key === 'std') renderCfgStd();
+}
+
+function cfgInit(){
+  if (CFG.inited) return;
+  CFG.inited = true;
+  cfgInitData();
+  CFG.rule.f = {}; CFG.std.f = {};
+  cfgFilterBar(document.getElementById('fbarExt'), CF_EXT_SPEC, CFG.ext.f,
+    function(){ CFG.ext.page = 1; renderCfgExt(); }, function(){ CFG.ext.page = 1; renderCfgExt(); });
+  cfgFilterBar(document.getElementById('fbarRule'), CF_RULE_SPEC, CFG.rule.f,
+    function(){ renderCfgRule(); }, function(){ renderCfgRule(); });
+  cfgFilterBar(document.getElementById('fbarStd'), CF_STD_SPEC, CFG.std.f,
+    function(){ renderCfgStd(); }, function(){ renderCfgStd(); });
+
+  [].forEach.call(document.querySelectorAll('#cfgTabs button'), function(b){
+    b.onclick = function(){ cfgSwitch(b.getAttribute('data-cfg')); };
+  });
+  document.getElementById('btnImport').onclick = cfgOpenImport;
+  document.getElementById('btnNewTask').onclick = cfgOpenTask;
+  document.getElementById('btnNewRule').onclick = function(){
+    var c = { id:'R' + Date.now(), name:'新建质控规范', n:0, type:'CT', part:'多部位', scope:'报告', stage:'终末', on:true };
+    CFG.rule.cards.unshift(c);
+    renderCfgRule();
+    cfgCardEdit('rule', c.id);
+  };
+  document.getElementById('btnNewStd').onclick = function(){
+    var c = { id:'S' + Date.now(), name:'新建评价标准', on:false, scope:'影像', grades:[['甲','90-100'],['乙','80-89'],['丙','60-79']] };
+    CFG.std.cards.unshift(c);
+    renderCfgStd();
+    cfgCardEdit('std', c.id);
+  };
+  var sall = document.getElementById('stdAll');
+  sall.onchange = function(){
+    [].forEach.call(document.querySelectorAll('#cardsStd [data-sck]'), function(cb){
+      cb.checked = sall.checked;
+      CFG.std.sel[cb.getAttribute('data-sck')] = sall.checked;
+    });
+  };
+  document.getElementById('stdToggle').onclick = function(){
+    var ids = Object.keys(CFG.std.sel).filter(function(k){ return CFG.std.sel[k]; });
+    if (!ids.length) { toast('请先勾选要切换的标准'); return; }
+    ids.forEach(function(id){
+      var c = CFG.std.cards.filter(function(x){ return x.id === id; })[0];
+      if (c) c.on = !c.on;
+    });
+    renderCfgStd();
+    toast('已切换 ' + ids.length + ' 个标准的启用状态');
+  };
+  cfgSwitch('ext');
+}
 
 </script>
 </body>
