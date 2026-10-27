@@ -58,7 +58,7 @@ button{font-family:inherit;cursor:pointer}
 
 /* ---------------- 表格 ---------------- */
 .wrap{padding:14px 16px 18px;flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.wrap>#tabList,.wrap>#tabImg,.wrap>#tabRep{flex:1;min-height:0;display:flex;flex-direction:column}
+.wrap>#tabList,.wrap>#tabQm,.wrap>#tabImg,.wrap>#tabRep{flex:1;min-height:0;display:flex;flex-direction:column}
 .panel{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;
   flex:1;min-height:0;display:flex;flex-direction:column}
 .tablewrap{overflow:auto;flex:1;min-height:0;position:relative}
@@ -342,7 +342,16 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
       <div class="pg" id="qcPager"></div>
     </div>
   </div>
-    <div id="tabImg" class="hidden">
+    <div id="tabQm" class="hidden">
+    <div class="panel">
+      <div class="tablewrap" id="qmTw">
+        <table class="qcf" id="qmTable2"></table>
+      </div>
+      <div class="pg" id="qmPager"></div>
+    </div>
+  </div>
+
+  <div id="tabImg" class="hidden">
     <div class="qa-title">影像质量分析</div>
     <div class="qa-bar">
       <span class="lbl">时间周期</span>
@@ -587,10 +596,11 @@ function qc2Val(r, k){
   if (k === 'sys' || k === 'tmp') return r[k].replace('报告：', '').split(' ')[0];
   return r[k];
 }
-function qc2Filtered(){
+function qc2Filtered(F){
+  F = F || QC2_F;
   return QC2.filter(function(r){
     for (var i = 0; i < QC2_COLS.length; i++) {
-      var c = QC2_COLS[i], f = QC2_F[c.k];
+      var c = QC2_COLS[i], f = F[c.k];
       if (c.f === 'date') {
         if (f.from && r.time.slice(0,10) < f.from) return false;
         if (f.to   && r.time.slice(0,10) > f.to)   return false;
@@ -603,8 +613,9 @@ function qc2Filtered(){
     return true;
   });
 }
-function qc2Ctl(c){
-  var id = 'qcf_' + c.k, f = QC2_F[c.k];
+function qc2Ctl(c, prefix){
+  prefix = prefix || 'qcf_';
+  var id = prefix + c.k, f = (prefix === 'qcf_' ? QC2_F : QM_F)[c.k];
   if (c.f === 'date') {
     return '<div class="qcf-date">'
          +   '<input type="date" class="qcf-ctl" id="' + id + '_from" value="' + (f.from || '') + '" title="开始日期">'
@@ -621,36 +632,46 @@ function qc2Ctl(c){
   return '<input class="qcf-ctl" id="' + id + '" placeholder="请输入" value="' + esc(f || '') + '">';
 }
 
-function renderQc(){
-  var rows = qc2Filtered();
-  var k = QC2_S.sort, desc = QC2_S.desc;
+var QM_S = { page:1, size:50, sort:'time', desc:true, hide:{}, sel:{} };
+var QM_F = {};
+QC2_COLS.forEach(function(c){ QM_F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+
+var QC_VIEW = { key:'qc', S:QC2_S, F:QC2_F, p:'qcf_', tbl:'qcTable2', pager:'qcPager', wrap:'qcTw',
+                all:'qcAll', gear:'qcGear', size:'qcSize', jump:'qcJump', reset:'qcReset', menu:'qcMenu' };
+var QM_VIEW = { key:'qm', S:QM_S, F:QM_F, p:'qmf_', tbl:'qmTable2', pager:'qmPager', wrap:'qmTw',
+                all:'qmAll', gear:'qmGear', size:'qmSize', jump:'qmJump', reset:'qmReset', menu:'qmMenu' };
+
+function renderList(V){
+  var S = V.S, F = V.F;
+  var rows = qc2Filtered(F);
+  var k = S.sort, desc = S.desc;
   rows = rows.slice().sort(function(a, b){
     var x = qc2Val(a, k), y = qc2Val(b, k);
     if (typeof x === 'string') return desc ? y.localeCompare(x) : x.localeCompare(y);
     return desc ? y - x : x - y;
   });
 
-  var cols = QC2_COLS.filter(function(c){ return !QC2_S.hide[c.k]; });
-  var maxP = Math.max(1, Math.ceil(rows.length / QC2_S.size));
-  if (QC2_S.page > maxP) QC2_S.page = maxP;
-  var view = rows.slice((QC2_S.page - 1) * QC2_S.size, QC2_S.page * QC2_S.size);
-  var arrow = function(c2){ return c2.sort ? (QC2_S.sort === c2.k ? (QC2_S.desc ? ' ▾' : ' ▴') : ' ◇') : ''; };
+  var cols = QC2_COLS.filter(function(c){ return !S.hide[c.k]; });
+  var maxP = Math.max(1, Math.ceil(rows.length / S.size));
+  if (S.page > maxP) S.page = maxP;
+  var view = rows.slice((S.page - 1) * S.size, S.page * S.size);
+  var arrow = function(c2){ return c2.sort ? (S.sort === c2.k ? (S.desc ? ' ▾' : ' ▴') : ' ◇') : ''; };
 
   var h = '<colgroup><col style="width:40px">'
         + cols.map(function(c){ return '<col style="width:' + c.w + 'px">'; }).join('')
         + '<col style="width:118px"></colgroup>';
-  h += '<thead><tr><th class="ck"><input type="checkbox" id="qcAll"></th>';
+  h += '<thead><tr><th class="ck"><input type="checkbox" id="' + V.all + '"></th>';
   cols.forEach(function(c){ h += '<th>' + esc(c.t) + arrow(c) + '</th>'; });
-  h += '<th class="op">操作<span class="qcf-gear" id="qcGear" title="表头设置">⚙</span></th></tr>';
+  h += '<th class="op">操作<span class="qcf-gear" id="' + V.gear + '" title="表头设置">⚙</span></th></tr>';
   h += '<tr class="qcf-frow"><th class="ck"></th>';
-  cols.forEach(function(c){ h += '<th>' + qc2Ctl(c) + '</th>'; });
+  cols.forEach(function(c){ h += '<th>' + qc2Ctl(c, V.p) + '</th>'; });
   h += '<th class="op"></th></tr></thead><tbody>';
 
   if (!view.length) {
     h += '<tr class="or-empty"><td colspan="' + (cols.length + 2) + '">没有符合条件的质控记录</td></tr>';
   } else {
     view.forEach(function(r){
-      var on = !!QC2_S.sel[r.idx];
+      var on = !!S.sel[r.idx];
       h += '<tr' + (on ? ' class="sel"' : '') + '><td class="ck"><input type="checkbox" data-qck="' + r.idx + '"'
          + (on ? ' checked' : '') + '></td>';
       cols.forEach(function(c){
@@ -667,128 +688,137 @@ function renderQc(){
     });
   }
   h += '</tbody>';
-  document.getElementById('qcTable2').innerHTML = h;
+  document.getElementById(V.tbl).innerHTML = h;
 
-  var selN = Object.keys(QC2_S.sel).filter(function(x){ return QC2_S.sel[x]; }).length;
-  var btns = '<button data-p="' + (QC2_S.page - 1) + '"' + (QC2_S.page <= 1 ? ' disabled' : '') + '>‹</button>';
+  var selN = Object.keys(S.sel).filter(function(x){ return S.sel[x]; }).length;
+  var btns = '<button data-p="' + (S.page - 1) + '"' + (S.page <= 1 ? ' disabled' : '') + '>‹</button>';
   var pages = [];
-  for (var p = 1; p <= maxP; p++) if (p <= 5 || p === maxP || Math.abs(p - QC2_S.page) <= 1) pages.push(p);
+  for (var p = 1; p <= maxP; p++) if (p <= 5 || p === maxP || Math.abs(p - S.page) <= 1) pages.push(p);
   var last = 0;
   pages.forEach(function(p){
     if (last && p - last > 1) btns += '<span class="gap">…</span>';
-    btns += '<button data-p="' + p + '" class="' + (p === QC2_S.page ? 'on' : '') + '">' + p + '</button>';
+    btns += '<button data-p="' + p + '" class="' + (p === S.page ? 'on' : '') + '">' + p + '</button>';
     last = p;
   });
-  btns += '<button data-p="' + (QC2_S.page + 1) + '"' + (QC2_S.page >= maxP ? ' disabled' : '') + '>›</button>';
+  btns += '<button data-p="' + (S.page + 1) + '"' + (S.page >= maxP ? ' disabled' : '') + '>›</button>';
 
-  document.getElementById('qcPager').innerHTML =
+  document.getElementById(V.pager).innerHTML =
       '<span class="info"><span>共 <b>' + rows.length + '</b> 条</span><span class="bar">|</span>'
-    + '<span>已选 <b>' + selN + '</b> 个</span><a id="qcReset">清除筛选</a></span>'
+    + '<span>已选 <b>' + selN + '</b> 个</span><a id="' + V.reset + '">清除筛选</a></span>'
     + '<span class="btns">'
     +   btns
-    +   '<select id="qcSize">'
-    +     [20,50,100].map(function(n){ return '<option value="' + n + '"' + (n === QC2_S.size ? ' selected' : '') + '>' + n + '条/页</option>'; }).join('')
+    +   '<select id="' + V.size + '">'
+    +     [20,50,100].map(function(n){ return '<option value="' + n + '"' + (n === S.size ? ' selected' : '') + '>' + n + '条/页</option>'; }).join('')
     +   '</select>'
-    +   '<span class="jump">前往<input id="qcJump" placeholder=""><span>页</span></span>'
+    +   '<span class="jump">前往<input id="' + V.jump + '" placeholder=""><span>页</span></span>'
     + '</span>';
 
   cols.forEach(function(c){
-    var id = 'qcf_' + c.k;
+    var id = V.p + c.k;
     if (c.f === 'date') {
       ['_from','_to'].forEach(function(sfx){
         var e = document.getElementById(id + sfx);
         if (e) e.onchange = function(){
-          QC2_F[c.k].from = document.getElementById(id + '_from').value;
-          QC2_F[c.k].to   = document.getElementById(id + '_to').value;
-          QC2_S.page = 1; renderQc();
+          F[c.k].from = document.getElementById(id + '_from').value;
+          F[c.k].to   = document.getElementById(id + '_to').value;
+          S.page = 1; renderList(V);
         };
       });
     } else {
       var el = document.getElementById(id);
       if (el) {
-        var handler = function(){ QC2_F[c.k] = el.value.trim(); QC2_S.page = 1; renderQc(); };
+        var handler = function(){ F[c.k] = el.value.trim(); S.page = 1; renderList(V); };
         el.onchange = handler;
         if (c.f === 'text') el.onkeydown = function(e){ if (e.key === 'Enter') { e.preventDefault(); handler(); } };
       }
     }
   });
 
-  [].forEach.call(document.querySelectorAll('#qcTable2 thead tr:first-child th'), function(th, i){
+  [].forEach.call(document.querySelectorAll('#' + V.tbl + ' thead tr:first-child th'), function(th, i){
     var c = cols[i - 1];
     if (c && c.sort) { th.style.cursor = 'pointer'; th.onclick = function(){
-      if (QC2_S.sort === c.k) QC2_S.desc = !QC2_S.desc; else { QC2_S.sort = c.k; QC2_S.desc = true; }
-      renderQc();
+      if (S.sort === c.k) S.desc = !S.desc; else { S.sort = c.k; S.desc = true; }
+      renderList(V);
     }; }
   });
-  [].forEach.call(document.querySelectorAll('#qcTable2 tbody input[data-qck]'), function(cb){
+  [].forEach.call(document.querySelectorAll('#' + V.tbl + ' tbody input[data-qck]'), function(cb){
     cb.onchange = function(){
       var key = cb.getAttribute('data-qck');
-      if (cb.checked) QC2_S.sel[key] = true; else delete QC2_S.sel[key];
-      renderQc();
+      if (cb.checked) S.sel[key] = true; else delete S.sel[key];
+      renderList(V);
     };
   });
-  var all = document.getElementById('qcAll');
+  var all = document.getElementById(V.all);
   if (all) all.onchange = function(){
-    view.forEach(function(r){ if (all.checked) QC2_S.sel[r.idx] = true; else delete QC2_S.sel[r.idx]; });
-    renderQc();
+    view.forEach(function(r){ if (all.checked) S.sel[r.idx] = true; else delete S.sel[r.idx]; });
+    renderList(V);
   };
-  [].forEach.call(document.querySelectorAll('#qcPager [data-p]'), function(b){
-    b.onclick = function(){ QC2_S.page = +b.getAttribute('data-p'); renderQc(); };
+  [].forEach.call(document.querySelectorAll('#' + V.pager + ' [data-p]'), function(b){
+    b.onclick = function(){ S.page = +b.getAttribute('data-p'); renderList(V); };
   });
-  var sz = document.getElementById('qcSize');
-  if (sz) sz.onchange = function(){ QC2_S.size = +sz.value; QC2_S.page = 1; renderQc(); };
-  var jp = document.getElementById('qcJump');
+  var sz = document.getElementById(V.size);
+  if (sz) sz.onchange = function(){ S.size = +sz.value; S.page = 1; renderList(V); };
+  var jp = document.getElementById(V.jump);
   if (jp) jp.onkeydown = function(e){
     if (e.key !== 'Enter') return;
     e.preventDefault();
     var n = parseInt(jp.value, 10);
     if (!n || n < 1 || n > maxP) { toast('页码需在 1–' + maxP + ' 之间'); return; }
-    QC2_S.page = n; renderQc();
+    S.page = n; renderList(V);
   };
-  var rs = document.getElementById('qcReset');
+  var rs = document.getElementById(V.reset);
   if (rs) rs.onclick = function(){
-    QC2_COLS.forEach(function(c){ QC2_F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
-    QC2_S.page = 1; QC2_S.sel = {}; renderQc(); toast('已清除筛选条件');
+    QC2_COLS.forEach(function(c){ F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+    S.page = 1; S.sel = {}; renderList(V);
+    toast(V.key === 'qm' ? '质控管理：已清除筛选条件' : '已清除筛选条件');
   };
-  [].forEach.call(document.querySelectorAll('#qcTable2 [data-qca]'), function(a){
+  [].forEach.call(document.querySelectorAll('#' + V.tbl + ' [data-qca]'), function(a){
     a.onclick = function(){ qcAudit(a.getAttribute('data-qca')); };
   });
-  [].forEach.call(document.querySelectorAll('#qcTable2 [data-qcd]'), function(a){
+  [].forEach.call(document.querySelectorAll('#' + V.tbl + ' [data-qcd]'), function(a){
     a.onclick = function(){
       var sid = a.getAttribute('data-qcd');
       QC2 = QC2.filter(function(r){ return r.sid !== sid; });
-      renderQc(); toast('已删除质控记录：' + sid);
+      renderLists(); toast('已删除质控记录：' + sid);
     };
   });
-  var gear = document.getElementById('qcGear');
-  if (gear) gear.onclick = function(e){ e.stopPropagation(); qcColMenu(); };
+  var gear = document.getElementById(V.gear);
+  if (gear) gear.onclick = function(e){ e.stopPropagation(); colMenuFor(V); };
 }
 
-function qcColMenu(){
-  var old = document.getElementById('qcMenu');
+function colMenuFor(V){
+  var old = document.getElementById(V.menu);
   if (old) { old.remove(); return; }
-  var h = '<div class="qcf-menu" id="qcMenu">';
+  var S = V.S;
+  var h = '<div class="qcf-menu" id="' + V.menu + '">';
   QC2_COLS.forEach(function(c){
-    h += '<label><input type="checkbox" data-qcc="' + c.k + '"' + (QC2_S.hide[c.k] ? '' : ' checked') + '>' + esc(c.t) + '</label>';
+    h += '<label><input type="checkbox" data-qcc="' + c.k + '"' + (S.hide[c.k] ? '' : ' checked') + '>' + esc(c.t) + '</label>';
   });
-  h += '<label class="all"><input type="checkbox" id="qcColAll">全选 / 全不选</label></div>';
-  document.getElementById('qcTw').insertAdjacentHTML('afterbegin', h);
-  [].forEach.call(document.querySelectorAll('#qcMenu [data-qcc]'), function(cb){
+  h += '<label class="all"><input type="checkbox" id="' + V.menu + 'All">全选 / 全不选</label></div>';
+  document.getElementById(V.wrap).insertAdjacentHTML('afterbegin', h);
+  [].forEach.call(document.querySelectorAll('#' + V.menu + ' [data-qcc]'), function(cb){
     cb.onchange = function(){
       var k = cb.getAttribute('data-qcc');
-      if (cb.checked) delete QC2_S.hide[k]; else QC2_S.hide[k] = true;
-      if (Object.keys(QC2_S.hide).length >= QC2_COLS.length) QC2_S.hide = {};
-      renderQc();
-      var m = document.getElementById('qcMenu'); if (m) m.remove(); qcColMenu();
+      if (cb.checked) delete S.hide[k]; else S.hide[k] = true;
+      if (Object.keys(S.hide).length >= QC2_COLS.length) S.hide = {};
+      renderList(V);
+      var m = document.getElementById(V.menu); if (m) m.remove(); colMenuFor(V);
     };
   });
-  var cl = document.getElementById('qcColAll');
+  var cl = document.getElementById(V.menu + 'All');
   if (cl) cl.onchange = function(){
-    QC2_S.hide = {};
-    if (!cl.checked) QC2_COLS.forEach(function(c, i){ if (i > 0) QC2_S.hide[c.k] = true; });
-    renderQc();
-    var m = document.getElementById('qcMenu'); if (m) m.remove(); qcColMenu();
+    S.hide = {};
+    if (!cl.checked) QC2_COLS.forEach(function(c, i){ if (i > 0) S.hide[c.k] = true; });
+    renderList(V);
+    var m = document.getElementById(V.menu); if (m) m.remove(); colMenuFor(V);
   };
+}
+
+function renderQc(){ renderList(QC_VIEW); }
+function renderQm(){ renderList(QM_VIEW); }
+function renderLists(){
+  renderQc();
+  if (document.getElementById(QM_VIEW.tbl)) renderQm();
 }
 
 function qcAudit(sid){
@@ -823,15 +853,13 @@ function qcAudit(sid){
     + '</div>');
   document.getElementById('qcPass').onclick = function(){
     r.state = '报告：成功'; r.tmp = r.sys;
-    dgClose(); renderQc(); toast('审核通过，已写入暂存审核结果');
+    dgClose(); renderLists(); toast('审核通过，已写入暂存审核结果');
   };
   document.getElementById('qcReject').onclick = function(){ dgClose(); toast('已退回整改：' + r.sid); };
 }
 
 /* ---------- 其它页签 ---------- */
 var QC_TABS = {
-  qc:  { t:'质控管理',     d:'维护质控任务与质控规则：新建质控任务、指定质控人、设置质控范围与抽检比例，并跟踪整改闭环。',
-         tags:['质控任务','质控规则','抽检比例','整改闭环'] },
   img: { t:'影像质控分析', d:'评估影像本身可用性：图像质量（噪声、伪影、对比度）、序列完整性、部位覆盖与摆位规范。',
          tags:['图像质量','伪影检出','序列完整性','部位覆盖'] },
   rep: { t:'报告质控分析', d:'评估结构化报告质量：完整性、描述规范性、结论与 AI 检出的一致性，以及危急值提示。',
@@ -844,12 +872,14 @@ function showTab(key){
   [].forEach.call(document.querySelectorAll('#qcTabs .tab'), function(b){
     b.classList.toggle('on', b.getAttribute('data-tab') === key);
   });
-  var isList = (key === 'list'), isImg = (key === 'img'), isRep = (key === 'rep');
+  var isList = (key === 'list'), isImg = (key === 'img'), isRep = (key === 'rep'), isQm = (key === 'qc');
   document.getElementById('tabList').classList.toggle('hidden', !isList);
   document.getElementById('qcActions').classList.toggle('hidden', !isList);
   document.getElementById('tabImg').classList.toggle('hidden', !isImg);
   document.getElementById('tabRep').classList.toggle('hidden', !isRep);
+  document.getElementById('tabQm').classList.toggle('hidden', !isQm);
   var other = document.getElementById('tabOther');
+  if (isQm) { other.classList.add('hidden'); other.innerHTML = ''; renderQm(); return; }
   if (isImg) { other.classList.add('hidden'); other.innerHTML = ''; bindQa(); renderQa(); return; }
   if (isRep) { other.classList.add('hidden'); other.innerHTML = ''; bindRp(); renderRp(); return; }
   if (isList) { other.classList.add('hidden'); other.innerHTML = ''; return; }
