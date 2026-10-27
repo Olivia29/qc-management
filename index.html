@@ -286,6 +286,65 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
   color:#fff;font-size:13px;padding:9px 16px;border-radius:3px;opacity:0;pointer-events:none;
   transition:opacity .22s,transform .22s;z-index:90;max-width:70vw}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ---------- 查看：报告质控复核弹窗 ---------- */
+.rv-mask{position:fixed;inset:0;background:rgba(16,24,40,.45);z-index:120;display:flex;align-items:center;justify-content:center}
+.rv{width:96vw;height:92vh;max-width:1780px;background:#fff;border-radius:6px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.rv-top{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 16px;border-bottom:1px solid #E5E7EB;background:#FAFBFC}
+.rv-info{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:12.5px;color:#333;align-items:center}
+.rv-info b{font-weight:600}
+.rv-info .k{color:#8A94A6}
+.rv-sbox{display:flex;align-items:center;gap:6px;border:1px solid #E5E7EB;border-radius:3px;padding:0 8px;height:30px;background:#fff;width:250px}
+.rv-sbox input{border:0;outline:0;font-size:12.5px;width:100%;color:#333}
+.rv-body{flex:1;min-height:0;display:grid;grid-template-columns:38% 62%}
+.rv-left{border-right:1px solid #E5E7EB;padding:12px 14px;overflow-y:auto;background:#FCFCFD}
+.rv-lt{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:#1F2937;margin-bottom:10px}
+.rv-annot{font-size:12px;color:#3B82F6;font-weight:400;cursor:pointer}
+.rv-card{background:#fff;border:1px solid #E5E7EB;border-radius:4px;margin-bottom:10px}
+.rv-card-h{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #EEF1F5;font-size:12.5px;font-weight:600;color:#374151;background:#F7F9FC}
+.rv-card-h i{font-style:normal;color:#9AA6B8;cursor:pointer;font-size:14px}
+.rv-card p{margin:0;padding:10px 12px;font-size:12.5px;line-height:1.85;color:#333;text-indent:0}
+.rv-right{padding:12px 14px;overflow-y:auto;display:flex;flex-direction:column;min-height:0}
+.rv-rt{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:#1F2937;margin-bottom:8px}
+.rv-rt em{font-style:normal;font-size:12px;font-weight:400;color:#8A94A6}
+.rv-rt .sp{flex:1}
+.rv-rt a{font-size:12.5px;color:#3B82F6;font-weight:400;cursor:pointer}
+.rv-score{display:flex;align-items:center;gap:12px;font-size:12.5px;color:#4B5563;padding:8px 12px;background:#F7F9FC;border-radius:4px;margin-bottom:10px}
+.rv-score b{font-size:18px;color:#1F2937}
+.rv-grade{display:inline-block;min-width:24px;text-align:center;font-weight:700;font-size:15px}
+.rv-score .sp{flex:1}
+.rv-sel{font-size:12px;color:#3B82F6;cursor:pointer}
+.rv-tabs{display:flex;gap:8px;margin-bottom:10px}
+.rv-tabs button{height:28px;padding:0 14px;font-size:12.5px;border:1px solid #E5E7EB;background:#F7F9FC;color:#4B5563;border-radius:3px;cursor:pointer}
+.rv-tabs button.on{background:#E6F0FF;border-color:#BBD3FB;color:#1D4ED8;font-weight:600}
+.rv-issues{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.rv-iss{border:1px solid #E5E7EB;border-radius:4px;padding:10px 12px;background:#fff}
+.rv-iss-h{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#1F2937;margin-bottom:6px}
+.rv-ai{display:inline-block;padding:0 5px;height:16px;line-height:16px;border-radius:2px;background:#3B82F6;color:#fff;font-size:10px;font-weight:600;font-style:normal}
+.rv-iss-h .sp{flex:1}
+.rv-tag{display:inline-block;height:18px;line-height:18px;padding:0 6px;border-radius:2px;font-size:11px;font-weight:400}
+.rv-tag.pin{color:#6B7280;background:#F3F4F6}
+.rv-tag.must{background:#FFF2E8;color:#D46B08;border:1px solid #FFD8BF}
+.rv-tag.sug{background:#E6F7FF;color:#096DD9;border:1px solid #BAE7FF}
+.rv-tag.minus{background:#FFF1F0;color:#CF1322}
+.rv-tag.zero{background:#F5F5F5;color:#8C8C8C}
+.rv-tag.note{background:#E6F0FF;color:#1D4ED8;cursor:pointer}
+.rv-iss p{margin:0;font-size:12.5px;line-height:1.8;color:#4B5563}
+.rv-loc{border:1px solid #E5E7EB;border-radius:4px;overflow:hidden;margin-bottom:10px}
+.rv-loc-h{padding:8px 12px;background:#F7F9FC;border-bottom:1px solid #EEF1F5;font-size:12.5px;font-weight:600;color:#374151}
+.rv-loc table{width:100%;border-collapse:collapse;font-size:12.5px}
+.rv-loc th{background:#FBFCFE;color:#6B7280;font-weight:500;text-align:left;padding:7px 12px;border-bottom:1px solid #EEF1F5;font-size:12px}
+.rv-loc td{padding:7px 12px;border-bottom:1px solid #F3F5F8;color:#333}
+.rv-loc tr:last-child td{border-bottom:0}
+.rv-loc .ed{color:#3B82F6;cursor:pointer}
+.rv-foot{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding-top:8px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#4B5563}
+.rv-foot label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.rv-foot .sp{flex:1}
+.rv-foot button{height:30px;padding:0 18px;border-radius:3px;font-size:12.5px;cursor:pointer}
+.rv-foot .p{background:#3B82F6;border:1px solid #3B82F6;color:#fff}
+.rv-foot .s{background:#fff;border:1px solid #D6DCE8;color:#4B5563}
+.rv-bot{position:relative;flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:18px;font-size:11.5px;color:#9AA6B8;padding:7px 0;border-top:1px solid #EEF1F5;background:#FAFBFC}
+.rv-bot span{position:absolute;right:18px}
+
 </style>
 </head>
 <body>
@@ -683,7 +742,7 @@ function renderList(V){
         if (c.k === 'name' || c.k === 'sid') v = '<span class="ell" title="' + esc(r[c.k]) + '">' + esc(r[c.k]) + '</span>';
         h += '<td' + (c.k === 'time' ? ' class="mono"' : '') + '>' + v + '</td>';
       });
-      h += '<td class="op"><a class="lnk" data-qca="' + esc(r.sid) + '">审核</a>'
+      h += '<td class="op"><a class="lnk" data-qcv="' + esc(r.sid) + '">查看</a>'
          + '<a class="lnk danger" data-qcd="' + esc(r.sid) + '">删除</a></td></tr>';
     });
   }
@@ -772,9 +831,6 @@ function renderList(V){
     S.page = 1; S.sel = {}; renderList(V);
     toast(V.key === 'qm' ? '质控管理：已清除筛选条件' : '已清除筛选条件');
   };
-  [].forEach.call(document.querySelectorAll('#' + V.tbl + ' [data-qca]'), function(a){
-    a.onclick = function(){ qcAudit(a.getAttribute('data-qca')); };
-  });
   [].forEach.call(document.querySelectorAll('#' + V.tbl + ' [data-qcd]'), function(a){
     a.onclick = function(){
       var sid = a.getAttribute('data-qcd');
@@ -1777,6 +1833,184 @@ document.addEventListener('click', function(e){
 });
 
 renderQc();
+</script>
+<script>
+/* ============================================================================
+   查看（原「审核」）→ 报告质控复核弹窗
+   ============================================================================ */
+var RV_TXT = [
+  { see:'胸廓对称。双侧肺野透光度正常，双肺散在长径约0.2-0.5cm小结节，较大者位于左肺上叶前段，呈磨玻璃密度，大小约0.5×0.4cm。右肺少许条索影。右肺上叶前段小囊状透亮影。气管少许痰栓，叶、段支气管未见狭窄、闭塞及扩大。肺门大小、位置未见异常。肺门及纵隔淋巴结未见增大，纵隔未见移位。心脏未见增大，主动脉及其弓上分支壁钙化，心包未见积液。双侧胸腔未见积液。左侧第2肋局部骨质稍膨隆、密度欠均匀。扫及左肾内数个低/等密度结节影。肝右前叶稍低密度结节影。',
+    dx:'双肺散在小结节，多系炎性结节，部分结节其他待排，请随诊。右肺少许纤维灶。右肺上叶小肺大泡。主动脉及其弓上分支壁钙化。左侧第2肋局部骨质稍膨隆、密度欠均匀。扫及左肾及肝右前叶结节，请结合腹部检查。' },
+  { see:'胸廓对称，气管居中。双肺纹理清晰，右肺下叶后基底段见斑片状高密度影，边界模糊，范围约2.6×1.9cm，其内可见支气管充气征。双肺门不大。纵隔内未见肿大淋巴结。心影大小形态未见异常。双侧胸腔未见积液。扫及甲状腺左叶低密度结节。',
+    dx:'右肺下叶后基底段斑片影，考虑感染性病变，建议抗炎治疗后复查。扫及甲状腺左叶结节，建议超声检查。' }
+];
+
+var RV_ISS = [
+  { cat:'口语化与错别字', pin:3, type:'must', delta:-10, lvl:'必须修改',
+    desc:'存在不规范用语及口语化表达:1.\'扫及\'应为\'所示\';2.\'少许\'为口语化表达，应改为\'少量\'或\'少许条索状\';3.\'稍低密度\'表述不规范，应为\'稍低密度影\'或\'低密度\'。',
+    loc:[['少许条','（具体肺段）','所见'],['扫及','所示','所见'],['低密度结…','低密度影…','所见'],['透光度正常','透光度正常，未见异常','所见'],['散在','散在分布','所见']] },
+  { cat:'报告整体逻辑性', pin:1, type:'must', delta:0, lvl:'必须修改',
+    desc:'所见"气管少许痰栓"缺失诊断', loc:[['气管少许痰栓','气管内痰栓','所见']] },
+  { cat:'病灶部位描述不规范', pin:1, type:'sug', delta:-4, lvl:'建议修改',
+    desc:'部分病变部位描述缺少大解剖结构或具体位置:1.\'右肺少许条索影\'缺少具体肺叶或肺段位置;2.\'右肺上叶前段小囊状透亮影\'虽有大结构但\'前段\'通常指肺段，需确认是否规范;3.\'扫及左肾内数个低/等密度结节影\'中\'左肾内\'符合规范;4.\'肝右前叶稍低密度结节影\'符合规范。主要问题在于\'右肺少许条索影\'未指明具体肺叶。',
+    loc:[['右肺少许条索影','右肺上叶少许条索影','所见']] }
+];
+
+var RV_EXTRA = [
+  ['报告文本规范性','建议修改',-3,'报告未按"部位-形态-边缘-密度-强化"顺序描述，建议规范书写顺序。'],
+  ['格式与符号不规范','建议修改',-2,'单位使用中英文混排（0.5×0.4cm 建议统一为 0.5cm×0.4cm）。'],
+  ['病灶边缘描述不规范','建议修改',-2,'结节边缘描述缺失（光滑/分叶/毛刺），建议补充。'],
+  ['诊断内容规范性','建议修改',-3,'诊断意见未给出随访建议的时间间隔。'],
+  ['阳性病变部位描述规范性','必须修改',-5,'"双侧肺野"未细化到肺叶/肺段。'],
+  ['阳性病变描述顺序规范性','建议修改',-2,'阳性病变未按主次顺序排列。']
+];
+
+var RV_GRADE_SCORE = { '甲':95, '乙':85, '丙':71, '丁':55 };
+var RV_GRADE_N     = { '甲':2, '乙':5, '丙':9, '丁':12 };
+
+function rvGradeOf(r){
+  var m = String(r.sys || '').match(/[甲乙丙丁]/);
+  return m ? m[0] : '乙';
+}
+
+function rvIssues(grade){
+  var n = RV_GRADE_N[grade] || 5;
+  var list = RV_ISS.slice();
+  var i = 0;
+  while (list.length < n) {
+    var e = RV_EXTRA[i % RV_EXTRA.length];
+    list.push({ cat:e[0], pin:1, type:e[1] === '必须修改' ? 'must' : 'sug', delta:e[2], lvl:e[1], desc:e[3], loc:[['—','—','所见']] });
+    i++;
+  }
+  return list.slice(0, n);
+}
+
+function rvHtml(r){
+  var g = rvGradeOf(r);
+  var sm = String(r.sys || '').match(/([0-9]+)\s*$/);
+  var score = sm ? +sm[1] : (RV_GRADE_SCORE[g] || 85);
+  var iss = rvIssues(g);
+  var t = RV_TXT[(r.idx || 0) % RV_TXT.length];
+  var left = String(r.name || '');
+  var gcol = (g === '甲') ? '#16A34A' : (g === '乙') ? '#2563EB' : '#DC2626';
+
+  var issH = iss.map(function(it, i){
+    var tag = '<span class="rv-tag pin">📍 ' + it.pin + '</span>'
+            + '<span class="rv-tag ' + it.type + '">' + esc(it.lvl) + '</span>';
+    var d = it.delta > 0 ? ('+' + it.delta) : String(it.delta);
+    var dcls = it.delta < 0 ? 'minus' : 'zero';
+    return '<div class="rv-iss" data-type="' + it.type + '">'
+         + '<div class="rv-iss-h"><input type="checkbox" class="rv-ck">'
+         + '<i class="rv-ai">AI</i><span>' + esc(it.cat) + '</span><span class="sp"></span>'
+         + tag + '<span class="rv-tag ' + dcls + '">' + d + '</span>'
+         + '<span class="rv-tag note">不提醒</span></div>'
+         + '<p>' + esc(it.desc) + '</p></div>';
+  }).join('');
+
+  var locRows = iss[0].loc.concat(iss[2] ? iss[2].loc : []).map(function(x){
+    return '<tr><td>' + esc(x[0]) + '</td><td>' + esc(x[1]) + '</td><td>' + esc(x[2]) + '</td>'
+         + '<td class="ed">编辑</td><td class="ed">✎</td></tr>';
+  }).join('');
+
+  return ''
+  + '<div class="rv-top">'
+  +   '<div class="rv-info">'
+  +     '<span>👤 <span class="k">患者:</span> <b>' + esc(left) + '</b></span>'
+  +     '<span><span class="k">检查项目:</span> ' + esc((r.etype || 'CT').split(' ')[0] + (r.part || '')) + '</span>'
+  +     '<span><span class="k">检查日期:</span> ' + esc(r.time || '') + '</span>'
+  +     '<span><span class="k">检查号:</span> ' + esc(r.sid || '') + '</span>'
+  +   '</div>'
+  +   '<div class="rv-sbox"><input value="' + esc(String(r.sid || '').slice(0, 14)) + '" readonly>🔍</div>'
+  + '</div>'
+  + '<div class="rv-body">'
+  +   '<div class="rv-left">'
+  +     '<div class="rv-lt">患者报告 <a class="rv-annot">标注全览</a></div>'
+  +     '<div class="rv-card"><div class="rv-card-h"><span>影像所见-原始报告</span><i data-rvx="1">×</i></div><p>' + esc(t.see) + '</p></div>'
+  +     '<div class="rv-card"><div class="rv-card-h"><span>影像诊断-原始报告</span><i data-rvx="2">×</i></div><p>' + esc(t.dx) + '</p></div>'
+  +   '</div>'
+  +   '<div class="rv-right">'
+  +     '<div class="rv-rt"><span>报告质控结果</span><em>总问题数：' + iss.length + '</em><span class="sp"></span><a>不提醒回收站</a></div>'
+  +     '<div class="rv-score"><span>质控结果（分）</span><b>' + score + '</b><span>| 100</span>'
+  +        '<span class="rv-grade" style="color:' + gcol + '">' + g + '</span><span class="sp"></span>'
+  +        '<span class="rv-sel">消息筛查 ▾</span></div>'
+  +     '<div class="rv-tabs"><button class="on" data-rvt="must">必须修改</button>'
+  +        '<button data-rvt="sug">建议修改</button><button data-rvt="all">已读</button></div>'
+  +     '<div class="rv-issues">' + issH + '</div>'
+  +     '<div class="rv-loc"><div class="rv-loc-h">口语化与错别字-定位详情</div>'
+  +       '<table><thead><tr><th>原文</th><th>质控后</th><th>定位段落</th><th>标签1</th><th>操作</th></tr></thead>'
+  +       '<tbody>' + locRows + '</tbody></table></div>'
+  +     '<div class="rv-foot"><label><input type="checkbox" id="rvAll">全选</label>'
+  +       '<span id="rvCnt">已选择 0 项</span><span class="sp"></span>'
+  +       '<button class="p" id="rvRead">已读</button><button class="s" id="rvMute">不提醒</button></div>'
+  +   '</div>'
+  + '</div>'
+  + '<div class="rv-bot"><span class="c">《免责声明》　《使用须知》</span><span>版本号：v1.0.5</span></div>';
+}
+
+function rvClose(){
+  var m = document.getElementById('rvMask');
+  if (m) m.classList.add('hidden');
+}
+
+function openReview(sid){
+  var r = null;
+  for (var i = 0; i < QC2.length; i++) if (QC2[i].sid === sid) { r = QC2[i]; break; }
+  if (!r) return;
+  var m = document.getElementById('rvMask');
+  if (!m) {
+    m = document.createElement('div');
+    m.id = 'rvMask';
+    m.className = 'rv-mask hidden';
+    m.innerHTML = '<div class="rv" id="rvBox"></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click', function(e){ if (e.target === m) rvClose(); });
+  }
+  document.getElementById('rvBox').innerHTML = rvHtml(r);
+  m.classList.remove('hidden');
+
+  var box = document.getElementById('rvBox');
+  var cnt = function(){
+    var n = box.querySelectorAll('.rv-ck:checked').length;
+    var el = document.getElementById('rvCnt');
+    if (el) el.textContent = '已选择 ' + n + ' 项';
+  };
+  [].forEach.call(box.querySelectorAll('.rv-ck'), function(c){ c.onchange = cnt; });
+  [].forEach.call(box.querySelectorAll('#rvBox .rv-tabs button, .rv-tabs button'), function(b){
+    b.onclick = function(){
+      [].forEach.call(box.querySelectorAll('.rv-tabs button'), function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      var t = b.getAttribute('data-rvt');
+      [].forEach.call(box.querySelectorAll('.rv-iss'), function(c){
+        var ty = c.getAttribute('data-type');
+        c.style.display = (t === 'all') ? '' : (ty === t ? '' : 'none');
+      });
+    };
+  });
+  var all = document.getElementById('rvAll');
+  if (all) all.onchange = function(){
+    [].forEach.call(box.querySelectorAll('.rv-iss'), function(c){
+      if (c.style.display !== 'none') { var k = c.querySelector('.rv-ck'); if (k) k.checked = all.checked; }
+    });
+    cnt();
+  };
+  var rd = document.getElementById('rvRead');
+  if (rd) rd.onclick = function(){ rvClose(); toast('已标记为已读：' + r.sid); };
+  var mu = document.getElementById('rvMute');
+  if (mu) mu.onclick = function(){ toast('已加入不提醒：' + r.sid); };
+  [].forEach.call(box.querySelectorAll('[data-rvx]'), function(x){
+    x.onclick = function(){
+      var card = x.closest('.rv-card');
+      if (card) card.style.display = 'none';
+      toast('已收起该报告块');
+    };
+  });
+}
+
+document.addEventListener('click', function(e){
+  var a = e.target.closest ? e.target.closest('[data-qcv]') : null;
+  if (a) { e.preventDefault(); openReview(a.getAttribute('data-qcv')); }
+});
+
 </script>
 </body>
 </html>
