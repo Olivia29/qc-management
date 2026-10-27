@@ -374,6 +374,62 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
 .imgv .bar input[type=range]{writing-mode:vertical-lr;direction:rtl;width:6px;height:100%;accent-color:#3B82F6;cursor:pointer}
 .imgv .noimg{color:#8A94A6;font-size:12.5px}
 
+/* ---------- 质控管理：审核 / 查看 报告文书页 ---------- */
+.ad-mask{position:fixed;inset:0;background:rgba(16,24,40,.45);z-index:132;display:flex;align-items:center;justify-content:center}
+.ad{width:97vw;height:94vh;max-width:1880px;background:#fff;display:flex;flex-direction:column;border-radius:4px;overflow:hidden;box-shadow:0 18px 52px rgba(0,0,0,.3)}
+.ad-top{flex:0 0 40px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #EEF1F5;background:#fff}
+.ad-back{color:#2F6BFF;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px}
+.ad-back:hover{text-decoration:underline}
+.ad-warn{font-size:12px;color:#D46B08;display:flex;align-items:center;gap:6px}
+.ad-warn i{font-style:normal;display:inline-block;width:14px;height:14px;line-height:14px;text-align:center;border-radius:50%;background:#FA8C16;color:#fff;font-size:10px}
+.ad-pat{flex:0 0 auto;display:flex;align-items:flex-start;gap:24px;padding:10px 16px 12px;border-bottom:1px solid #EEF1F5}
+.ad-pinfo{flex:1;min-width:0}
+.ad-pt{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:#1F2937;margin-bottom:7px}
+.ad-badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:400;padding:1px 8px;border-radius:10px}
+.ad-badge.wait{background:#F6FFED;color:#389E0D;border:1px solid #B7EB8F}
+.ad-badge.done{background:#F6FFED;color:#389E0D;border:1px solid #B7EB8F}
+.ad-fields{display:flex;flex-wrap:wrap;gap:6px 28px;font-size:12.5px;color:#333}
+.ad-fields .k{color:#8A94A6}
+.ad-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;padding-top:2px}
+.ad-acts label{display:flex;align-items:center;gap:5px;font-size:12px;color:#4B5563;cursor:pointer;margin-right:6px}
+.ad-btn{height:28px;padding:0 14px;border-radius:3px;font-size:12.5px;cursor:pointer;border:1px solid #D6DCE8;background:#fff;color:#374151}
+.ad-btn.pri{background:#2F6BFF;border-color:#2F6BFF;color:#fff}
+.ad-btn.ghost{background:#EAF1FF;border-color:#D2E0FF;color:#2F6BFF}
+.ad-body{flex:1;min-height:0;display:grid;grid-template-columns:57% 43%}
+.ad-left{min-width:0;border-right:1px solid #EEF1F5;display:flex;flex-direction:column;padding:0 0 8px;overflow-y:auto}
+.ad-lt{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 14px;background:#F7F9FC;border-bottom:1px solid #EEF1F5}
+.ad-lt b{font-size:13px;color:#1F2937}
+.ad-lt .sp{flex:1}
+.ad-lt .mode{font-size:12px;color:#6B7280;cursor:pointer}
+.ad-blk{margin:10px 14px 0}
+.ad-bh{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;color:#374151;margin-bottom:6px}
+.ad-bh label{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:400;color:#6B7280;cursor:pointer}
+.ad-txt{border:1px solid #E5E7EB;background:#FAFBFC;border-radius:3px;padding:9px 11px;font-size:12.5px;line-height:1.9;color:#333}
+.ad-right{min-width:0;display:flex;flex-direction:column;min-height:0}
+.ad-rt{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 14px;background:#F7F9FC;border-bottom:1px solid #EEF1F5}
+.ad-rt b{font-size:13px;color:#1F2937}
+.ad-grade{display:inline-block;min-width:22px;height:18px;line-height:18px;text-align:center;border-radius:2px;background:#E6F0FF;color:#1D4ED8;font-size:11.5px;font-style:normal}
+.ad-score{font-size:12.5px;color:#4B5563}
+.ad-rt .sp{flex:1}
+.ad-rt a{font-size:12px;color:#2F6BFF;cursor:pointer}
+.ad-list{flex:1;min-height:0;overflow-y:auto;padding:10px 14px}
+.ad-iss{display:flex;align-items:center;gap:8px;padding:9px 10px;border:1px solid #EEF1F5;border-radius:3px;margin-bottom:7px;background:#fff}
+.ad-iss:hover{border-color:#D6E4FF;background:#FCFDFF}
+.ad-ai{display:inline-block;padding:0 5px;height:16px;line-height:16px;border-radius:2px;background:#3B82F6;color:#fff;font-size:10px;font-weight:600;font-style:normal}
+.ad-name{font-size:12.5px;font-weight:600;color:#1F2937}
+.ad-sep{color:#E5E7EB}
+.ad-pin{display:inline-block;height:16px;line-height:16px;padding:0 5px;border-radius:2px;background:#F3EEFF;color:#722ED1;font-size:10.5px}
+.ad-iss .sp{flex:1}
+.ad-minus{display:inline-block;height:18px;line-height:18px;padding:0 7px;border-radius:2px;background:#FFF1F0;color:#CF1322;font-size:11.5px;font-weight:600}
+.ad-more{font-size:11.5px;color:#6B7280;cursor:pointer}
+.ad-x{width:16px;height:16px;line-height:15px;text-align:center;border-radius:50%;border:1px solid #D6DCE8;color:#9AA6B8;font-size:11px;cursor:pointer}
+.ad-x:hover{border-color:#FFA39E;color:#CF1322}
+.ad-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#9AA6B8;font-size:12.5px}
+.ad-empty svg{opacity:.9}
+.ad-menu{position:absolute;background:#fff;border:1px solid #E5E7EB;border-radius:4px;box-shadow:0 6px 18px rgba(0,0,0,.12);padding:4px 0;z-index:140;min-width:96px}
+.ad-menu div{padding:6px 14px;font-size:12.5px;color:#374151;cursor:pointer}
+.ad-menu div:hover{background:#F2F6FF;color:#2F6BFF}
+
 </style>
 </head>
 <body>
@@ -684,11 +740,12 @@ function qc2Val(r, k){
   if (k === 'sys' || k === 'tmp') return r[k].replace('报告：', '').split(' ')[0];
   return r[k];
 }
-function qc2Filtered(F){
-  F = F || QC2_F;
+function qc2Filtered(F, COLS){
+  F = F || QC2_F; COLS = COLS || QC2_COLS;
   return QC2.filter(function(r){
-    for (var i = 0; i < QC2_COLS.length; i++) {
-      var c = QC2_COLS[i], f = F[c.k];
+    for (var i = 0; i < COLS.length; i++) {
+      var c = COLS[i], f = F[c.k];
+      if (!f) continue;
       if (c.f === 'date') {
         if (f.from && r.time.slice(0,10) < f.from) return false;
         if (f.to   && r.time.slice(0,10) > f.to)   return false;
@@ -720,18 +777,23 @@ function qc2Ctl(c, prefix){
   return '<input class="qcf-ctl" id="' + id + '" placeholder="请输入" value="' + esc(f || '') + '">';
 }
 
+var QM_COLS = QC2_COLS.slice();
+QM_COLS.push({ k:'audit', t:'审核', w:104, f:'select', opts:['已审核','未审核'] });
+
 var QM_S = { page:1, size:50, sort:'time', desc:true, hide:{}, sel:{} };
 var QM_F = {};
-QC2_COLS.forEach(function(c){ QM_F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+QM_COLS.forEach(function(c){ QM_F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+QM_F.audit = '未审核';
 
-var QC_VIEW = { key:'qc', S:QC2_S, F:QC2_F, p:'qcf_', tbl:'qcTable2', pager:'qcPager', wrap:'qcTw',
+var QC_VIEW = { key:'qc', cols:QC2_COLS, S:QC2_S, F:QC2_F, p:'qcf_', tbl:'qcTable2', pager:'qcPager', wrap:'qcTw',
                 all:'qcAll', gear:'qcGear', size:'qcSize', jump:'qcJump', reset:'qcReset', menu:'qcMenu' };
-var QM_VIEW = { key:'qm', S:QM_S, F:QM_F, p:'qmf_', tbl:'qmTable2', pager:'qmPager', wrap:'qmTw',
+var QM_VIEW = { key:'qm', cols:QM_COLS, S:QM_S, F:QM_F, p:'qmf_', tbl:'qmTable2', pager:'qmPager', wrap:'qmTw',
                 all:'qmAll', gear:'qmGear', size:'qmSize', jump:'qmJump', reset:'qmReset', menu:'qmMenu' };
 
 function renderList(V){
   var S = V.S, F = V.F;
-  var rows = qc2Filtered(F);
+  var COLS = V.cols || QC2_COLS;
+  var rows = qc2Filtered(F, COLS);
   var k = S.sort, desc = S.desc;
   rows = rows.slice().sort(function(a, b){
     var x = qc2Val(a, k), y = qc2Val(b, k);
@@ -739,7 +801,7 @@ function renderList(V){
     return desc ? y - x : x - y;
   });
 
-  var cols = QC2_COLS.filter(function(c){ return !S.hide[c.k]; });
+  var cols = COLS.filter(function(c){ return !S.hide[c.k]; });
   var maxP = Math.max(1, Math.ceil(rows.length / S.size));
   if (S.page > maxP) S.page = maxP;
   var view = rows.slice((S.page - 1) * S.size, S.page * S.size);
@@ -769,9 +831,22 @@ function renderList(V){
           v = '<span class="st-dot" style="background:' + col + '"></span>' + esc(r.state);
         }
         if (c.k === 'name' || c.k === 'sid') v = '<span class="ell" title="' + esc(r[c.k]) + '">' + esc(r[c.k]) + '</span>';
+        if (c.k === 'audit') {
+          var acol = r.audit === '已审核' ? '#16A34A' : '#FA8C16';
+          v = '<span class="st-dot" style="background:' + acol + '"></span>' + esc(r.audit);
+        }
         h += '<td' + (c.k === 'time' ? ' class="mono"' : '') + '>' + v + '</td>';
       });
-      h += '<td class="op"><a class="lnk" data-qcv="' + esc(r.sid) + '">查看</a>'
+      var opHtml;
+      if (V.key === 'qm') {
+        var lbl = (F.audit === '已审核') ? '查看'
+                : (F.audit === '未审核') ? '审核'
+                : (r.audit === '已审核' ? '查看' : '审核');
+        opHtml = '<a class="lnk" data-qma="' + esc(r.sid) + '" data-mode="' + lbl + '">' + lbl + '</a>';
+      } else {
+        opHtml = '<a class="lnk" data-qcv="' + esc(r.sid) + '">查看</a>';
+      }
+      h += '<td class="op">' + opHtml
          + '<a class="lnk danger" data-qcd="' + esc(r.sid) + '">删除</a></td></tr>';
     });
   }
@@ -856,7 +931,8 @@ function renderList(V){
   };
   var rs = document.getElementById(V.reset);
   if (rs) rs.onclick = function(){
-    QC2_COLS.forEach(function(c){ F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+    COLS.forEach(function(c){ F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+    if (V.key === 'qm') F.audit = '未审核';
     S.page = 1; S.sel = {}; renderList(V);
     toast(V.key === 'qm' ? '质控管理：已清除筛选条件' : '已清除筛选条件');
   };
@@ -875,8 +951,9 @@ function colMenuFor(V){
   var old = document.getElementById(V.menu);
   if (old) { old.remove(); return; }
   var S = V.S;
+  var COLS = V.cols || QC2_COLS;
   var h = '<div class="qcf-menu" id="' + V.menu + '">';
-  QC2_COLS.forEach(function(c){
+  COLS.forEach(function(c){
     h += '<label><input type="checkbox" data-qcc="' + c.k + '"' + (S.hide[c.k] ? '' : ' checked') + '>' + esc(c.t) + '</label>';
   });
   h += '<label class="all"><input type="checkbox" id="' + V.menu + 'All">全选 / 全不选</label></div>';
@@ -885,7 +962,7 @@ function colMenuFor(V){
     cb.onchange = function(){
       var k = cb.getAttribute('data-qcc');
       if (cb.checked) delete S.hide[k]; else S.hide[k] = true;
-      if (Object.keys(S.hide).length >= QC2_COLS.length) S.hide = {};
+      if (Object.keys(S.hide).length >= COLS.length) S.hide = {};
       renderList(V);
       var m = document.getElementById(V.menu); if (m) m.remove(); colMenuFor(V);
     };
@@ -893,7 +970,7 @@ function colMenuFor(V){
   var cl = document.getElementById(V.menu + 'All');
   if (cl) cl.onchange = function(){
     S.hide = {};
-    if (!cl.checked) QC2_COLS.forEach(function(c, i){ if (i > 0) S.hide[c.k] = true; });
+    if (!cl.checked) COLS.forEach(function(c, i){ if (i > 0) S.hide[c.k] = true; });
     renderList(V);
     var m = document.getElementById(V.menu); if (m) m.remove(); colMenuFor(V);
   };
@@ -2169,6 +2246,230 @@ function openViewer(sid){
 document.addEventListener('click', function(e){
   var a = e.target.closest ? e.target.closest('[data-qcv]') : null;
   if (a) { e.preventDefault(); openViewer(a.getAttribute('data-qcv')); }
+});
+
+</script>
+<script>
+/* ============================================================================
+   质控管理：审核 / 查看（报告文书页）
+   ============================================================================ */
+QC2.forEach(function(r, i){
+  if (!r.audit) r.audit = ((i % 5) < 2) ? '已审核' : '未审核';
+  if (!r.age)   r.age   = 38 + (i % 40);
+});
+
+var AD_ISS = [
+  ['口语化与错别字', -10],
+  ['诊断内容不规范', -5],
+  ['病灶形态描述不规范', -2],
+  ['病灶密度描述不规范', -2],
+  ['病灶边缘描述不规范', -2],
+  ['诊断建议不规范', -2],
+  ['格式与符号不规范', -2]
+];
+
+var AD_S = { sid:null, mode:'审核', collapsed:false, menu:null };
+
+function adRow(sid){
+  for (var i = 0; i < QC2.length; i++) if (QC2[i].sid === sid) return QC2[i];
+  return null;
+}
+function adGrade(r){
+  var m = String(r.sys || '').match(/[甲乙丙丁]/);
+  return m ? m[0] : '乙';
+}
+function adScore(r){
+  var m = String(r.sys || '').match(/([0-9]+)\s*$/);
+  return m ? m[1] : '75';
+}
+function adText(r){
+  var t = (typeof VWR_TXT !== 'undefined') ? VWR_TXT[(r.idx || 0) % VWR_TXT.length] : null;
+  if (t) return { see:t.see, dx:t.dx };
+  return { see:'胸廓对称。双肺散在小结节，长径约0.2-0.6cm；双肺散在少许斑片及条索影。气管及叶、段支气管未见狭窄、闭塞及扩大。肺门及纵隔淋巴结未见肿大。心脏未见增大，心包未见积液。双侧胸腔未见积液。',
+           dx:'双肺散在小结节，多系炎性，请随诊。双肺散在少许慢性炎症，伴轻度间质性改变。' };
+}
+function adEmptySvg(){
+  return '<svg width="128" height="96" viewBox="0 0 128 96" fill="none">'
+    + '<rect x="34" y="20" width="60" height="62" rx="4" stroke="#BFD4FF" stroke-width="2"/>'
+    + '<rect x="46" y="10" width="36" height="14" rx="3" fill="#EAF1FF" stroke="#BFD4FF" stroke-width="2"/>'
+    + '<path d="M46 40h36M46 52h36M46 64h22" stroke="#D6E4FF" stroke-width="2" stroke-linecap="round"/>'
+    + '<path d="M96 34l10-8" stroke="#BFD4FF" stroke-width="2" stroke-linecap="round"/>'
+    + '<path d="M104 24l4 6-7 1 3-7z" fill="#BFD4FF"/>'
+    + '<circle cx="24" cy="70" r="7" stroke="#E3EDFF" stroke-width="2"/>'
+    + '<path d="M18 84c2-3 10-3 12 0" stroke="#E3EDFF" stroke-width="2" stroke-linecap="round"/>'
+    + '</svg>';
+}
+
+function adRender(){
+  var r = adRow(AD_S.sid);
+  if (!r) return;
+  var isView = AD_S.mode === '查看';
+  var t = adText(r);
+  var g = adGrade(r), sc = adScore(r);
+
+  document.getElementById('adBadge').className = 'ad-badge ' + (isView ? 'done' : 'wait');
+  document.getElementById('adBadge').textContent = isView ? '✓ 已审核' : '未审核';
+  document.getElementById('adFields').innerHTML =
+      '<span><span class="k">姓名：</span>' + esc(r.name) + '</span>'
+    + '<span><span class="k">检查号：</span>' + esc(r.sid) + '</span>'
+    + '<span><span class="k">性别：</span>' + esc(r.sex) + '</span>'
+    + '<span><span class="k">年龄：</span>' + esc(String(r.age)) + '</span>'
+    + '<span><span class="k">检查日期：</span>' + esc(r.time) + '</span>';
+  document.getElementById('adSee').textContent = t.see;
+  document.getElementById('adDx').textContent = t.dx;
+  document.getElementById('adGrade').textContent = g;
+  document.getElementById('adScore').textContent = sc + '/100';
+
+  var box = document.getElementById('adList');
+  if (isView) {
+    box.innerHTML = '<div class="ad-empty">' + adEmptySvg() + '<span>暂无内容</span></div>';
+  } else {
+    box.innerHTML = AD_ISS.map(function(it, i){
+      return '<div class="ad-iss" data-i="' + i + '">'
+        + '<i class="ad-ai">AI</i><span class="ad-name">' + esc(it[0]) + '</span>'
+        + '<span class="ad-sep">|</span><span class="ad-pin">📍 1</span><span class="sp"></span>'
+        + '<span class="ad-minus">' + it[1] + '</span>'
+        + '<span class="ad-more" data-more="' + i + '">更多 ▾</span>'
+        + '<span class="ad-x" data-x="' + i + '">×</span></div>';
+    }).join('');
+    adBindList();
+  }
+  document.getElementById('adSubmit').classList.toggle('disabled', isView);
+}
+
+function adBindList(){
+  var box = document.getElementById('adList');
+  [].forEach.call(box.querySelectorAll('[data-x]'), function(x){
+    x.onclick = function(){
+      var row = x.closest('.ad-iss');
+      row.style.display = 'none';
+      toast('已忽略该质控项');
+    };
+  });
+  [].forEach.call(box.querySelectorAll('[data-more]'), function(m){
+    m.onclick = function(e){
+      e.stopPropagation();
+      var old = document.querySelector('.ad-menu'); if (old) old.remove();
+      var d = document.createElement('div');
+      d.className = 'ad-menu';
+      d.innerHTML = '<div data-act="定位">定位原文</div><div data-act="忽略">忽略此项</div><div data-act="复制">复制描述</div>';
+      var rc = m.getBoundingClientRect();
+      d.style.position = 'fixed';
+      d.style.left = Math.max(8, rc.left - 80) + 'px';
+      d.style.top = (rc.bottom + 4) + 'px';
+      document.body.appendChild(d);
+      [].forEach.call(d.querySelectorAll('div'), function(it){
+        it.onclick = function(){
+          var a = it.getAttribute('data-act');
+          d.remove();
+          if (a === '忽略') { var row = m.closest('.ad-iss'); if (row) row.style.display = 'none'; toast('已忽略该质控项'); }
+          else toast(a === '定位' ? '已定位到原文位置' : '已复制问题描述');
+        };
+      });
+      setTimeout(function(){
+        document.addEventListener('click', function close(){ var o = document.querySelector('.ad-menu'); if (o) o.remove(); document.removeEventListener('click', close); });
+      }, 0);
+    };
+  });
+}
+
+function adStep(dir){
+  var V = QM_VIEW;
+  var rows = qc2Filtered(QM_F, QM_COLS);
+  var idx = -1;
+  for (var i = 0; i < rows.length; i++) if (rows[i].sid === AD_S.sid) { idx = i; break; }
+  if (idx < 0) return;
+  var n = idx + dir;
+  if (n < 0 || n >= rows.length) { toast(dir < 0 ? '已经是第一条' : '已经是最后一条'); return; }
+  var r = rows[n];
+  AD_S.sid = r.sid;
+  AD_S.mode = (r.audit === '已审核') ? '查看' : (QM_F.audit === '已审核' ? '查看' : '审核');
+  adRender();
+}
+
+function adClose(){ var m = document.getElementById('adMask'); if (m) m.classList.add('hidden'); }
+
+function openAudit(sid, mode){
+  var r = adRow(sid);
+  if (!r) return;
+  var m = document.getElementById('adMask');
+  if (!m) {
+    m = document.createElement('div');
+    m.id = 'adMask'; m.className = 'ad-mask hidden';
+    m.innerHTML = ''
+    + '<div class="ad">'
+    +   '<div class="ad-top"><a class="ad-back" id="adBack">← 返回</a>'
+    +     '<span class="ad-warn"><i>!</i>提交后将无法进行编辑操作</span></div>'
+    +   '<div class="ad-pat"><div class="ad-pinfo">'
+    +     '<div class="ad-pt"><span>患者信息</span><span class="ad-badge wait" id="adBadge">未审核</span></div>'
+    +     '<div class="ad-fields" id="adFields"></div></div>'
+    +     '<div class="ad-acts"><label><input type="checkbox" id="adAuto">切换患者时自动保存</label>'
+    +       '<button class="ad-btn ghost" id="adPrev">&lt; 前一个</button>'
+    +       '<button class="ad-btn ghost" id="adNext">后一个 &gt;</button>'
+    +       '<button class="ad-btn" id="adSave">保存</button>'
+    +       '<button class="ad-btn pri" id="adSubmit">提交</button>'
+    +       '<button class="ad-btn" id="adReset">重置</button></div></div>'
+    +   '<div class="ad-body">'
+    +     '<div class="ad-left">'
+    +       '<div class="ad-lt"><b>报告文书</b><button class="ad-btn pri">+ 新增</button>'
+    +         '<button class="ad-btn pri">✎ 编辑</button><span class="sp"></span>'
+    +         '<span class="mode">展示模式：单屏-纯文本 ▾</span></div>'
+    +       '<div class="ad-blk"><div class="ad-bh"><span>影像所见-原始报告</span>'
+    +         '<label><input type="checkbox">标注总览</label></div><div class="ad-txt" id="adSee"></div></div>'
+    +       '<div class="ad-blk"><div class="ad-bh"><span>影像诊断-原始报告</span></div>'
+    +         '<div class="ad-txt" id="adDx"></div></div>'
+    +     '</div>'
+    +     '<div class="ad-right">'
+    +       '<div class="ad-rt"><b>报告质控结果</b><em class="ad-grade" id="adGrade">乙</em>'
+    +         '<span class="ad-score" id="adScore">75/100</span><span class="sp"></span>'
+    +         '<a id="adExpand">展开</a><a id="adCollapse">收起</a></div>'
+    +       '<div class="ad-list" id="adList"></div>'
+    +     '</div>'
+    +   '</div>'
+    + '</div>';
+    document.body.appendChild(m);
+    m.addEventListener('click', function(e){ if (e.target === m) adClose(); });
+    document.getElementById('adBack').onclick = adClose;
+    document.getElementById('adPrev').onclick = function(){ adStep(-1); };
+    document.getElementById('adNext').onclick = function(){ adStep(1); };
+    document.getElementById('adSave').onclick = function(){ toast('已保存当前质控记录：' + AD_S.sid); };
+    document.getElementById('adReset').onclick = function(){
+      var rr = adRow(AD_S.sid);
+      AD_S.collapsed = false;
+      adRender();
+      toast('已重置为系统质控结果');
+    };
+    document.getElementById('adSubmit').onclick = function(){
+      var rr = adRow(AD_S.sid);
+      if (!rr) return;
+      if (rr.audit === '已审核') { toast('该记录已审核，无需重复提交'); return; }
+      rr.audit = '已审核';
+      rr.tmp = rr.sys;
+      adClose();
+      renderQm();
+      toast('提交成功，已写入审核结果：' + rr.sid);
+    };
+    document.getElementById('adExpand').onclick = function(){
+      var st = document.querySelectorAll('#adList .ad-iss');
+      [].forEach.call(st, function(x){ x.style.display = ''; });
+      toast('已展开全部质控项');
+    };
+    document.getElementById('adCollapse').onclick = function(){
+      var st = document.querySelectorAll('#adList .ad-iss');
+      if (!st.length) { toast('暂无可收起的质控项'); return; }
+      [].forEach.call(st, function(x, i){ x.style.display = i === 0 ? '' : 'none'; });
+      toast('已收起，仅保留首条');
+    };
+  }
+  AD_S.sid = sid;
+  AD_S.mode = mode || (r.audit === '已审核' ? '查看' : '审核');
+  adRender();
+  m.classList.remove('hidden');
+}
+
+document.addEventListener('click', function(e){
+  var a = e.target.closest ? e.target.closest('[data-qma]') : null;
+  if (a) { e.preventDefault(); openAudit(a.getAttribute('data-qma'), a.getAttribute('data-mode')); }
 });
 
 </script>
