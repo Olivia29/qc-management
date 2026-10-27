@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>质控管理 · 生态伙伴端</title>
+<style>
+:root{
+  --primary:#A9473F; --head:#173D43; --ink:#2B3A3D; --ink2:#4A5A5C;
+  --muted:#8A9A97; --muted2:#B6C2BF; --line:#E6ECEA; --line2:#EFF3F2;
+  --surface:#FFFDFB; --card:#FFFDFB; --bg:#F4F7F5; --ok:#2E7D74; --warn:#C8862A;
+  --r:8px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:13px/1.55 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+.mono{font-family:Consolas,"SF Mono",Menlo,monospace;font-size:11px}
+.mutd{color:var(--muted2)}
+
+/* ---------- 左栏 ---------- */
+.side{position:fixed;left:0;top:0;bottom:0;width:236px;background:#fff;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;z-index:5}
+.sbrand{display:flex;align-items:center;gap:9px;padding:14px 16px 13px;border-bottom:1px solid var(--line2)}
+.sbrand .m{flex:0 0 28px;height:28px;border-radius:6px;background:var(--primary);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+.sbrand .tx{min-width:0}
+.sbrand b{display:block;font-size:11.5px;color:var(--head);font-weight:600;line-height:1.35;white-space:nowrap}
+.sbrand small{display:block;font-size:10.5px;color:var(--muted);margin-top:2px;white-space:nowrap}
+.snav{flex:1;overflow:auto;padding:4px 0 10px}
+.snav .g{font-size:11.5px;color:#666;font-weight:500;padding:13px 16px 5px;letter-spacing:.3px}
+.snav a{display:flex;align-items:center;gap:10px;padding:8px 16px;color:var(--ink);text-decoration:none;
+  font-size:12.5px;position:relative;line-height:1.45;cursor:pointer}
+.snav a i{font-style:normal;color:#999;font-size:11.5px;width:18px;flex:0 0 18px}
+.snav a:hover{background:#F7F8FA}
+.snav a.on{background:#FCECEC;color:#333;font-weight:600}
+.snav a.on i{color:#333}
+.snav a.on:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--primary)}
+.suser{display:flex;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--line2)}
+.suser .av{width:30px;height:30px;border-radius:5px;background:#E8EDF1;color:#5B6B77;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:0 0 30px}
+.suser b{display:block;font-size:12.5px;color:var(--ink);line-height:1.4}
+.suser small{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+
+/* ---------- 右侧 ---------- */
+.pane{margin-left:236px;min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:52px;flex:0 0 52px;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:4}
+.crumb{font-size:12px;color:var(--muted)}
+.crumb b{color:var(--head);font-weight:600}
+.tb-r{display:flex;align-items:center;gap:14px;font-size:11.5px;color:var(--muted)}
+.tb-r .subj{color:var(--ink2)}
+.btn{background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 12px;font-size:12px;
+  color:var(--ink2);line-height:1.4}
+.btn:hover{border-color:var(--primary);color:var(--primary)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.primary:hover{filter:brightness(.95);color:#fff}
+.btn.sm{padding:4px 10px;font-size:11.5px}
+.main{flex:1;padding:18px 22px 26px;min-width:0}
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.head h1{margin:0;font-size:19px;color:var(--head);font-weight:600;letter-spacing:.2px}
+.head .acts{display:flex;gap:8px;flex:0 0 auto}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0;overflow:hidden}
+.qcf-wrap{position:relative;overflow:auto}
+table.qcf{width:100%;border-collapse:separate;border-spacing:0;font-size:11.5px;min-width:1520px}
+.qcf thead th{background:#F5F7FA;color:#333;font-weight:500;text-align:left;padding:9px 7px 7px;
+  border-bottom:1px solid var(--line);white-space:nowrap}
+.qcf thead th.op{text-align:right}
+.qcf-frow th{padding:0 6px 8px!important;background:#F5F7FA;border-bottom:1px solid var(--line)}
+.qcf tbody td{padding:8px 7px;border-bottom:1px solid #F1F4F3;color:var(--ink);white-space:nowrap}
+.qcf tbody tr:hover td{background:#FBFCFB}
+.qcf tbody tr:last-child td{border-bottom:none}
+.qcf-ctl{width:100%;height:26px;border:1px solid #DCE3E1;border-radius:4px;background:#fff;
+  font-size:11px;color:var(--ink);padding:0 6px;outline:none;font-family:inherit}
+.qcf-ctl:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(169,71,63,.08)}
+.qcf-ctl::placeholder{color:#9AA6A3}
+select.qcf-ctl{appearance:none;-webkit-appearance:none;padding-right:18px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='6'><path d='M0 0l4 5 4-5z' fill='%238A9A97'/></svg>");
+  background-repeat:no-repeat;background-position:right 6px center}
+.qcf-date{display:flex;align-items:center;gap:3px}
+.qcf-date input{width:calc(50% - 9px);min-width:62px}
+.qcf-date span{color:var(--muted2);font-size:10px}
+.qcf-gear{float:right;color:var(--muted);cursor:pointer;font-size:12px;line-height:1.1}
+.qcf-gear:hover{color:var(--primary)}
+.qcf .dg-link{color:var(--primary);text-decoration:none;cursor:pointer;margin-right:8px;font-size:11.5px}
+.qcf .dg-link:hover{text-decoration:underline}
+.qcf .dg-link.danger{color:#B3261E}
+.qcf .ell{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom}
+.qcf-menu{position:absolute;top:6px;right:10px;z-index:20;background:#fff;border:1px solid var(--line);
+  border-radius:8px;box-shadow:0 8px 24px rgba(23,61,67,.14);padding:8px;min-width:152px}
+.qcf-menu label{display:flex;align-items:center;gap:6px;padding:4px 6px;font-size:11.5px;color:var(--ink);
+  cursor:pointer;border-radius:4px;margin:0}
+.qcf-menu label:hover{background:#F7F8FA}
+.qcf-menu label.all{border-top:1px solid var(--line2);margin-top:4px;padding-top:7px}
+.st-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.or-empty td{text-align:center;color:var(--muted);padding:28px 0!important}
+
+.pg{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;
+  border-top:1px solid var(--line);background:#fff;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.pg .btns{display:flex;align-items:center;gap:4px}
+.pg button{min-width:26px;height:26px;border:1px solid var(--line);background:#fff;border-radius:5px;
+  color:var(--ink2);font-size:11.5px;padding:0 6px}
+.pg button:hover:not(:disabled){border-color:var(--primary);color:var(--primary)}
+.pg button.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.pg button:disabled{color:var(--muted2);cursor:not-allowed}
+.pg select{height:26px;border:1px solid var(--line);border-radius:5px;background:#fff;font-size:11.5px;color:var(--ink2);padding:0 4px}
+.pg .gap{color:var(--muted2);padding:0 3px}
+
+/* ---------- 弹窗 ---------- */
+#dgModal{position:fixed;inset:0;background:rgba(23,61,67,.42);display:flex;align-items:center;
+  justify-content:center;padding:26px;z-index:60}
+.dg-sheet{background:#fff;border-radius:12px;width:min(760px,94vw);max-height:86vh;display:flex;flex-direction:column;
+  box-shadow:0 24px 64px rgba(23,61,67,.28);overflow:hidden}
+.dg-shead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 18px;
+  border-bottom:1px solid var(--line)}
+.dg-shead b{font-size:14px;color:var(--head);font-weight:600}
+.dg-shead small{display:block;margin-top:3px;font-size:11.5px;color:var(--muted)}
+.dg-x{background:none;border:none;font-size:12px;color:var(--muted)}
+.dg-x:hover{color:var(--primary)}
+.dg-sbody{padding:16px 18px;overflow:auto}
+.dg-kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;margin-bottom:14px}
+.dg-kv div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dg-kv small{font-size:11px;color:var(--muted)}
+.dg-kv span{font-size:12.5px;color:var(--ink);word-break:break-all}
+.dg-blk{border:1px solid var(--line2);border-radius:8px;padding:11px 12px;margin-bottom:10px;background:#FCFDFC}
+.dg-blk .t{font-size:12px;font-weight:600;color:var(--head);margin-bottom:6px}
+.dg-blk p{margin:3px 0;font-size:12px;color:var(--ink2);line-height:1.6}
+.dg-note{background:#FDF6F4;border:1px solid #F3DFDA;border-radius:7px;padding:8px 10px;
+  font-size:11px;color:#8A5A52;line-height:1.6}
+.dg-sfoot{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px;border-top:1px solid var(--line);background:#FCFDFC}
+.qc-dt{width:100%;border-collapse:collapse;font-size:11.5px;margin-bottom:12px}
+.qc-dt th{text-align:left;font-weight:500;color:var(--muted);padding:7px;border-bottom:1px solid var(--line);white-space:nowrap;background:#F5F7FA}
+.qc-dt td{padding:8px 7px;border-bottom:1px solid #F1F4F3;color:var(--ink);vertical-align:top}
+
+#toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(12px);background:#173D43;
+  color:#fff;font-size:12px;padding:8px 15px;border-radius:7px;opacity:0;pointer-events:none;
+  transition:opacity .22s,transform .22s;z-index:90;max-width:70vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="sbrand">
+    <span class="m">南</span>
+    <div class="tx">
+      <b>南昌影禾医脉智能科技有限公司</b>
+      <small>生态伙伴端 · S024</small>
+    </div>
+  </div>
+  <nav class="snav">
+    <div class="g">患者管理</div>
+    <a href="javascript:;" class="on" data-page="qc"><i>01</i>质控管理</a>
+    <div class="g">系统</div>
+    <a href="javascript:;" data-page="setting"><i>02</i>设置中心</a>
+  </nav>
+  <div class="suser"><span class="av">王</span><div><b>王斌</b><small>企业管理员</small></div></div>
+</aside>
+
+<div class="pane">
+  <header class="topbar">
+    <div class="crumb">生态伙伴端 / <b>质控管理</b></div>
+    <div class="tb-r">
+      <span class="subj">当前主体：南昌影禾医脉智能科技有限公司</span>
+      <button class="btn sm" id="tbClose">关闭</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="head">
+      <h1>质控管理</h1>
+      <div class="acts">
+        <button class="btn" id="qcRefresh">刷新</button>
+        <button class="btn" id="qcReset">重置筛选</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="qcf-wrap">
+        <table class="qcf" id="qcTable2"></table>
+      </div>
+      <div class="pg" id="qcPager"></div>
+    </div>
+  </main>
+</div>
+
+<div id="dgModal" class="hidden"></div>
+<div id="toast"></div>
+
+<script>
+/* ---------- 通用 ---------- */
+var toastTimer = null;
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2000);
+}
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function dgOpen(html){
+  var m = document.getElementById('dgModal');
+  m.innerHTML = html; m.classList.remove('hidden');
+  var x = document.getElementById('dgX'); if (x) x.onclick = dgClose;
+  var c = document.getElementById('dgClose'); if (c) c.onclick = dgClose;
+  m.onclick = function(e){ if (e.target === m) dgClose(); };
+}
+function dgClose(){
+  var m = document.getElementById('dgModal');
+  m.classList.add('hidden'); m.innerHTML = '';
+}
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') dgClose(); });
+</script>
+
+<script>
+/* ============================================================================
+   患者管理 · 质控管理（表头逐列筛选）
+   ============================================================================ */
+var QC_NAMES = ['黎明','王清','赵敏','孙丽','周强','吴静','郑伟','冯雪','陈曦','褚亮','卫红','蒋文'];
+var QC_DEPT  = ['口腔门诊','影像科','放射科','无'];
+var QC_PART  = ['胸部','颅脑','腹部'];
+var QC_TYPE  = ['CT - 平扫','CT - 增强','MR - 平扫'];
+var QC_SCOPE = ['报告','报告+图像','图像'];
+var QC_GRADE = [['甲',88],['乙',77],['乙',75],['丙',71],['丙',68],['丁',62]];
+
+var QC2 = (function(){
+  var out = [];
+  var p2 = function(n){ return (n < 10 ? '0' : '') + n; };
+  var seed = [
+    { name:'黎明', pid:'PAT2026', dept:'口腔门诊', org:'HUAXI', sid:'CN20260734568', sex:'男',
+      time:'2026-10-25 10:30:21', type:'CT - 平扫', part:'胸部', scope:'报告', state:'报告：成功',
+      sys:'报告：乙 75', tmp:'报告：乙 75' },
+    { name:'王清', pid:'PAT2026', dept:'口腔门诊', org:'HUAXI', sid:'CN20260734567', sex:'男',
+      time:'2026-10-24 10:30:21', type:'CT - 平扫', part:'胸部', scope:'报告', state:'报告：成功',
+      sys:'报告：丙 71', tmp:'报告：丙 71' },
+    { name:'HX胸部CT二批次患者0…', pid:'无', dept:'无', org:'huaxi',
+      sid:'1.2840.113619.2.476,…', sex:'无', time:'2026-10-19 05:57:00', type:'CT - 平扫',
+      part:'胸部', scope:'报告', state:'报告：成功', sys:'报告：乙 77', tmp:'报告：丙 68' }
+  ];
+  seed.forEach(function(r){ out.push(r); });
+  var base = new Date(2026, 9, 19, 5, 57, 0);
+  for (var i = 3; i < 407; i++) {
+    var d = new Date(base);
+    d.setDate(d.getDate() - i);
+    d.setHours((i * 5) % 20 + 1, (i * 17) % 60, (i * 29) % 60);
+    var g = QC_GRADE[i % 6], g2 = QC_GRADE[(i + 2) % 6];
+    var batch = i % 5 === 0;
+    out.push({
+      name: batch ? ('HX胸部CT二批次患者' + p2(i % 100)) : QC_NAMES[i % QC_NAMES.length],
+      pid: batch ? '无' : ('PAT20260' + (34500 + i)),
+      dept: batch ? '无' : QC_DEPT[i % 4],
+      org: batch ? 'huaxi' : 'HUAXI',
+      sid: batch ? ('1.2840.113619.2.' + (470 + i) + ',…') : ('CN2026' + (734500 - i) + ''),
+      sex: batch ? '无' : (i % 3 === 0 ? '女' : '男'),
+      time: d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()) + ' '
+          + p2(d.getHours()) + ':' + p2(d.getMinutes()) + ':' + p2(d.getSeconds()),
+      type: QC_TYPE[i % 3],
+      part: QC_PART[i % 3],
+      scope: QC_SCOPE[i % 3],
+      state: i % 23 === 0 ? '报告：质控中' : (i % 17 === 0 ? '报告：失败' : '报告：成功'),
+      sys: '报告：' + g[0] + ' ' + (g[1] - (i % 5)),
+      tmp: '报告：' + g2[0] + ' ' + (g2[1] - (i % 4))
+    });
+  }
+  return out;
+})();
+
+var QC2_COLS = [
+  { k:'name',  t:'患者姓名',     w:122, f:'text', sort:true },
+  { k:'pid',   t:'患者ID',       w:120, f:'text' },
+  { k:'dept',  t:'部门',         w:96,  f:'select', opts:['口腔门诊','影像科','放射科','无'] },
+  { k:'org',   t:'机构',         w:86,  f:'select', opts:['HUAXI','huaxi'] },
+  { k:'sid',   t:'检查号',       w:162, f:'text' },
+  { k:'sex',   t:'性别',         w:76,  f:'select', opts:['男','女','无'] },
+  { k:'time',  t:'检查日期',     w:132, f:'date', sort:true },
+  { k:'type',  t:'检查类型',     w:110, f:'select', opts:['CT - 平扫','CT - 增强','MR - 平扫'] },
+  { k:'part',  t:'部位',         w:84,  f:'select', opts:['胸部','颅脑','腹部'] },
+  { k:'scope', t:'质控范围',     w:104, f:'select', opts:['报告','报告+图像','图像'] },
+  { k:'state', t:'质控状态',     w:112, f:'select', opts:['报告：成功','报告：质控中','报告：失败'], sort:true },
+  { k:'sys',   t:'系统质控结果', w:112, f:'select', opts:['甲','乙','丙','丁'] },
+  { k:'tmp',   t:'暂存审核结果', w:112, f:'select', opts:['甲','乙','丙','丁'] }
+];
+
+var QC2_F = {};
+var QC2_S = { page:1, size:20, sort:'time', desc:true, hide:{} };
+QC2_COLS.forEach(function(c){ QC2_F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+
+function qc2Val(r, k){
+  if (k === 'sys' || k === 'tmp') return r[k].replace('报告：', '').split(' ')[0];
+  return r[k];
+}
+
+function qc2Filtered(){
+  return QC2.filter(function(r){
+    for (var i = 0; i < QC2_COLS.length; i++) {
+      var c = QC2_COLS[i], f = QC2_F[c.k];
+      if (c.f === 'date') {
+        if (f.from && r.time.slice(0,10) < f.from) return false;
+        if (f.to   && r.time.slice(0,10) > f.to)   return false;
+      } else if (c.f === 'select') {
+        if (f && qc2Val(r, c.k) !== f) return false;
+      } else if (c.f === 'text') {
+        if (f && String(r[c.k]).toUpperCase().indexOf(f.toUpperCase()) < 0) return false;
+      }
+    }
+    return true;
+  });
+}
+
+function qc2Ctl(c){
+  var id = 'qcf_' + c.k, f = QC2_F[c.k];
+  if (c.f === 'date') {
+    return '<div class="qcf-date">'
+         +   '<input type="date" class="qcf-ctl" id="' + id + '_from" value="' + (f.from || '') + '" title="开始日期">'
+         +   '<span>→</span>'
+         +   '<input type="date" class="qcf-ctl" id="' + id + '_to" value="' + (f.to || '') + '" title="结束日期">'
+         + '</div>';
+  }
+  if (c.f === 'select') {
+    var opts = '<option value="">全部</option>' + c.opts.map(function(o){
+      return '<option' + (f === o ? ' selected' : '') + '>' + esc(o) + '</option>';
+    }).join('');
+    return '<select class="qcf-ctl" id="' + id + '">' + opts + '</select>';
+  }
+  return '<input class="qcf-ctl" id="' + id + '" placeholder="请输入" value="' + esc(f || '') + '">';
+}
+
+function renderQc(){
+  var rows = qc2Filtered();
+  var k = QC2_S.sort, desc = QC2_S.desc;
+  rows = rows.slice().sort(function(a, b){
+    var x = a[k], y = b[k];
+    if (k === 'sys' || k === 'tmp') { x = qc2Val(a, k); y = qc2Val(b, k); }
+    if (typeof x === 'string') return desc ? y.localeCompare(x) : x.localeCompare(y);
+    return desc ? y - x : x - y;
+  });
+
+  var cols = QC2_COLS.filter(function(c){ return !QC2_S.hide[c.k]; });
+  var maxP = Math.max(1, Math.ceil(rows.length / QC2_S.size));
+  if (QC2_S.page > maxP) QC2_S.page = maxP;
+  var view = rows.slice((QC2_S.page - 1) * QC2_S.size, QC2_S.page * QC2_S.size);
+
+  var arrow = function(c2){ return c2.sort ? (QC2_S.sort === c2.k ? (QC2_S.desc ? ' ▾' : ' ▴') : ' ◇') : ''; };
+
+  var h = '<colgroup>' + cols.map(function(c){ return '<col style="width:' + c.w + 'px">'; }).join('')
+        + '<col style="width:104px"></colgroup>';
+  h += '<thead><tr>';
+  cols.forEach(function(c){ h += '<th>' + esc(c.t) + arrow(c) + '</th>'; });
+  h += '<th class="op">操作<span class="qcf-gear" id="qcGear" title="表头设置">⚙</span></th></tr>';
+  h += '<tr class="qcf-frow">';
+  cols.forEach(function(c){ h += '<th>' + qc2Ctl(c) + '</th>'; });
+  h += '<th class="op"></th></tr></thead><tbody>';
+
+  if (!view.length) {
+    h += '<tr class="or-empty"><td colspan="' + (cols.length + 1) + '">没有符合条件的质控记录</td></tr>';
+  } else {
+    view.forEach(function(r){
+      h += '<tr>';
+      cols.forEach(function(c){
+        var v = esc(r[c.k]);
+        if (c.k === 'state') {
+          var col = r.state.indexOf('成功') >= 0 ? 'var(--ok)' : (r.state.indexOf('失败') >= 0 ? '#B3261E' : 'var(--warn)');
+          v = '<span class="st-dot" style="background:' + col + '"></span>' + esc(r.state);
+        }
+        if (c.k === 'name' || c.k === 'sid') v = '<span class="ell" title="' + esc(r[c.k]) + '">' + esc(r[c.k]) + '</span>';
+        h += '<td' + (c.k === 'time' ? ' class="mono"' : '') + '>' + v + '</td>';
+      });
+      h += '<td class="op"><a class="dg-link" data-qca="' + esc(r.sid) + '">审核</a>'
+         + '<a class="dg-link danger" data-qcd="' + esc(r.sid) + '">删除</a></td></tr>';
+    });
+  }
+  h += '</tbody>';
+  document.getElementById('qcTable2').innerHTML = h;
+
+  var btns = '<button data-p="' + (QC2_S.page - 1) + '"' + (QC2_S.page <= 1 ? ' disabled' : '') + '>‹</button>';
+  var pages = [];
+  for (var p = 1; p <= maxP; p++) {
+    if (p <= 6 || p === maxP || Math.abs(p - QC2_S.page) <= 1) pages.push(p);
+  }
+  var last = 0;
+  pages.forEach(function(p){
+    if (last && p - last > 1) btns += '<span class="gap">…</span>';
+    btns += '<button data-p="' + p + '" class="' + (p === QC2_S.page ? 'on' : '') + '">' + p + '</button>';
+    last = p;
+  });
+  btns += '<button data-p="' + (QC2_S.page + 1) + '"' + (QC2_S.page >= maxP ? ' disabled' : '') + '>›</button>';
+
+  document.getElementById('qcPager').innerHTML =
+      '<span>共 ' + rows.length + ' 条</span>'
+    + '<span class="btns"><select id="qcSize">'
+    +   [10,20,50].map(function(n){ return '<option value="' + n + '"' + (n === QC2_S.size ? ' selected' : '') + '>' + n + '条/页</option>'; }).join('')
+    + '</select>' + btns
+    + '<span style="color:var(--muted);font-size:11.5px;margin-left:6px">前往</span>'
+    + '<input id="qcJump" value="' + QC2_S.page + '" style="width:38px;border:1px solid var(--line);border-radius:4px;padding:2px 5px;font-size:11.5px;text-align:center">'
+    + '<span style="color:var(--muted);font-size:11.5px">页</span></span>';
+
+  cols.forEach(function(c){
+    var id = 'qcf_' + c.k;
+    if (c.f === 'date') {
+      ['_from','_to'].forEach(function(sfx){
+        var e = document.getElementById(id + sfx);
+        if (e) e.onchange = function(){
+          QC2_F[c.k].from = document.getElementById(id + '_from').value;
+          QC2_F[c.k].to   = document.getElementById(id + '_to').value;
+          QC2_S.page = 1; renderQc();
+        };
+      });
+    } else {
+      var el = document.getElementById(id);
+      if (el) {
+        var handler = function(){ QC2_F[c.k] = el.value.trim(); QC2_S.page = 1; renderQc(); };
+        el.onchange = handler;
+        if (c.f === 'text') el.onkeydown = function(e){ if (e.key === 'Enter') { e.preventDefault(); handler(); } };
+      }
+    }
+  });
+
+  [].forEach.call(document.querySelectorAll('#qcTable2 thead tr:first-child th'), function(th, i){
+    var c = cols[i];
+    if (c && c.sort) th.style.cursor = 'pointer', th.onclick = function(){
+      if (QC2_S.sort === c.k) QC2_S.desc = !QC2_S.desc; else { QC2_S.sort = c.k; QC2_S.desc = true; }
+      renderQc();
+    };
+  });
+  [].forEach.call(document.querySelectorAll('#qcPager [data-p]'), function(b){
+    b.onclick = function(){ QC2_S.page = +b.getAttribute('data-p'); renderQc(); };
+  });
+  var sz = document.getElementById('qcSize');
+  if (sz) sz.onchange = function(){ QC2_S.size = +sz.value; QC2_S.page = 1; renderQc(); };
+  var jp = document.getElementById('qcJump');
+  if (jp) jp.onkeydown = function(e){
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    var n = parseInt(jp.value, 10);
+    if (!n || n < 1 || n > maxP) { toast('页码需在 1–' + maxP + ' 之间'); return; }
+    QC2_S.page = n; renderQc();
+  };
+  [].forEach.call(document.querySelectorAll('#qcTable2 [data-qca]'), function(a){
+    a.onclick = function(){ qcAudit(a.getAttribute('data-qca')); };
+  });
+  [].forEach.call(document.querySelectorAll('#qcTable2 [data-qcd]'), function(a){
+    a.onclick = function(){
+      var sid = a.getAttribute('data-qcd');
+      QC2 = QC2.filter(function(r){ return r.sid !== sid; });
+      renderQc(); toast('已删除质控记录：' + sid);
+    };
+  });
+  var gear = document.getElementById('qcGear');
+  if (gear) gear.onclick = function(e){ e.stopPropagation(); qcColMenu(); };
+}
+
+function qcColMenu(){
+  var old = document.getElementById('qcMenu');
+  if (old) { old.remove(); return; }
+  var h = '<div class="qcf-menu" id="qcMenu">';
+  QC2_COLS.forEach(function(c){
+    h += '<label><input type="checkbox" data-qcc="' + c.k + '"' + (QC2_S.hide[c.k] ? '' : ' checked') + '>' + esc(c.t) + '</label>';
+  });
+  h += '<label class="all"><input type="checkbox" id="qcColAll">全选 / 全不选</label></div>';
+  var wrap = document.querySelector('.qcf-wrap');
+  wrap.insertAdjacentHTML('afterbegin', h);
+  [].forEach.call(document.querySelectorAll('#qcMenu [data-qcc]'), function(cb){
+    cb.onchange = function(){
+      var k = cb.getAttribute('data-qcc');
+      if (cb.checked) delete QC2_S.hide[k]; else QC2_S.hide[k] = true;
+      if (Object.keys(QC2_S.hide).length >= QC2_COLS.length) QC2_S.hide = {};
+      renderQc();
+      var m = document.getElementById('qcMenu'); if (m) m.remove(); qcColMenu();
+    };
+  });
+  var cl = document.getElementById('qcColAll');
+  if (cl) cl.onchange = function(){
+    QC2_S.hide = {};
+    if (!cl.checked) QC2_COLS.forEach(function(c, i){ if (i > 0) QC2_S.hide[c.k] = true; });
+    renderQc();
+    var m = document.getElementById('qcMenu'); if (m) m.remove(); qcColMenu();
+  };
+}
+
+function qcAudit(sid){
+  var r = QC2.filter(function(x){ return x.sid === sid; })[0];
+  if (!r) return;
+  dgOpen('<div class="dg-sheet">'
+    + '<div class="dg-shead"><div><b>质控审核</b>'
+    +   '<small>' + esc(r.name) + '　|　检查号 ' + esc(r.sid) + '</small></div>'
+    +   '<button class="dg-x" id="dgX">关闭</button></div>'
+    + '<div class="dg-sbody">'
+    +   '<div class="dg-kv">'
+    +     '<div><small>患者ID</small><span>' + esc(r.pid) + '</span></div>'
+    +     '<div><small>部门 / 机构</small><span>' + esc(r.dept) + ' / ' + esc(r.org) + '</span></div>'
+    +     '<div><small>检查</small><span>' + esc(r.type) + ' · ' + esc(r.part) + '</span></div>'
+    +     '<div><small>检查日期</small><span>' + esc(r.time) + '</span></div>'
+    +     '<div><small>质控范围</small><span>' + esc(r.scope) + '</span></div>'
+    +     '<div><small>质控状态</small><span>' + esc(r.state) + '</span></div>'
+    +     '<div><small>系统质控结果</small><span>' + esc(r.sys) + '</span></div>'
+    +     '<div><small>暂存审核结果</small><span>' + esc(r.tmp) + '</span></div>'
+    +   '</div>'
+    +   '<table class="qc-dt"><thead><tr><th>质控项</th><th>判定要点</th></tr></thead><tbody>'
+    +     '<tr><td>报告完整性</td><td>检查所见 / 诊断意见 / 建议是否齐全</td></tr>'
+    +     '<tr><td>描述规范性</td><td>病灶位置、大小、密度的描述是否规范</td></tr>'
+    +     '<tr><td>结论一致性</td><td>结论是否与 AI 检出结果一致</td></tr>'
+    +     '<tr><td>危急值提示</td><td>存在高度可疑病灶时是否给出提示</td></tr>'
+    +   '</tbody></table>'
+    +   '<div class="dg-note">审核结果仅覆盖「' + esc(r.scope) + '」范围；审核通过后写入暂存审核结果。</div>'
+    + '</div>'
+    + '<div class="dg-sfoot"><button class="btn" id="dgClose">关闭</button>'
+    +   '<button class="btn" id="qcReject">退回整改</button>'
+    +   '<button class="btn primary" id="qcPass">审核通过</button></div>'
+    + '</div>');
+  var pass = document.getElementById('qcPass');
+  if (pass) pass.onclick = function(){
+    r.state = '报告：成功'; r.tmp = r.sys;
+    dgClose(); renderQc(); toast('审核通过，已写入暂存审核结果');
+  };
+  var rej = document.getElementById('qcReject');
+  if (rej) rej.onclick = function(){ dgClose(); toast('已退回整改：' + r.sid); };
+}
+
+/* ---------- 交互 ---------- */
+document.getElementById('qcRefresh').onclick = function(){ renderQc(); toast('质控列表已刷新'); };
+document.getElementById('qcReset').onclick = function(){
+  QC2_COLS.forEach(function(c){ QC2_F[c.k] = (c.f === 'date') ? { from:'', to:'' } : ''; });
+  QC2_S.page = 1; renderQc(); toast('已重置列筛选');
+};
+document.getElementById('tbClose').onclick = function(){ toast('已关闭当前页面（示例）'); };
+document.addEventListener('click', function(e){
+  var m = document.getElementById('qcMenu');
+  if (!m) return;
+  if (e.target.closest && (e.target.closest('#qcMenu') || e.target.closest('#qcGear'))) return;
+  m.remove();
+});
+[].forEach.call(document.querySelectorAll('.snav a'), function(a){
+  a.onclick = function(){
+    if (a.getAttribute('data-page') === 'setting') toast('设置中心不在本原型范围内');
+  };
+});
+
+renderQc();
+</script>
+</body>
+</html>
