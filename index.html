@@ -126,6 +126,7 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
 .pg .jump input:focus{border-color:var(--blue)}
 
 /* ===================== 影像质控分析 ===================== */
+.qa-title{font-size:18px;font-weight:600;color:var(--text);margin:2px 0 12px}
 .qa-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);
   border-radius:4px;padding:12px 14px;margin-bottom:12px}
 .qa-seg{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
@@ -184,6 +185,9 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
 .qa-leg.inline .r{display:flex;align-items:center;gap:5px;font-size:12.5px}
 .qa-leg.inline .r i{width:7px;height:7px;border-radius:50%}
 .qa-none{font-size:12.5px;color:var(--muted)}
+.qa-tag{display:inline-block;margin-left:6px;padding:0 5px;height:16px;line-height:15px;border-radius:2px;
+  background:#FFF1F0;color:#D4380D;font-size:10.5px;font-style:normal;border:1px solid #FFCCC7;vertical-align:1px}
+.qa-alert{font-style:normal;color:#D4380D;font-weight:600;margin-right:3px}
 .qa-card-h{font-size:14px;font-weight:600;color:var(--text);padding-bottom:10px;
   border-bottom:1px solid var(--line);margin-bottom:12px}
 .qa-blk{margin-bottom:16px}
@@ -320,6 +324,7 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
     </div>
   </div>
     <div id="tabImg" class="hidden">
+    <div class="qa-title">影像质量分析</div>
     <div class="qa-bar">
       <span class="lbl">时间周期</span>
       <div class="qa-seg" id="qaPeriod">
@@ -382,6 +387,75 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--blue);cursor:poin
           <div class="qa-blk-h" id="qaYoyTitle">同比数据分析</div>
           <p class="qa-txt" id="qaYoyTxt"></p>
           <div id="qaYoyChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tabRep" class="hidden">
+    <div class="qa-title">报告质量统计分析</div>
+    <div class="qa-bar">
+      <span class="lbl">时间周期</span>
+      <div class="qa-seg" id="rpPeriod">
+        <button class="on" data-v="month">近一月</button>
+        <button data-v="quarter">近三月</button>
+        <button data-v="half">近半年</button>
+        <button data-v="custom">自定义</button>
+      </div>
+      <span class="lbl">环节</span>
+      <div class="qa-seg" id="rpStage">
+        <button data-v="事中">事中</button>
+        <button class="on" data-v="终末">终末</button>
+      </div>
+      <span class="lbl">设备</span>
+      <select class="qa-sel" id="rpDev"><option>CT</option><option>MR</option><option>DR</option></select>
+      <span class="lbl">类型</span>
+      <div class="qa-seg" id="rpType">
+        <button class="on" data-v="系统">系统</button>
+        <button data-v="人工">人工</button>
+      </div>
+      <button class="btn primary" id="rpQuery">查询</button>
+      <button class="btn" id="rpReset">重置</button>
+      <span class="qa-sp"></span>
+      <span class="qa-range" id="rpRange">2026.09.27–2026.10.27</span>
+      <button class="btn primary" id="rpAiReport">
+        <span style="display:inline-flex;align-items:center;gap:6px">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>
+          </svg>AI分析报告</span>
+      </button>
+    </div>
+
+    <div class="qa-tabs" id="rpTabs">
+      <button class="on" data-v="sum">总体达标情况</button>
+      <button data-v="key">关键问题分析</button>
+    </div>
+
+    <div class="qa-grid">
+      <div class="qa-card">
+        <div class="qa-cap" id="rpCap">—</div>
+        <div class="qa-kpis" id="rpKpis"></div>
+        <div class="qa-donutrow" id="rpDonutRow">
+          <div id="rpDonut"></div>
+          <div class="qa-leg" id="rpLeg"></div>
+        </div>
+        <div class="qa-dt-head"><span>详情分析</span>
+          <span class="qa-focus hidden" id="rpFocus"><i></i>需关注</span>
+        </div>
+        <div id="rpDetail"></div>
+      </div>
+      <div class="qa-card">
+        <div class="qa-card-h" id="rpCardTitle">总体达标情况改进分析</div>
+        <div class="qa-blk">
+          <div class="qa-blk-h" id="rpMomTitle">环比数据分析</div>
+          <p class="qa-txt" id="rpMomTxt"></p>
+          <div id="rpMomChart"></div>
+        </div>
+        <div class="qa-blk">
+          <div class="qa-blk-h" id="rpYoyTitle">同比数据分析</div>
+          <p class="qa-txt" id="rpYoyTxt"></p>
+          <div id="rpYoyChart"></div>
         </div>
       </div>
     </div>
@@ -751,12 +825,14 @@ function showTab(key){
   [].forEach.call(document.querySelectorAll('#qcTabs .tab'), function(b){
     b.classList.toggle('on', b.getAttribute('data-tab') === key);
   });
-  var isList = (key === 'list'), isImg = (key === 'img');
+  var isList = (key === 'list'), isImg = (key === 'img'), isRep = (key === 'rep');
   document.getElementById('tabList').classList.toggle('hidden', !isList);
   document.getElementById('qcActions').classList.toggle('hidden', !isList);
   document.getElementById('tabImg').classList.toggle('hidden', !isImg);
+  document.getElementById('tabRep').classList.toggle('hidden', !isRep);
   var other = document.getElementById('tabOther');
   if (isImg) { other.classList.add('hidden'); other.innerHTML = ''; bindQa(); renderQa(); return; }
+  if (isRep) { other.classList.add('hidden'); other.innerHTML = ''; bindRp(); renderRp(); return; }
   if (isList) { other.classList.add('hidden'); other.innerHTML = ''; return; }
   var m = QC_TABS[key];
   other.innerHTML = '<div class="placeholder"><div class="ic">'
@@ -889,7 +965,10 @@ function qaCombo(legend, prevLabel, curLabel, prev, cur){
   var W = 500, H = 196, pl = 34, pr = 14, pt = 24, pb = 40;
   var iw = W - pl - pr, ih = H - pt - pb;
   var max = Math.max(prev, cur, 1);
-  var step = max <= 1 ? 0.2 : (max <= 2 ? 0.5 : Math.ceil(max / 4));
+  var raw = max / 5;
+  var cands = [0.2, 0.25, 0.5, 1, 2, 2.5, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 5000, 10000];
+  var step = cands[cands.length - 1];
+  for (var ci = 0; ci < cands.length; ci++) { if (cands[ci] >= raw - 1e-9) { step = cands[ci]; break; } }
   var top = Math.ceil(max / step) * step;
   top = +top.toFixed(6);
   var Y = function(v){ return pt + ih * (1 - v / top); };
@@ -1149,7 +1228,8 @@ function qaKeyText(R, cur, base, kind, bf, bt, when){
 }
 
 /* ---------- AI 分析报告 ---------- */
-function openAiReport(){
+function openAiReport(kind){
+  var quant = (kind === '报告') ? '全量' : '全质量';
   dgOpen('<div class="dg-sheet ai-sheet">'
     + '<div class="dg-shead"><div><b>AI分析报告</b></div>'
     +   '<button class="dg-x" id="dgX">✕</button></div>'
@@ -1157,7 +1237,7 @@ function openAiReport(){
     +   '<div class="ai-sec"><div class="ai-sec-h"><span>1</span>大纲生成</div>'
     +     '<div class="ai-h2">一、质控目标</div>'
     +     '<p class="ai-p">结合本次质控统计数据，梳理本次质控整体等级分布情况，明确整体质量等级分布特征，对照质控评定标准完成整体质量等级判定。'
-    +       '同步汇总全质量质控问题整体发生情况，梳理整体问题发生趋势，结合同期往期参照维度，明确整体问题数量变动态势。'
+    +       '同步汇总' + quant + '质控问题整体发生情况，梳理整体问题发生趋势，结合同期往期参照维度，明确整体问题数量变动态势。'
     +       '提炼本次质控过程中最为突出、占比靠前的核心问题类别，明确影像采集、参数设置、图像处理、成像规范等板块存在的共性短板，'
     +       '直观点明本次质控整体质量现状与核心症结。</p>'
     +     '<div class="ai-h2">二、总体质控概况</div>'
@@ -1245,6 +1325,385 @@ function bindQa(){
     };
   });
   renderQa();
+}
+
+/* ============================================================================
+   报告质控分析（报告质量统计分析）
+   ============================================================================ */
+var RP_GRADES = ['甲','乙','丙','丁'];
+var RP_GRADE_N = { '甲':23, '乙':198, '丙':132, '丁':12 };
+
+/* 各等级问题项（[问题项, 例数, 是否需关注]） */
+var RP_SUM = {
+  '甲': [['诊断建议规范性',12,1],['诊断建议不规范',7,0],['报告整体逻辑性',6,0],['格式与符号不规范',5,0],
+        ['病灶形态描述不规范',5,0],['病灶边缘描述不规范',4,0],['报告文本规范性',3,1],
+        ['病灶部位描述不规范',2,0],['病灶密度描述不规范',2,0],['诊断顺序规范性',1,0],
+        ['阳性病变描述顺序规范性',1,1]],
+  '乙': [['诊断建议规范性',128,1],['阳性病变描述顺序规范性',109,1],['病灶形态描述不规范',63,0],
+        ['病灶密度描述不规范',61,0],['阳性病变部位描述规范性',59,1],['诊断建议不规范',59,0],
+        ['病灶边缘描述不规范',53,0],['格式与符号不规范',51,0],['诊断内容不规范',40,0],
+        ['口语化与错别字',32,0],['报告整体逻辑性',30,0],['报告文本规范性',28,1],
+        ['病灶部位描述不规范',23,0],['诊断内容规范性',17,1],['过度诊断',12,1],
+        ['诊断顺序规范性',8,0],['阳性病变形态描述规范性',3,0],['阳性病变密度描述规范性',1,0]],
+  '丙': [['诊断建议规范性',107,1],['阳性病变部位描述规范性',103,1],['阳性病变描述顺序规范性',100,1],
+        ['诊断内容规范性',86,0],['报告文本规范性',51,1],['报告整体逻辑性',26,0],
+        ['口语化与错别字',23,0],['病灶密度描述不规范',23,0],['病灶形态描述不规范',22,0],
+        ['病灶边缘描述不规范',21,0],['诊断建议不规范',21,0],['病灶部位描述不规范',18,0],
+        ['格式与符号不规范',16,0],['过度诊断',9,1],['诊断顺序规范性',6,0]],
+  '丁': [['诊断建议规范性',11,1],['阳性病变部位描述规范性',10,1],['报告文本规范性',9,1],
+        ['病灶形态描述不规范',8,0],['口语化与错别字',7,0],['阳性病变描述顺序规范性',7,1]]
+};
+
+/* 问题类别 → 问题项（[类别, 类别例数, 是否需关注, [[问题项, 例数, 需关注]]]） */
+var RP_KEY = [
+  ['诊断书写规范性', 357, 1, [['诊断建议规范性',259,1],['诊断内容规范性',115,1],['诊断建议不规范',87,0],
+                             ['诊断内容不规范',59,0],['过度诊断',7,1]]],
+  ['所见描述规范性', 345, 1, [['阳性病变描述顺序规范性',222,1],['阳性病变部位描述规范性',174,1],
+                             ['病灶形态描述不规范',90,0],['病灶密度描述不规范',86,0],
+                             ['病灶边缘描述不规范',78,0],['病灶部位描述不规范',40,0],
+                             ['阳性病变密度描述规范性',16,0],['阳性病变形态描述规范性',7,0]]],
+  ['书写格式规范性', 180, 0, [['报告文本规范性',93,1],['格式与符号不规范',76,0],
+                             ['口语化与错别字',55,0],['诊断顺序规范性',12,0]]],
+  ['所见诊断一致性', 67, 0, [['报告整体逻辑性',67,0]]],
+  ['诊断规范性', 31, 0, [['过度诊断',31,1]]]
+];
+var RP_KEY_PREV = { '诊断书写规范性':1, '所见描述规范性':1, '书写格式规范性':5, '所见诊断一致性':4, '诊断规范性':0 };
+
+var RP_CAT = {
+  '诊断建议规范性':'诊断书写规范性', '诊断内容规范性':'诊断书写规范性', '诊断建议不规范':'诊断书写规范性',
+  '诊断内容不规范':'诊断书写规范性', '过度诊断':'诊断书写规范性',
+  '阳性病变描述顺序规范性':'所见描述规范性', '阳性病变部位描述规范性':'所见描述规范性',
+  '阳性病变形态描述规范性':'所见描述规范性', '阳性病变密度描述规范性':'所见描述规范性',
+  '病灶形态描述不规范':'所见描述规范性', '病灶密度描述不规范':'所见描述规范性',
+  '病灶部位描述不规范':'所见描述规范性', '病灶边缘描述不规范':'所见描述规范性',
+  '格式与符号不规范':'书写格式规范性', '口语化与错别字':'书写格式规范性',
+  '报告整体逻辑性':'所见诊断一致性', '报告文本规范性':'书写格式规范性',
+  '诊断顺序规范性':'诊断规范性'
+};
+
+var RP_END = '2026-10-27';
+var RP_S = { period:'month', stage:'终末', dev:'CT', type:'系统', tab:'sum',
+             cFrom:'2026-08-01', cTo:'2026-10-27' };
+
+function rpDay(n){
+  var base = new Date(2026, 9, 27);
+  base.setDate(base.getDate() - (n % 30));
+  var p = function(x){ return (x < 10 ? '0' : '') + x; };
+  return base.getFullYear() + '-' + p(base.getMonth() + 1) + '-' + p(base.getDate());
+}
+function rpPct(c, base){
+  if (!base) return '0%';
+  var v = c / base * 100;
+  var s = v.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+  return s + '%';
+}
+
+/* 由等级问题表生成逐条记录（供筛选子集使用） */
+var RP_ROWS = (function(){
+  var rows = [], seq = 0;
+  RP_GRADES.forEach(function(g){
+    var N = RP_GRADE_N[g], recs = [];
+    for (var i = 0; i < N; i++) recs.push({ grade:g, issues:[] });
+    RP_SUM[g].forEach(function(it, k){
+      var start = Math.floor(k * N / RP_SUM[g].length);
+      for (var c = 0; c < it[1]; c++) recs[(start + c) % N].issues.push(it[0]);
+    });
+    recs.forEach(function(r){
+      seq++;
+      rows.push({ idx:seq, d:rpDay(seq), stage:'终末', dev:'CT', type:'系统',
+                  grade:r.grade, issues:r.issues });
+    });
+  });
+  /* 上一周期 6 例：甲4 / 乙2（含 1 例诊断书写问题） */
+  for (var i = 0; i < 6; i++) {
+    rows.push({ idx:++seq, d:(i < 4 ? '2026-09-10' : '2026-09-05'), stage:'终末', dev:'CT', type:'系统',
+                grade:(i < 4 ? '甲' : '乙'),
+                issues:(i === 5 ? ['诊断建议规范性'] : []) });
+  }
+  /* 其它组合：MR / 事中 / 人工，各若干例 */
+  var extra = [
+    ['MR','终末','系统', 6,'乙'], ['MR','终末','系统', 4,'丙'],
+    ['CT','事中','系统', 9,'乙'], ['CT','事中','系统', 3,'丙'],
+    ['CT','终末','人工', 7,'甲'], ['CT','终末','人工', 5,'乙'],
+    ['DR','终末','系统', 3,'丙'], ['MR','事中','人工', 2,'丁']
+  ];
+  extra.forEach(function(e){
+    for (var k = 0; k < e[3]; k++) {
+      rows.push({ idx:++seq, d:rpDay(seq + 3), stage:e[1], dev:e[0], type:e[2], grade:e[4],
+                  issues:(k % 3 === 0 ? ['诊断建议规范性'] : (k % 3 === 1 ? ['病灶形态描述不规范'] : [])) });
+    }
+  });
+  return rows;
+})();
+
+function rpRange(){
+  var to = RP_END, from;
+  if (RP_S.period === 'month') from = qaShift(to, -1);
+  else if (RP_S.period === 'quarter') from = qaShift(to, -3);
+  else if (RP_S.period === 'half') from = qaShift(to, -6);
+  else { from = RP_S.cFrom; to = RP_S.cTo; }
+  var span = qaSpan(from, to);
+  var prevTo = qaShiftDays(from, -1);
+  return { from:from, to:to, prevFrom:qaShiftDays(prevTo, -span), prevTo:prevTo,
+           yoyFrom:qaShiftDays(qaShift(to, -12), -span), yoyTo:qaShiftDays(qaShift(to, -12), 0) };
+}
+
+function rpFilter(f, t){
+  return RP_ROWS.filter(function(r){
+    if (r.d < f || r.d > t) return false;
+    if (RP_S.stage && r.stage !== RP_S.stage) return false;
+    if (RP_S.dev && r.dev !== RP_S.dev) return false;
+    if (RP_S.type && r.type !== RP_S.type) return false;
+    return true;
+  });
+}
+
+/* 默认口径直接输出与设计稿一致的聚合快照 */
+function rpIsDefault(){
+  return RP_S.period === 'month' && RP_S.stage === '终末' && RP_S.dev === 'CT' && RP_S.type === '系统';
+}
+
+function rpAggregate(){
+  var R = rpRange();
+  if (rpIsDefault()) {
+    return {
+      static:true, R:R, total:365,
+      grades:{ '甲':23,'乙':198,'丙':132,'丁':12 },
+      sumItems:RP_SUM, keyCats:RP_KEY,
+      prevTotal:6, prevGrades:{ '甲':4,'乙':2,'丙':0,'丁':0 }, prevKey:RP_KEY_PREV,
+      yoyTotal:0, yoyGrades:{ '甲':0,'乙':0,'丙':0,'丁':0 }, yoyKey:{}
+    };
+  }
+  var cur = rpFilter(R.from, R.to);
+  var prev = rpFilter(R.prevFrom, R.prevTo);
+  var yoy = rpFilter(R.yoyFrom, R.yoyTo);
+  function pack(rows){
+    var grades = { '甲':0,'乙':0,'丙':0,'丁':0 }, sumItems = {}, keyMap = {};
+    rows.forEach(function(r){
+      grades[r.grade]++;
+      r.issues.forEach(function(it){
+        (sumItems[r.grade] = sumItems[r.grade] || {});
+        sumItems[r.grade][it] = (sumItems[r.grade][it] || 0) + 1;
+        var cat = RP_CAT[it] || '其他';
+        keyMap[cat] = keyMap[cat] || { set:{}, items:{} };
+        keyMap[cat].set[r.idx] = 1;
+        keyMap[cat].items[it] = (keyMap[cat].items[it] || 0) + 1;
+      });
+    });
+    var si = {};
+    RP_GRADES.forEach(function(g){
+      si[g] = Object.keys(sumItems[g] || {}).map(function(k){ return [k, sumItems[g][k], 0]; })
+                  .sort(function(a, b){ return b[1] - a[1]; });
+    });
+    var kc = Object.keys(keyMap).map(function(cat){
+      return [cat, Object.keys(keyMap[cat].set).length, 0,
+              Object.keys(keyMap[cat].items).map(function(k){ return [k, keyMap[cat].items[k], 0]; })
+                    .sort(function(a, b){ return b[1] - a[1]; })];
+    }).sort(function(a, b){ return b[1] - a[1]; });
+    return { total:rows.length, grades:grades, sumItems:si, keyCats:kc, keyMap:keyMap };
+  }
+  var c = pack(cur), p = pack(prev), y = pack(yoy);
+  var pk = {};
+  p.keyCats.forEach(function(x){ pk[x[0]] = x[1]; });
+  return { static:false, R:R, total:c.total, grades:c.grades, sumItems:c.sumItems, keyCats:c.keyCats,
+           prevTotal:p.total, prevGrades:p.grades, prevKey:pk,
+           yoyTotal:y.total, yoyGrades:y.grades, yoyKey:{} };
+}
+
+function renderRp(){
+  var A = rpAggregate();
+  var R = A.R;
+  document.getElementById('rpRange').textContent = qaDot(R.from) + '–' + qaDot(R.to);
+  document.getElementById('rpCap').textContent = qaDot(R.from) + '–' + qaDot(R.to) + ' 完成质控' + A.total + ' 例';
+
+  var passN = A.total - A.grades['丁'];
+  document.getElementById('rpKpis').innerHTML =
+      '<div class="qa-kpi"><div class="lb">报告总数</div><div class="vl">' + A.total + '</div></div>'
+    + '<div class="qa-kpi"><div class="lb">已达标（例）</div><div class="vl">' + passN + '</div>'
+    + '<div class="dt">' + rpPct(passN, A.total) + '</div></div>'
+    + '<div class="qa-kpi ' + (A.grades['丁'] ? 'bad' : '') + '"><div class="lb">未达标（例）</div>'
+    + '<div class="vl">' + A.grades['丁'] + '</div><div class="dt">' + rpPct(A.grades['丁'], A.total) + '</div></div>';
+
+  if (RP_S.tab === 'sum') rpRenderSum(A, R);
+  else rpRenderKey(A, R);
+}
+
+function rpRenderSum(A, R){
+  document.getElementById('rpCardTitle').textContent = '总体达标情况改进分析';
+  document.getElementById('rpMomTitle').textContent = '环比数据分析';
+  document.getElementById('rpYoyTitle').textContent = '同比数据分析';
+
+  var segs = RP_GRADES.map(function(g){ return { g:g, v:A.grades[g], c:QA_COLOR[g] }; })
+                      .filter(function(s){ return s.v > 0; });
+  document.getElementById('rpDonut').innerHTML = qaDonut(segs, A.total, '#3B82F6');
+  document.getElementById('rpDonutRow').classList.remove('below');
+  var leg = document.getElementById('rpLeg');
+  leg.className = 'qa-leg';
+  leg.innerHTML = segs.map(function(sg){
+    return '<div class="r"><i style="background:' + sg.c + '"></i><span>' + sg.g + ' ' + sg.v + '</span></div>';
+  }).join('');
+
+  var html = '';
+  RP_GRADES.forEach(function(g){
+    var n = A.grades[g];
+    if (!n) return;
+    html += '<div class="qa-grp"><div class="qa-grp-h"><span class="lt"><i style="background:' + QA_COLOR[g]
+          + '"></i>' + g + '</span><span class="rt">占比 ' + rpPct(n, A.total) + ' | ' + n + ' 例</span></div>';
+    var items = (A.sumItems[g] || []);
+    if (!items.length) html += '<div class="qa-row">未检出问题项</div>';
+    items.forEach(function(it){
+      html += '<div class="qa-issue"><span>' + esc(it[0])
+            + (it[2] ? '<em class="qa-tag">需关注</em>' : '') + '</span>'
+            + '<span class="tk"><i style="width:' + Math.round(it[1] / n * 100) + '%"></i></span>'
+            + '<span class="num">' + rpPct(it[1], n) + '</span>'
+            + '<span class="num2">' + it[1] + '例</span></div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('rpDetail').innerHTML = html || '<div class="qa-empty">该条件下暂无质控样本</div>';
+  document.getElementById('rpFocus').classList.toggle('hidden', !Object.keys(A.sumItems).some(function(g){
+    return (A.sumItems[g] || []).some(function(it){ return it[2]; });
+  }));
+
+  document.getElementById('rpMomTxt').textContent = rpSumText(R, A, '环比', A.prevTotal, A.prevGrades, R.prevFrom, R.prevTo, '上一周期');
+  document.getElementById('rpMomChart').innerHTML = qaCombo('环比',
+    [qaDot(R.prevFrom) + '–' + qaDot(R.prevTo), '环比'], [qaDot(R.from) + '–' + qaDot(R.to), '当前'],
+    A.prevTotal, A.total);
+  document.getElementById('rpYoyTxt').textContent = rpSumText(R, A, '同比', A.yoyTotal, A.yoyGrades, R.yoyFrom, R.yoyTo, '去年同期');
+  document.getElementById('rpYoyChart').innerHTML = qaCombo('同比',
+    [qaDot(R.yoyFrom) + '–' + qaDot(R.yoyTo), '同比'], [qaDot(R.from) + '–' + qaDot(R.to), '当前'],
+    A.yoyTotal, A.total);
+}
+
+function rpSumText(R, A, kind, baseTotal, baseGrades, bf, bt, when){
+  var d = A.total - baseTotal;
+  var s = '本期 ' + qaDot(R.from) + '–' + qaDot(R.to) + ' 完成' + RP_S.stage + '报告 ' + A.total + ' 例；'
+        + when + ' ' + qaDot(bf) + '–' + qaDot(bt) + ' 完成 ' + baseTotal + ' 例。'
+        + '总数' + kind + qaDelta(baseTotal, A.total, '例') + '，趋势' + qaTrend(baseTotal, A.total) + '。'
+        + '其中' + RP_GRADES.map(function(g){ return g + '级' + qaDelta(baseGrades[g] || 0, A.grades[g], '例'); }).join('，') + '。';
+  var ups = [], downs = [], flats = [];
+  RP_GRADES.forEach(function(g){
+    var c1 = baseTotal ? (baseGrades[g] || 0) / baseTotal : 0, c2 = A.grades[g] / (A.total || 1);
+    var dd = c2 - c1;
+    if (dd > 0.0001) ups.push(g); else if (dd < -0.0001) downs.push(g); else flats.push(g);
+  });
+  var seg = [];
+  if (ups.length) seg.push(ups.join('、') + '级占比上升');
+  if (downs.length) seg.push(downs.join('、') + '级占比下降');
+  if (flats.length) seg.push(flats.join('、') + '级未见明显改变');
+  s += '等级占比方面，' + (seg.join('，') || '未见明显改变') + '。';
+  return s;
+}
+
+function rpRenderKey(A, R){
+  document.getElementById('rpCardTitle').textContent = '关键问题分析改进分析';
+  document.getElementById('rpMomTitle').textContent = '环比问题分析';
+  document.getElementById('rpYoyTitle').textContent = '同比问题分析';
+
+  var cats = A.keyCats;
+  var segs = cats.map(function(c, i){ return { g:c[0], v:c[1], c:['#3B82F6','#18A058','#FAAD14','#7C6CF0','#D03050'][i % 5] }; });
+  document.getElementById('rpDonut').innerHTML = qaDonut(segs, segs.reduce(function(a, b){ return a + b.v; }, 0), '#3B82F6');
+  document.getElementById('rpDonutRow').classList.add('below');
+  var leg = document.getElementById('rpLeg');
+  leg.className = 'qa-leg inline';
+  leg.innerHTML = segs.map(function(sg){
+    return '<span class="r"><i style="background:' + sg.c + '"></i>' + esc(sg.g) + ' ' + sg.v + '</span>';
+  }).join('');
+
+  var html = '';
+  cats.forEach(function(c){
+    html += '<div class="qa-grp"><div class="qa-grp-h"><span class="lt">'
+          + (c[2] ? '<em class="qa-alert">！</em>' : '<i style="background:#3B82F6"></i>')
+          + esc(c[0]) + '</span>'
+          + '<span class="rt">占比 ' + rpPct(c[1], A.total) + ' | ' + c[1] + ' 例</span></div>';
+    c[3].forEach(function(it){
+      html += '<div class="qa-issue"><span>' + esc(it[0])
+            + (it[2] ? '<em class="qa-tag">需关注</em>' : '') + '</span>'
+            + '<span class="tk"><i style="width:' + Math.round(it[1] / c[1] * 100) + '%"></i></span>'
+            + '<span class="num">' + rpPct(it[1], c[1]) + '</span>'
+            + '<span class="num2">' + it[1] + '例</span></div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('rpDetail').innerHTML = html || '<div class="qa-empty">该条件下暂无质控问题</div>';
+  document.getElementById('rpFocus').classList.toggle('hidden', !cats.some(function(c){ return c[2]; }));
+
+  document.getElementById('rpMomTxt').textContent = rpKeyText(R, A, '环比', A.prevTotal, A.prevKey,
+    R.prevFrom, R.prevTo, '上一周期');
+  document.getElementById('rpMomChart').innerHTML = qaCombo('环比',
+    [qaDot(R.prevFrom) + '–' + qaDot(R.prevTo), '环比'], [qaDot(R.from) + '–' + qaDot(R.to), '当前'],
+    A.prevTotal, A.total);
+  document.getElementById('rpYoyTxt').textContent = rpKeyText(R, A, '同比', A.yoyTotal, A.yoyKey || {},
+    R.yoyFrom, R.yoyTo, '去年同期');
+  document.getElementById('rpYoyChart').innerHTML = qaCombo('同比',
+    [qaDot(R.yoyFrom) + '–' + qaDot(R.yoyTo), '同比'], [qaDot(R.from) + '–' + qaDot(R.to), '当前'],
+    A.yoyTotal, A.total);
+}
+
+function rpKeyText(R, A, kind, baseTotal, baseKey, bf, bt, when){
+  var d = A.total - baseTotal;
+  var s = '本期（' + qaDot(R.from) + '–' + qaDot(R.to) + '）完成质控' + A.total + '例，'
+        + when + '（' + qaDot(bf) + '–' + qaDot(bt) + '）' + RP_S.stage + '报告质控共' + baseTotal + '例，'
+        + '总数' + kind + (d === 0 ? '持平' : qaDelta(baseTotal, A.total, '例')) + '，趋势'
+        + qaTrend(baseTotal, A.total) + '。';
+  s += '其中' + A.keyCats.map(function(c){
+    return c[0] + qaDelta(baseKey[c[0]] || 0, c[1], '例');
+  }).join('，') + '。';
+  var ups = [], downs = [], flats = [];
+  A.keyCats.forEach(function(c){
+    var c1 = baseTotal ? (baseKey[c[0]] || 0) / baseTotal : 0, c2 = c[1] / (A.total || 1);
+    var dd = c2 - c1;
+    if (dd > 0.0001) ups.push(c[0]); else if (dd < -0.0001) downs.push(c[0]); else flats.push(c[0]);
+  });
+  var seg = [];
+  if (ups.length) seg.push(ups.join('、') + '占比上升');
+  if (downs.length) seg.push(downs.join('、') + '占比下降');
+  if (flats.length) seg.push(flats.join('、') + '未见明显改变');
+  s += '问题占比方面，' + (seg.join('，') || '未见明显改变') + '。';
+  return s;
+}
+
+/* ---------- 报告版 AI 分析报告 ---------- */
+function openRpReport(){
+  openAiReport('报告');
+}
+
+function bindRp(){
+  if (bindRp._done) return;
+  bindRp._done = true;
+  [['rpPeriod','period'], ['rpStage','stage'], ['rpType','type']].forEach(function(p){
+    var box = document.getElementById(p[0]);
+    [].forEach.call(box.querySelectorAll('button'), function(b){
+      b.onclick = function(){
+        [].forEach.call(box.querySelectorAll('button'), function(x){ x.classList.remove('on'); });
+        b.classList.add('on');
+        RP_S[p[1]] = b.getAttribute('data-v');
+        renderRp();
+      };
+    });
+  });
+  document.getElementById('rpDev').onchange = function(){ RP_S.dev = this.value; renderRp(); };
+  document.getElementById('rpQuery').onclick = function(){ renderRp(); toast('已按当前条件查询'); };
+  document.getElementById('rpReset').onclick = function(){
+    RP_S.period = 'month'; RP_S.stage = '终末'; RP_S.dev = 'CT'; RP_S.type = '系统';
+    [['rpPeriod','month'], ['rpStage','终末'], ['rpType','系统']].forEach(function(p){
+      [].forEach.call(document.getElementById(p[0]).querySelectorAll('button'), function(b){
+        b.classList.toggle('on', b.getAttribute('data-v') === p[1]);
+      });
+    });
+    document.getElementById('rpDev').value = 'CT';
+    renderRp(); toast('已重置筛选条件');
+  };
+  document.getElementById('rpAiReport').onclick = function(){ openRpReport(); };
+  [].forEach.call(document.querySelectorAll('#rpTabs button'), function(b){
+    b.onclick = function(){
+      [].forEach.call(document.querySelectorAll('#rpTabs button'), function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      RP_S.tab = b.getAttribute('data-v');
+      renderRp();
+    };
+  });
+  renderRp();
 }
 
 /* ---------- 交互 ---------- */
